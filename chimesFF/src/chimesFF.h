@@ -492,43 +492,101 @@ inline void chimesFF::build_atom_and_pair_mappers(const int natoms, const int np
 }
 
 
-inline void chimesFF::set_cheby_polys(vector<double> &Tn, vector<double> &Tnd, double dx, const int pair_idx,
+inline void chimesFF::set_cheby_polys(vector<double> &Tn, vector<double> &Tnd, double rlen, const int pair_idx,
 									  const double inner_cutoff, const double outer_cutoff, const int bodiedness_idx) 
 {
+    //define these variables ahead for later when evaluating the out_of_range function
+    double x, rlen_orig, exprlen = 0, dx_drlen, invrlen = 0;
+    bool out_of_range;
+
     // Currently assumes a Morse-style transformation has been requested
     
     // Sets the value of the Chebyshev polynomials (Tn) and their derivatives (Tnd).  Tnd is the derivative
     // with respect to the interatomic distance, not the transformed distance (x).
     
-    // Do the Morse transformation
-    
-    double x_min = exp(-1*inner_cutoff/morse_var[pair_idx]);
-    double x_max = exp(-1*outer_cutoff/morse_var[pair_idx]);
-    
-    double x_avg   = 0.5 * (x_max + x_min);
-    double x_diff  = 0.5 * (x_max - x_min);
-	
-    x_diff *= -1.0; // Special for Morse style
-
-
-    bool out_of_range ;
-    double dx_orig = dx ;
-
-	//  The case dx > outer_cutoff is not treated, because it is assumed that the outer smoothing
-    //  function will be zero for dx > outer_cutoff.
-    if ( dx < inner_cutoff )
+    // Select the transformation style
+   
+    if(xform_style == "MORSE")
     {
-        out_of_range = true ;
-        dx = inner_cutoff ;
-    }
-    else
-        out_of_range = false ;
-    
-	double exprlen = exp(-1*dx/morse_var[pair_idx]);
-	double x  = (exprlen - x_avg)/x_diff;
-	double dx_dr = (-exprlen/morse_var[pair_idx])/x_diff;		
+        double x_min = exp(-1*inner_cutoff/morse_var[pair_idx]); // transfer from rin and rout to xin and xout
+        double x_max = exp(-1*outer_cutoff/morse_var[pair_idx]);
 
-    if ( ! out_of_range )
+        double x_avg   = 0.5 * (x_max + x_min);
+        double x_diff  = 0.5 * (x_max - x_min);
+
+        x_diff *= -1.0; // Special for Morse style; inner&outer flipped
+
+        rlen_orig = rlen; 
+
+        //  The case rlen > outer_cutoff is not treated, because it is assumed that the outer smoothing
+        //  function will be zero for dx > outer_cutoff.
+        if(rlen < inner_cutoff)
+        {
+            out_of_range = true;
+            rlen = inner_cutoff;
+        }
+        else
+        {
+            out_of_range = false ; 
+
+            exprlen = exp(-1*rlen/morse_var[pair_idx]);   
+            x  = (exprlen - x_avg)/x_diff;
+            dx_drlen = (-exprlen/morse_var[pair_idx])/x_diff; 
+        }
+    }
+
+    if(xform_style == "NONE")
+    {
+        double x_min = inner_cutoff;
+        double x_max = outer_cutoff;
+        
+        double x_avg = 0.5 * (x_max + x_min);
+        double x_diff = 0.5 * (x_max - x_min);
+
+        rlen_orig = rlen; 
+
+        if (rlen < inner_cutoff)
+        {
+            out_of_range = true;
+            rlen = inner_cutoff;
+        }
+        else
+        {
+            out_of_range = false;
+
+            x = (rlen - x_avg)/x_diff;
+            dx_drlen = 1/x_diff; 
+        }
+
+    }
+    
+    if(xform_style == "INVRSE_R")
+    {
+        double x_min = 1/inner_cutoff;
+        double x_max = 1/outer_cutoff;
+        
+        double x_avg = 0.5 * (x_max + x_min);
+        double x_diff = 0.5 * (x_max - x_min);
+
+        rlen_orig = rlen; 
+
+        if (rlen < inner_cutoff)
+        {
+            out_of_range = true;
+            rlen = inner_cutoff;
+        }
+        else
+        {
+            out_of_range = false;
+
+            invrlen = 1/rlen;
+            x = (invrlen - x_avg)/x_diff;
+            dx_drlen = -1/(rlen*rlen*x_diff); 
+        }
+
+    }
+
+    if (! out_of_range )
     {
         // Generate Chebyshev polynomials by recursion. 
         // 
@@ -565,16 +623,16 @@ inline void chimesFF::set_cheby_polys(vector<double> &Tn, vector<double> &Tnd, d
         // DERIV_CONST is no longer used. (old way: dx_dr = DERIV_CONST*cheby_var_deriv(x_diff, rlen, ff_2body.LAMBDA, ff_2body.CHEBY_TYPE, exprlen);)
 
         for ( int i = poly_orders[bodiedness_idx]; i >= 1; i-- ) 
-            Tnd[i] = i * dx_dr * Tnd[i-1];
+            Tnd[i] = i * dx_drlen * Tnd[i-1];
 
         Tnd[0] = 0.0;
     }
     else // out_of_range == true
     {
 		cout << "Warning: An intermolecular distance less than the inner cutoff = " << inner_cutoff << " was found\n " ;
-		cout << "         Distance = " << dx_orig << endl ;
+		cout << "         Distance = " << rlen_orig << endl ;
 
-		set_polys_out_of_range(Tn, Tnd, dx_orig, x, poly_orders[bodiedness_idx], inner_cutoff, exprlen, dx_dr) ;
+		set_polys_out_of_range(Tn, Tnd, rlen_orig, x, poly_orders[bodiedness_idx], inner_cutoff, exprlen, dx_drlen) ;
     }        
 
 }
