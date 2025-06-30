@@ -495,7 +495,7 @@ void PairCHIMES::compute(int eflag, int vflag)
 		chimes_calculator.compute_1B(type[i]-1, energy);
 		
 		if(evflag)
-			ev_tally_mb(0, atmidxlst, energy, fscalar, tmp_dist, tmp_dr);
+			ev_tally_mb(1, 0, atmidxlst, energy, stensor); 
 
 		// Now move on to two-body force, stress, and energy
 		
@@ -543,7 +543,9 @@ void PairCHIMES::compute(int eflag, int vflag)
 			tmp_dist    [0] = dist;
 			
 			if (evflag)
-				ev_tally_mb(2, atmidxlst, energy, fscalar, tmp_dist, dr);         
+			{
+				ev_tally_mb(2, 1, atmidxlst, energy, stensor);  
+			}         
 		}
 	}
     
@@ -597,7 +599,9 @@ void PairCHIMES::compute(int eflag, int vflag)
             }
 			
 			if (evflag)
-				ev_tally_mb(3, atmidxlst, energy, fscalar, dist_3b, dr_3b);		            
+			{
+				ev_tally_mb(3, 3, atmidxlst, energy, stensor);	
+			}		            
 		}		
 	}
 
@@ -658,7 +662,9 @@ void PairCHIMES::compute(int eflag, int vflag)
             }
 			
 			if (evflag)
-				ev_tally_mb(4, atmidxlst, energy, fscalar, dist_4b, dr_4b);	
+			{
+				ev_tally_mb(4, 6, atmidxlst, energy, stensor);	
+			}	
             
 		}
 	}

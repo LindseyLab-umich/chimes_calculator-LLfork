@@ -1422,138 +1422,65 @@ void Pair::ev_tally4(int i, int j, int k, int m, double evdwl,
    do not make sense. Expects newton_pair = 1.
  ------------------------------------------------------------------------- */
 
- void Pair::ev_tally_mb(int npair, int atmpairidxlst[6][2], double evdwl, std::vector<double>fscalar, std::vector<double> & dist, std::vector<double> &dr)
- {
-     double v[6];
-    
-     eng_vdwl += evdwl; // Note: Assume eflag_global alsways true and eflag atom always false
-
-     if (vflag_either) // Note: Assume newton_pair always true for this pair type
-     {
-         for (int i=0; i<npair; i++)
-         {
-             v[0] = fscalar[i] * dr[i*3+0] * dr[i*3+0] / dist[i];
-             v[1] = fscalar[i] * dr[i*3+1] * dr[i*3+1] / dist[i];
-             v[2] = fscalar[i] * dr[i*3+2] * dr[i*3+2] / dist[i];
-             v[3] = fscalar[i] * dr[i*3+0] * dr[i*3+1] / dist[i];
-             v[4] = fscalar[i] * dr[i*3+0] * dr[i*3+2] / dist[i];
-             v[5] = fscalar[i] * dr[i*3+1] * dr[i*3+2] / dist[i];
-            
-             if (vflag_global)
-             {
-                 virial[0] += v[0];
-                 virial[1] += v[1];
-                 virial[2] += v[2];
-                 virial[3] += v[3];
-                 virial[4] += v[4];
-                 virial[5] += v[5];
-             }
-             if(vflag_atom)
-             {
-                 vatom[atmpairidxlst[i][0]][0] += 0.5*v[0];
-                 vatom[atmpairidxlst[i][0]][1] += 0.5*v[1];
-                 vatom[atmpairidxlst[i][0]][2] += 0.5*v[2];
-                 vatom[atmpairidxlst[i][0]][3] += 0.5*v[3];
-                 vatom[atmpairidxlst[i][0]][4] += 0.5*v[4];
-                 vatom[atmpairidxlst[i][0]][5] += 0.5*v[5];
-                
-                 vatom[atmpairidxlst[i][1]][0] += 0.5*v[0];
-                 vatom[atmpairidxlst[i][1]][1] += 0.5*v[1];
-                 vatom[atmpairidxlst[i][1]][2] += 0.5*v[2];
-                 vatom[atmpairidxlst[i][1]][3] += 0.5*v[3];
-                 vatom[atmpairidxlst[i][1]][4] += 0.5*v[4];
-                 vatom[atmpairidxlst[i][1]][5] += 0.5*v[5];
-             }
-         }
-     }                      
-  }
-
-
-/* ----------------------------------------------------------------------
-   tally ecoul and virial into each of atoms in list
-   called by TIP4P potential, newton_pair is always on
-   weight assignments by alpha, so contribution is all to O atom as alpha -> 0.0
-   key = 0 if neither atom = water O
-   key = 1 if first atom = water O
-   key = 2 if second atom = water O
-   key = 3 if both atoms = water O
- ------------------------------------------------------------------------- */
-
-void Pair::ev_tally_tip4p(int key, int *list, double *v,
-                          double ecoul, double alpha)
+void Pair::ev_tally_mb(int ninteractionatoms, int npairs, int atmpairidxlst[6][2], double evdwl, std::vector<double> stress)
 {
-  int i;
+    // Assumes newton pair is always true 
+    // Assumes a full neighbor list is always true (hard coded in pair_chimes.cpp)
+    // Modeled after ev_tally_full and ev_tally3 (to get MB handling)
+    // force and distance vector are flattened 2d vectors, e.g., atom_idx*3 + [0,1,2 == x,y,z dims]
 
-  if (eflag_either) {
-    if (eflag_global) eng_coul += ecoul;
-    if (eflag_atom) {
-      if (key == 0) {
-        eatom[list[0]] += 0.5*ecoul;
-        eatom[list[1]] += 0.5*ecoul;
-      } else if (key == 1) {
-        eatom[list[0]] += 0.5*ecoul*(1-alpha);
-        eatom[list[1]] += 0.25*ecoul*alpha;
-        eatom[list[2]] += 0.25*ecoul*alpha;
-        eatom[list[3]] += 0.5*ecoul;
-      } else if (key == 2) {
-        eatom[list[0]] += 0.5*ecoul;
-        eatom[list[1]] += 0.5*ecoul*(1-alpha);
-        eatom[list[2]] += 0.25*ecoul*alpha;
-        eatom[list[3]] += 0.25*ecoul*alpha;
-      } else {
-        eatom[list[0]] += 0.5*ecoul*(1-alpha);
-        eatom[list[1]] += 0.25*ecoul*alpha;
-        eatom[list[2]] += 0.25*ecoul*alpha;
-        eatom[list[3]] += 0.5*ecoul*(1-alpha);
-        eatom[list[4]] += 0.25*ecoul*alpha;
-        eatom[list[5]] += 0.25*ecoul*alpha;
-      }
-    }
-  }
+    std::vector<int> atmlist(4);
 
-  if (vflag_either) {
-    if (vflag_global) {
-      virial[0] += v[0];
-      virial[1] += v[1];
-      virial[2] += v[2];
-      virial[3] += v[3];
-      virial[4] += v[4];
-      virial[5] += v[5];
+    atmlist[0] = atmpairidxlst[0][0];       // i
+
+    if(ninteractionatoms>1) // 2, 3, and/or 4b
+        atmlist[1] = atmpairidxlst[0][1];   // j
+        
+    if(ninteractionatoms>2) // 3 and/or 4b
+        atmlist[2] = atmpairidxlst[1][1];   // k
+        
+    if(ninteractionatoms>3) // 4b only
+        atmlist[3] = atmpairidxlst[2][1];   // l
+    
+    if (eflag_global)
+        eng_vdwl += evdwl;
+
+    if (eflag_atom)
+        for(int atm=0; atm<ninteractionatoms; atm++)
+                eatom[atmlist[atm]] += evdwl/ninteractionatoms;
+
+    if (ninteractionatoms < 2)
+        return;
+
+    if (!vflag_either)
+        return;
+        
+    // FYI, stress calculations follow strategy described here: https://docs.lammps.org/compute_stress_atom.html
+
+    if (vflag_global)
+    {
+        virial[0] += stress[0];
+        virial[1] += stress[3];
+        virial[2] += stress[5];
+        virial[3] += stress[1];
+        virial[4] += stress[2];
+        virial[5] += stress[4];
     }
 
-    if (vflag_atom) {
-      if (key == 0) {
-        for (i = 0; i <= 5; i++) {
-          vatom[list[0]][i] += 0.5*v[i];
-          vatom[list[1]][i] += 0.5*v[i];
+    if (vflag_atom) 
+    {
+        for (int a=0; a<ninteractionatoms; a++)
+        {
+             vatom[atmlist[a]][0] += stress[0]/ninteractionatoms;
+             vatom[atmlist[a]][1] += stress[3]/ninteractionatoms;
+             vatom[atmlist[a]][2] += stress[5]/ninteractionatoms;
+             vatom[atmlist[a]][3] += stress[1]/ninteractionatoms;
+             vatom[atmlist[a]][4] += stress[2]/ninteractionatoms;
+             vatom[atmlist[a]][5] += stress[4]/ninteractionatoms;          
         }
-      } else if (key == 1) {
-        for (i = 0; i <= 5; i++) {
-          vatom[list[0]][i] += 0.5*v[i]*(1-alpha);
-          vatom[list[1]][i] += 0.25*v[i]*alpha;
-          vatom[list[2]][i] += 0.25*v[i]*alpha;
-          vatom[list[3]][i] += 0.5*v[i];
-        }
-      } else if (key == 2) {
-        for (i = 0; i <= 5; i++) {
-          vatom[list[0]][i] += 0.5*v[i];
-          vatom[list[1]][i] += 0.5*v[i]*(1-alpha);
-          vatom[list[2]][i] += 0.25*v[i]*alpha;
-          vatom[list[3]][i] += 0.25*v[i]*alpha;
-        }
-      } else {
-        for (i = 0; i <= 5; i++) {
-          vatom[list[0]][i] += 0.5*v[i]*(1-alpha);
-          vatom[list[1]][i] += 0.25*v[i]*alpha;
-          vatom[list[2]][i] += 0.25*v[i]*alpha;
-          vatom[list[3]][i] += 0.5*v[i]*(1-alpha);
-          vatom[list[4]][i] += 0.25*v[i]*alpha;
-          vatom[list[5]][i] += 0.25*v[i]*alpha;
-        }
-      }
     }
-  }
 }
+
 
 /* ----------------------------------------------------------------------
    tally virial into global or per-atom accumulators
