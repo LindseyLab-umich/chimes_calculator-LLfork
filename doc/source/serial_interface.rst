@@ -279,10 +279,19 @@ operations, in order:
 
        # Associate the wrapper with a compiled C API library file
        chimescalc_serial_py.chimes_wrapper = chimescalc_serial_py.init_chimes_wrapper("libchimescalc_dl.so")
+       # Allocate memory for the ChIMESFF object and get pointer
+       chimes_ptr = chimescalc_serial_py.chimes_open_instance()
        # Instantiate; as for the C++ API (see warning message), can pass 0/1 for false/true
-       chimescalc_serial_py.set_chimes()
+       chimescalc_serial_py.set_chimes_instance(chimes_ptr, small)
        # Read the parameter file, set MPI rank to 0 (i.e. no MPI used)
-       chimescalc_serial_py.init_chimes("my_parameter_file", 0)
+       chimescalc_serial_py.init_chimes_instance(chimes_ptr, "my_parameter_file", 0)
+
+If you need to close an instance of the ChIMES Calculator (for example, to free memory or overwrite a ChIMESFF instance) during a single system call, you can:
+
+    .. code-block:: python
+
+        # Close/free up ChIMESFF obj
+        chimescalc_serial_py.chimes_close_instance(chimes_ptr)
 
 
 For additional information on compiling (i.e. generation of ``lib-C_wrapper-serial_interface.so``), see :ref:`Implementation Examples <sec-ser-use-examples-api>`.
@@ -290,67 +299,121 @@ For additional information on compiling (i.e. generation of ``lib-C_wrapper-seri
 Note that the ChIMES calculator serial interface ``chimescalc_serial_py`` API provides users with the following functions:
 
 
-=============== ========================    =================
-Return Type      Name                        Arguments and Description
-=============== ========================    =================
-See description init_chimes_wrapper         =======================   =====
-                                            Type                      Description
-                                            =======================   =====
-                                            string                    Library name
-                                            =======================   =====
+================================= ============================    =================
+Return Type                       Name                            Arguments and Description
+================================= ============================    =================
+See description                   init_chimes_wrapper             =======================   =====
+                                                                  Type                      Description
+                                                                  =======================   =====
+                                                                  string                    Library name
+                                                                  =======================   =====
 
-                                            Associate ctypes.CDLL (i.e. the return type) with a the compiled ChIMES calculator serial interface C-library.
-
-
-void            set_chimes                  Creates a pointer to a ``serial_chimes_interface`` object.
-
-                                            =======================   =====
-                                            Type                      Description
-                                            =======================   =====
-                                            bool                      Allow replication? ; default = true
-                                            =======================   =====
+                                                                  Associate ctypes.CDLL (i.e. the return type) with a the compiled ChIMES calculator serial interface C-library.
 
 
-void            init_chimes                 =======================   =====
-                                            Type                      Description
-                                            =======================   =====
-                                            string                    Parameter file
-                                            int                       MPI rank
-                                            =======================   =====
+ctypes.POINTER(ctypes.c_void_p)   chimes_open_instance            No arguments. Allocates memory for a new ChIMESFF object and returns a pointer to the instance.
 
-                                            Sets rank and reads the parameter file to the ``serial_chimes_interface`` object.
-                                            With the exception of error messages, the ChIMES calculator will only print output for rank 0.
+none                              chimes_close_instance           ==============   ===
+                                                                  Type             Description
+                                                                  ==============   ===
+                                                                  void pointer     Pointer to the ChIMESFF instance to be destroyed
+                                                                  ==============   ===
+                                                                  Frees memory for the specified ChIMESFF object.
 
-See description calculate_chimes            =======================   =====
-                                            Type (input)              Description
-                                            =======================   =====
-                                            int                       number of atoms in system
-                                            float list                Vector of x-coordinates for system atoms
-                                            float list                Vector of y-coordinates for system atoms
-                                            float list                Vector of z-coordinates for system atoms
-                                            str list                  System cell a lattice vector
-                                            float list                System cell b lattice vector
-                                            float list                System cell c lattice vector
-                                            float list                Vector of atom types for system atoms
-                                            float                     Overall system energy
-                                            float list                Vector of forces for system atoms ([atom index][fx, fy, fz])
-                                            float list                System stress tensor ([s_xx, s_xy, s_xz, s_yx, s_yy, s_yz, s_zx, s_zy, s_zz])
-                                            =======================   =====
+none                              set_chimes_instance             ==============   ===
+                                                                  Type             Description
+                                                                  ==============   ===
+                                                                  void pointer     Pointer to the ChIMESFF instance to configure
+                                                                  bool             If True, uses a reduced ("small") configuration (default False)
+                                                                  ==============   ===
+                                                                  Instantiates or configures the specified ChIMESFF object.
 
-                                            Takes system coordinates and cell lattice vectors, computes corresponding ChIMES energy, stress tensor, and system forces.
+none                              init_chimes_instance            ==============   ===
+                                                                  Type             Description
+                                                                  ==============   ===
+                                                                  void pointer     Pointer to the ChIMESFF instance to initialize
+                                                                  str              Parameter file
+                                                                  int              MPI rank
+                                                                  ==============   ===
+                                                                  Initializes the specified ChIMESFF object with the given parameters and rank.
 
-                                            =======================   =====
-                                            Type (return)             Description
-                                            =======================   =====
-                                            float list                List of x-force components for system atoms
-                                            float list                List of y-force components for system atoms
-                                            float list                List of z-force components for system atoms
-                                            float list                System stress tensor [s_xx, s_xy, s_xz, s_yx, s_yy, s_yz, s_zx, s_zy, s_zz]
-                                            float                     System energy
-                                            =======================   =====
+see description                   calculate_chimes_instance       ==============   ===
+                                                                  Type             Description
+                                                                  ==============   ===
+                                                                  void pointer     Pointer to the ChIMESFF instance to use
+                                                                  int              Number of atoms in the system
+                                                                  float list       X coordinates of atoms (length natoms)
+                                                                  float list       Y coordinates of atoms (length natoms)
+                                                                  float list       Z coordinates of atoms (length natoms)
+                                                                  str list         Atom types (length natoms)
+                                                                  float list       First lattice vector (length 3)
+                                                                  float list       Second lattice vector (length 3)
+                                                                  float list       Third lattice vector (length 3)
+                                                                  float            Template for overall system energy; contents are ignored
+                                                                  float list       Template for x-force components (length natoms); contents are ignored
+                                                                  float list       Template for y-force components (length natoms); contents are ignored
+                                                                  float list       Template for z-force components (length natoms); contents are ignored
+                                                                  float list       Template for stress tensor components (length 9); contents are ignored
+                                                                  ==============   ===
 
-=============== ========================    =================
+                                                                  =======================   =====
+                                                                  Type (return)             Description
+                                                                  =======================   =====
+                                                                  float list                List of x-force components for system atoms
+                                                                  float list                List of y-force components for system atoms
+                                                                  float list                List of z-force components for system atoms
+                                                                  float list                System stress tensor [s_xx, s_xy, s_xz, s_yx, s_yy, s_yz, s_zx, s_zy, s_zz]
+                                                                  float                     Overall system energy
+                                                                  =======================   =====
 
+void                              set_chimes                      **Deprecated:** using ``set_chimes_instance`` is recommended.
+                                                                  Creates a pointer to a ``serial_chimes_interface`` object.
+
+                                                                  =======================   =====
+                                                                  Type                      Description
+                                                                  =======================   =====
+                                                                  bool                      Allow replication? ; default = true
+                                                                  =======================   =====
+
+void                              init_chimes                     **Deprecated:** using ``init_chimes_instance`` is recommended.
+                                                                  =======================   =====
+                                                                  Type                      Description
+                                                                  =======================   =====
+                                                                  string                    Parameter file
+                                                                  int                       MPI rank
+                                                                  =======================   =====
+                                                                                                                                    Sets rank and reads the parameter file to the ``serial_chimes_interface`` object.
+                                                                  With the exception of error messages, the ChIMES calculator will only print output for rank 0.
+
+See description                   calculate_chimes                **Deprecated:** using ``calculate_chimes_instance`` is recommended.
+                                                                  =======================   =====
+                                                                  Type (input)              Description
+                                                                  =======================   =====
+                                                                  int                       number of atoms in system
+                                                                  float list                Vector of x-coordinates for system atoms
+                                                                  float list                Vector of y-coordinates for system atoms
+                                                                  float list                Vector of z-coordinates for system atoms
+                                                                  str list                  System cell a lattice vector
+                                                                  float list                System cell b lattice vector
+                                                                  float list                System cell c lattice vector
+                                                                  float list                Vector of atom types for system atoms
+                                                                  float                     Overall system energy
+                                                                  float list                Vector of forces for system atoms ([atom index][fx, fy, fz])
+                                                                  float list                System stress tensor ([s_xx, s_xy, s_xz, s_yx, s_yy, s_yz, s_zx, s_zy, s_zz])
+                                                                  =======================   =====
+                                                                  Takes system coordinates and cell lattice vectors, computes corresponding ChIMES energy, stress tensor, and system forces.
+
+                                                                  =======================   =====
+                                                                  Type (return)             Description
+                                                                  =======================   =====
+                                                                  float list                List of x-force components for system atoms
+                                                                  float list                List of y-force components for system atoms
+                                                                  float list                List of z-force components for system atoms
+                                                                  float list                System stress tensor [s_xx, s_xy, s_xz, s_yx, s_yy, s_yz, s_zx, s_zy, s_zz]
+                                                                  float                     System energy
+                                                                  =======================   =====
+
+================================= ============================    =================
 
 
 
