@@ -118,7 +118,7 @@ def calculate_chimes_instance(chimes_ptr, natoms,xcrd,ycrd,zcrd,atmtyps,cell_a,c
 	return in_fx, in_fy, in_fz, in_stress, in_energy.value
 
 """
-    Below are depricated functions for the chimesFF wrapper kept for
+    Below are deprecated functions for the chimesFF wrapper kept for
     backwards compatability.
 
     They do not allow for multiple instances of chimesFF to be intialized
