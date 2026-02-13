@@ -282,10 +282,19 @@ operations, in order:
 
        # Associate the wrapper with a compiled C API library file
        chimescalc_serial_py.chimes_wrapper = chimescalc_serial_py.init_chimes_wrapper("libchimescalc_dl.so")
+       # Allocate memory for the ChIMESFF object and get pointer
+       chimes_ptr = chimescalc_serial_py.chimes_open_instance()
        # Instantiate; as for the C++ API (see warning message), can pass 0/1 for false/true
-       chimescalc_serial_py.set_chimes()
+       chimescalc_serial_py.set_chimes_instance(chimes_ptr, small)
        # Read the parameter file, set MPI rank to 0 (i.e. no MPI used)
-       chimescalc_serial_py.init_chimes("my_parameter_file", 0)
+       chimescalc_serial_py.init_chimes_instance(chimes_ptr, "my_parameter_file", 0)
+
+If you need to close an instance of the ChIMES Calculator (for example, to free memory or overwrite a ChIMESFF instance) during a single system call, you can:
+
+    .. code-block:: python
+
+        # Close/free up ChIMESFF obj
+        chimescalc_serial_py.chimes_close_instance(chimes_ptr)
 
 
 For additional information on compiling (i.e. generation of ``lib-C_wrapper-serial_interface.so``), see :ref:`Implementation Examples <sec-ser-use-examples-api>`.
