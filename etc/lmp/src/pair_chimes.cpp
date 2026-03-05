@@ -584,7 +584,7 @@ void PairCHIMES::compute(int eflag, int vflag)
 		
 		energy = 0.0;
 		
-		chimes_calculator.compute_1B(type[i]-1, energy);
+		chimes_calculator.compute_1B(chimes_type[type[i]-1], energy);
         
         atmidxlst[0][0] = i;
 		
