@@ -1,9 +1,24 @@
+! ChIMES-HSE06 parameters for  Publication DOI: TBD
+!
+! These parameters correspond to HSE06 DFT and are intended to be used with tabulation
+! In order to use tabulation, use a ChIMES version after commit d97cf42 and compile lammps with the TABULTAION flag
+! Assuming the path to the tabulated files is correct (lines 58 and 84) lammps will automatically use tabulation
+! Tabulation increase simulation speeds by roughly 2 times. If issues occur with tabulation, TABULATED and everything after intended
+!
+! This model is intended for use for pure silicon in the 0-100 GPa pressure range and 0-8000K temperature 
+! range and has been tested on many crystal structures, see publication for specifics
+!
+! -------------------------------------------------------------------------------
 ! Date  2026-02-09
 !
 ! Number of variables            =  429
 ! Number of equations            =  210138
-! LARS implementation of LASSO used
-! LASSO alpha =  1.0000e-08
+! DLARS code for LASSO used
+! DLARS alpha = 1.0000e-08
+srun
+srun: srun -N 4 -n 224 /g/g14/sundberg3/codes/lsq/build/../contrib/dlars/src/dlars
+! DLARS run: srun -N 4 -n 224 /g/g14/sundberg3/codes/lsq/build/../contrib/dlars/src/dlars A.txt b.txt dim.txt --lambda=1e-08 --split_files --algorithm=lasso --weights=weights.txt --normalize=y >& dlars.log
+
 ! RMS force error                =  1.4407e+01
 ! max abs variable               =  6.3844e+02
 ! number of fitting vars         =  371
