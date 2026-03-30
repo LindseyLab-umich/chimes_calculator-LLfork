@@ -1,9 +1,9 @@
 ! ChIMES-HSE06 parameters for  Publication DOI: TBD
 !
 ! These parameters correspond to HSE06 DFT and are intended to be used with tabulation
-! In order to use tabulation, use a ChIMES version after commit d97cf42 and compile lammps with the TABULTAION flag
+! In order to use tabulation, use a ChIMES Calculator version after commit d97cf42 and compile lammps with the TABULTAION flag
 ! Assuming the path to the tabulated files is correct (lines 58 and 84) lammps will automatically use tabulation
-! Tabulation increase simulation speeds by roughly 2 times. If issues occur with tabulation, TABULATED and everything after intended
+! For this model Tabulation increases simulation speeds by roughly 2 times. If issues occur with tabulation, remove the TABULATED tag to run normally.
 !
 ! This model is intended for use for pure silicon in the 0-100 GPa pressure range and 0-8000K temperature 
 ! range and has been tested on many crystal structures, see publication for specifics
