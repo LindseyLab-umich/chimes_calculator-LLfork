@@ -3,14 +3,15 @@
 ! Contributing Author:  Nir Goldman (2020) 
 
       program test_F_api
-      use chimescalc_serial
+      use chimes_serial
       use, intrinsic :: ISO_C_binding
       implicit none
       integer io_num, stat, small
       double precision, parameter :: GPa = 6.9479 ! convert kcal/mol.A^3 to GPa
-      character(C_char), dimension(1025) :: c_file
-      character(1024) :: coord_file, param_file
-      CHARACTER ( len = 1024 ) :: wq_char
+      character(C_char), dimension(80) :: c_file
+      character(C_char), dimension(80) :: dummy_var
+      character(80) :: coord_file, param_file
+      CHARACTER ( len = 100 ) :: wq_char
       integer :: i, j, k, l, natom, ns
       real(C_double) ::   lx, ly, lz
       real(C_double) :: stress(9)
@@ -21,6 +22,7 @@
       character(len=2) :: atom
       TYPE(C_PTR), allocatable, dimension(10) :: stringPtr(:)
       integer lenstr
+      
 
       small = 1
 
@@ -80,7 +82,8 @@
       
       print*,"fcheck-1"
 
-      call f_init_chimes(trim(param_file) // c_null_char,  0) ! last '0' is the rank of the process
+      c_file = string2Cstring(param_file)
+      call f_init_chimes(c_file,  0) ! last '0' is the rank of the process
       
       print*,"fcheck-2"
       
@@ -95,22 +98,22 @@
       &      cb, cc, energy, fx, fy, fz, stress)
 
       print *, "Success!"
-      print '(A,1X, F0.6)', "Energy (kcal/mol):",energy
-      print *, "Stress tensors (GPa):"
+      print '(A,1X, F0.6)', "Energy (kcal/mol)",energy
+      print *, "Stress tensors (GPa)"
       print '(A,1X, F15.6)', "s_xx: ",stress(1)*GPa
       print '(A,1X, F15.6)', "s_yy: ",stress(5)*GPa
       print '(A,1X, F15.6)', "s_zz: ",stress(9)*GPa
       print '(A,1X, F15.6)', "s_xy: ",stress(2)*GPa
       print '(A,1X, F15.6)', "s_xz: ",stress(3)*GPa
       print '(A,1X, F15.6)', "s_yz: ",stress(6)*GPa
-      print *, "Forces (kcal/mol/A):"
+      print *, "Forces (kcal/mol)"
       do i = 1, natom
          print '(F15.6)',fx(i)
          print '(F15.6)',fy(i)
          print '(F15.6)',fz(i)
       enddo
       
-#if DEBUG==1
+#if VERBOSE == 1
 
       open (unit = 20, status = 'replace', file='debug.dat')
       write(20,'(F15.6)') energy
@@ -124,9 +127,9 @@
       ! Changed format of forces to E15.7 to output the same number of
       ! digits as C (LEF) 08/02/21
       do i = 1, natom
-         write(20,'(F15.6)') fx(i)
-         write(20,'(F15.6)') fy(i)
-         write(20,'(F15.6)') fz(i)
+         write(20,'(E15.7)') fx(i)
+         write(20,'(E15.7)') fy(i)
+         write(20,'(E15.7)') fz(i)
       enddo
       close(20)
 
