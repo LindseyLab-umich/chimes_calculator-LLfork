@@ -17,7 +17,7 @@ using namespace std;
 
 // Simple linear algebra functions (for arbitrary triclinic cell support)
 
-double mag_a    (const vector<double> & a)
+inline double mag_a    (const vector<double> & a)
 {
     double mag = 0;
     
@@ -28,18 +28,8 @@ double mag_a    (const vector<double> & a)
     
     return mag;
 }
-void   unit_a   (const vector<double> & a, vector<double> & unit)        
-{
-    double mag = mag_a(a);
 
-    unit.resize(a.size());
-    
-    for(int i=0; i<a.size(); i++)
-        unit[i] += a[i]/mag;
-    
-    return;
-}
-double a_dot_b  (const vector<double> & a, const vector<double> & b)
+inline double a_dot_b  (const vector<double> & a, const vector<double> & b)
 {
     double dot = 0;
     
@@ -54,16 +44,8 @@ double a_dot_b  (const vector<double> & a, const vector<double> & b)
     
     return dot;
 }
-double angle_ab (const vector<double> & a, const vector<double> & b)
-{
-    double ang = a_dot_b(a,b);
 
-    ang /= mag_a(a);
-    ang /= mag_a(b);
-
-    return acos(ang);    
-}        
-void   a_cross_b(const vector<double> & a, const vector<double> & b, vector<double> & cross)
+inline void   a_cross_b(const vector<double> & a, const vector<double> & b, vector<double> & cross)
 {
     if( a.size() != b.size())
     {
@@ -82,13 +64,14 @@ void   a_cross_b(const vector<double> & a, const vector<double> & b, vector<doub
     cross[2] =    (a[0]*b[1] - a[1]*b[0]);
     return;
 }    
-void set_hmat(const vector<double> & cell_a,const vector<double> & cell_b, const vector<double> & cell_c, vector<double> & hmat, vector<double> & invr_hmat, int replicates)
+
+void set_hmat(const vector<double> & cell_a,const vector<double> & cell_b, const vector<double> & cell_c, vector<double> & hmat, vector<double> & invr_hmat, vector<int> replicates)
 {
     // Define the h-matrix (stores the cell vectors locally)
 
-    hmat[0] = cell_a[0]*(replicates+1);  hmat[3] = cell_a[1]*(replicates+1); hmat[6] = cell_a[2]*(replicates+1);
-    hmat[1] = cell_b[0]*(replicates+1);  hmat[4] = cell_b[1]*(replicates+1); hmat[7] = cell_b[2]*(replicates+1);
-    hmat[2] = cell_c[0]*(replicates+1);  hmat[5] = cell_c[1]*(replicates+1); hmat[8] = cell_c[2]*(replicates+1);
+    hmat[0] = cell_a[0]*(replicates[0]+1);  hmat[3] = cell_a[1]*(replicates[0]+1); hmat[6] = cell_a[2]*(replicates[0]+1);
+    hmat[1] = cell_b[0]*(replicates[1]+1);  hmat[4] = cell_b[1]*(replicates[1]+1); hmat[7] = cell_b[2]*(replicates[1]+1);
+    hmat[2] = cell_c[0]*(replicates[2]+1);  hmat[5] = cell_c[1]*(replicates[2]+1); hmat[8] = cell_c[2]*(replicates[2]+1);
 
     // Determine the h-matrix inverse
     
@@ -119,9 +102,15 @@ simulation_system::simulation_system()
 {
     hmat     .resize(9);
     invr_hmat.resize(9);
+    n_layers.resize(3) ;
+    n_replicates.resize(3) ;
+    face_dist.resize(3) ;
+    max_replicates = 0 ;
 }
+
 simulation_system::~simulation_system()
 {}
+
 void simulation_system::set_atomtyp_indices(vector<string> & type_list)
 {
     sys_atmtyp_indices.resize(n_ghost);
@@ -175,17 +164,13 @@ void simulation_system::init(vector<string> & atmtyps, vector<double> & x_in, ve
     // Copy over the system
     
     n_ghost = n_atoms;
-    n_repl  = n_atoms;
+    n_non_repl = n_atoms ;
     
-    sys_atmtyp_indices .resize(0);
+    sys_atmtyp_indices.resize(0);
     
-    sys_x              .resize(0);
-    sys_y              .resize(0);
-    sys_z              .resize(0);
-    sys_parent         .resize(0);
-    sys_rep_parent     .resize(0);
-    atmtyps            .erase(atmtyps.begin() + n_atoms, atmtyps.end());
-    sys_atmtyps        .resize(0);
+    sys_x.resize(0);
+    sys_y.resize(0);
+    sys_z.resize(0);
     
     for (int a=0; a<n_atoms; a++)
     {
@@ -196,35 +181,38 @@ void simulation_system::init(vector<string> & atmtyps, vector<double> & x_in, ve
         sys_z.push_back( z_in[a] );
         
         sys_parent.push_back(a); // for ghost
-        sys_rep_parent.push_back(a);    // for replicates
     }  
     
     // Determine if system is large enough  
 
-    latcon_a = mag_a({cella_in[0], cella_in[1], cella_in[2]});
-    latcon_b = mag_a({cellb_in[0], cellb_in[1], cellb_in[2]});
-    latcon_c = mag_a({cellc_in[0], cellc_in[1], cellc_in[2]});
+    std::fill(n_replicates.begin(), n_replicates.end(), 0) ;
+    std::fill(n_layers.begin(), n_layers.end(), 0) ;
 
-    double min_latcon = latcon_a;
-
-    if (latcon_b < min_latcon)
-        min_latcon = latcon_b;
-    if (latcon_c < min_latcon)
-        min_latcon = latcon_c;
+    cell_face_distances(face_dist, n_layers, cella_in, cellb_in, cellc_in) ;
     
-    n_replicates = 0;
-    
+    max_replicates = 0 ;
     if (allow_replication)
-        n_replicates = ceil(max_cut/min_latcon)-1;
+    {
+        for ( int i = 0 ; i < 3 ; i++ )
+        {
+            n_replicates[i] = ceil(max_cut/face_dist[i])-1;
+            if ( n_replicates[i] > max_replicates ) 
+                max_replicates = n_replicates[i] ;
+        }
+    }
 
-    if (n_replicates > 0)
+
+    if ( max_replicates > 0)
     {
             if (!called_before)
             {
                 called_before = true;
 
                 // Avoid printing the number of replicates on each MD step (LEF).
-                cout << "SerialchimesFF: " << "Replicating the system " << n_replicates << " times prior to generating ghost atoms" << endl;    
+                cout << "SerialchimesFF: " << "Replicating the system prior to generating ghost atoms" << endl;
+                cout << "SerialchimesFF: " << "Maximum interaction cutoff = " << max_cut << endl ;
+                cout << "SerialchimesFF: " << "Number of replicates in a,b,c directions = " << n_replicates[0]
+                     << " " << n_replicates[1] << " " << n_replicates[2] << endl ;
     
                 cout << "SerialchimesFF: " << "\t" << "Warning: At least one cell length is smaller than the ChIMES outer cutoff." << endl;
                 cout << "SerialchimesFF: " << "\t" << "System will be replicated prior to ghost atom generation." << endl;
@@ -233,20 +221,20 @@ void simulation_system::init(vector<string> & atmtyps, vector<double> & x_in, ve
             }
     }
 
-    set_hmat(cella_in, cellb_in, cellc_in, hmat, invr_hmat, 0);
+    set_hmat(cella_in, cellb_in, cellc_in, hmat, invr_hmat, {0,0,0} );
     
-    // Build the replicates
+    // Build the replicates - required for correct counting of self-interactions.
 
     double tmp_x, tmp_y, tmp_z;
 
-
-    for (int i=0; i<=n_replicates; i++) // x
+    int n_repl  = n_atoms;
+    for (int i=0; i <= n_replicates[0] ; i++) // cella_in
     {
-        for (int j=0; j<=n_replicates; j++) // y
+        for (int j=0; j <= n_replicates[1] ; j++) // cellb_in
         {
-            for (int k=0; k<=n_replicates; k++) // z
+            for (int k=0; k <= n_replicates[2] ; k++) // cellc_in
             {                
-                if ((i==0)&&(j==0)&&(k==0))
+                if ( (i==0) && (j==0) && (k==0) )
                    continue;
                 
                 for (int a=0; a<n_atoms; a++)
@@ -261,22 +249,23 @@ void simulation_system::init(vector<string> & atmtyps, vector<double> & x_in, ve
                     sys_y.push_back(0.0);
                     sys_z.push_back(0.0);
                     
-                    // Transform into inverse space 
                     
-                    tmp_x = invr_hmat[0]*sys_x[a] + invr_hmat[1]*sys_y[a] + invr_hmat[2]*sys_z[a];
-                    tmp_y = invr_hmat[3]*sys_x[a] + invr_hmat[4]*sys_y[a] + invr_hmat[5]*sys_z[a];
-                    tmp_z = invr_hmat[6]*sys_x[a] + invr_hmat[7]*sys_y[a] + invr_hmat[8]*sys_z[a];
                     
-                    tmp_x += i;
-                    tmp_y += j;    
-                    tmp_z += k;
+                    tmp_x = sys_x[a] ;
+                    tmp_y = sys_y[a] ;
+                    tmp_z = sys_z[a] ;
+
+                    // Translate by multiples of cell vectors.
                     
-                    sys_x[n_ghost-1] = hmat[0]*tmp_x + hmat[1]*tmp_y + hmat[2]*tmp_z;
-                    sys_y[n_ghost-1] = hmat[3]*tmp_x + hmat[4]*tmp_y + hmat[5]*tmp_z;
-                    sys_z[n_ghost-1] = hmat[6]*tmp_x + hmat[7]*tmp_y + hmat[8]*tmp_z;    
+                    tmp_x += i * cella_in[0] + j * cellb_in[0] + k * cellc_in[0] ;
+                    tmp_y += i * cella_in[1] + j * cellb_in[1] + k * cellc_in[1] ;
+                    tmp_z += i * cella_in[2] + j * cellb_in[2] + k * cellc_in[2] ;                                        
+                    
+                    sys_x[n_ghost-1] = tmp_x ;
+                    sys_y[n_ghost-1] = tmp_y ;
+                    sys_z[n_ghost-1] = tmp_z ;
                     
                     sys_parent.push_back(n_repl-1); // As far as ghosts are concerned, these are real atoms
-                    sys_rep_parent.push_back(a);    // replicates know they have a parent
                 }
             }
         }
@@ -320,295 +309,103 @@ void simulation_system::init(vector<string> & atmtyps, vector<double> & x_in, ve
     }
     
     //////////////////////////////////////////
-    // STEP 3: Determine cell volume 
+    // STEP 3: Determine cell volume after replication.
     //////////////////////////////////////////    
-    
-    latcon_a = mag_a({hmat[0], hmat[3], hmat[6]});
-    latcon_b = mag_a({hmat[1], hmat[4], hmat[7]});
-    latcon_c = mag_a({hmat[2], hmat[5], hmat[8]});
 
-    cell_alpha = angle_ab({hmat[1], hmat[4], hmat[7]}, {hmat[2], hmat[5], hmat[8]});
-    cell_beta  = angle_ab({hmat[2], hmat[5], hmat[8]}, {hmat[0], hmat[3], hmat[6]});
-    cell_gamma = angle_ab({hmat[0], hmat[3], hmat[6]}, {hmat[1], hmat[4], hmat[7]});
-    
-    vol  = 1;
-    vol += 2*cos(cell_alpha)*cos(cell_beta )*cos(cell_gamma);
-    vol -=   cos(cell_alpha)*cos(cell_alpha);
-    vol -=   cos(cell_beta )*cos(cell_beta );
-    vol -=   cos(cell_gamma)*cos(cell_gamma);
+    vector<double> axb(3) ;
 
-    vol = latcon_a * latcon_b * latcon_c * sqrt(vol);   
+    vector<double> a_new({hmat[0], hmat[3], hmat[6]});
+    vector<double> b_new({hmat[1], hmat[4], hmat[7]});
+    vector<double> c_new({hmat[2], hmat[5], hmat[8]});
+
+    a_cross_b(a_new, b_new, axb) ;
+    vol = fabs( a_dot_b(axb, c_new) ) ;
+    
 }
-void simulation_system::reorient()
-{
-    //////////////////////////////////////////
-    //  Manipulate atoms and cell to conform with LAMMPS convention
-    //////////////////////////////////////////
-    // Assumes the cell has already been wrapped
-    // This will make linear-scaling neighbor list construction easier down the line
-    // See: https://lammps.sandia.gov/doc/Howto_triclinic.html
-    
-    // Convert to fractional coordinates from the original basis
 
-    double tmp_ax, tmp_ay, tmp_az;
-    
-    for(int i=0; i<n_atoms; i++)
-    {
-        tmp_ax = invr_hmat[0]*sys_x[i] + invr_hmat[1]*sys_y[i] + invr_hmat[2]*sys_z[i];
-        tmp_ay = invr_hmat[3]*sys_x[i] + invr_hmat[4]*sys_y[i] + invr_hmat[5]*sys_z[i];
-        tmp_az = invr_hmat[6]*sys_x[i] + invr_hmat[7]*sys_y[i] + invr_hmat[8]*sys_z[i];
-        
-        sys_x[i] = tmp_ax;
-        sys_y[i] = tmp_ay;
-        sys_z[i] = tmp_az;
-    }  
-    
-    
-    // Rotate the cell
-    
-    vector<double> tmp_cella(3);
-    vector<double> tmp_cellb(3);
-    vector<double> tmp_cellc(3);
-    vector<double> tmp_unit (3);
-    vector<double> tmp_cross(3);
-    
-    vector<double> cella_in = {hmat[0], hmat[3], hmat[6]};
-    vector<double> cellb_in = {hmat[1], hmat[4], hmat[7]};
-    vector<double> cellc_in = {hmat[2], hmat[5], hmat[8]};
-    
-    
-    unit_a   (cella_in, tmp_unit);
-    a_cross_b(tmp_unit, cellb_in, tmp_cross);
-    
-    // Determine cell vectors for the rotated system
-    
-    tmp_cella[0] = mag_a(cella_in);
-    tmp_cella[1] = 0;
-    tmp_cella[2] = 0;
-
-    tmp_cellb[0] = a_dot_b(cellb_in, tmp_unit);
-    tmp_cellb[1] = mag_a(tmp_cross);
-    tmp_cellb[2] = 0;
-
-    tmp_cellc[0] = a_dot_b(cellc_in,tmp_unit);
-    tmp_cellc[1] = (a_dot_b(cellb_in,cellc_in) - tmp_cellb[0]*tmp_cellc[0]) / tmp_cellb[1];
-    tmp_cellc[2] = sqrt( mag_a(cellc_in)*mag_a(cellc_in) -  tmp_cellc[0]*tmp_cellc[0] - tmp_cellc[1]*tmp_cellc[1]);
-            
-    // Determine the new cell h-matrix and its inverse
-
-    set_hmat({tmp_cella[0], tmp_cella[1], tmp_cella[2]}, {tmp_cellb[0], tmp_cellb[1], tmp_cellb[2]}, {tmp_cellc[0], tmp_cellc[1], tmp_cellc[2]}, hmat, invr_hmat, 0);
-
-    // Transform to the new nominally rotated cell  
-
-    for(int i=0; i<n_atoms; i++)
-    {
-        tmp_ax = sys_x[i];
-        tmp_ay = sys_y[i];
-        tmp_az = sys_z[i];
-        
-        sys_x[i] = hmat[0]*tmp_ax + hmat[1]*tmp_ay + hmat[2]*tmp_az;    
-        sys_y[i] = hmat[3]*tmp_ax + hmat[4]*tmp_ay + hmat[5]*tmp_az;
-        sys_z[i] = hmat[6]*tmp_ax + hmat[7]*tmp_ay + hmat[8]*tmp_az;
-    }   
-
-    // Determine cell extents and volume for neighbor list constructions
-     
-    latcon_a = mag_a({hmat[0], hmat[3], hmat[6]});
-    latcon_b = mag_a({hmat[1], hmat[4], hmat[7]});
-    latcon_c = mag_a({hmat[2], hmat[5], hmat[8]});
-
-    cell_alpha = angle_ab({hmat[1], hmat[4], hmat[7]}, {hmat[2], hmat[5], hmat[8]});
-    cell_beta  = angle_ab({hmat[2], hmat[5], hmat[8]}, {hmat[0], hmat[3], hmat[6]});
-    cell_gamma = angle_ab({hmat[0], hmat[3], hmat[6]}, {hmat[1], hmat[4], hmat[7]});
-
-    double cell_lx = latcon_a;
-    double xy = latcon_b * cos(cell_gamma);
-    if(abs(xy) < 1E-12)
-        xy = 0.0;
-
-    double xz = latcon_c * cos(cell_beta );
-    if(abs(xz) < 1E-12)
-        xz = 0.0;
-
-    double cell_ly = sqrt(latcon_b *latcon_b - xy*xy);
-
-    double yz = (latcon_b*latcon_c * cos(cell_alpha) -xy*xz)/cell_ly;
-    if(abs(yz) < 1E-12)
-        yz = 0.0;
-
-    double cell_lz = sqrt( latcon_c*latcon_c - xz*xz -yz*yz);
-    double tmp;
-        
-    double xlo = 0.0;
-    if (xy < xlo)
-        xlo = xy;
-    if (xz < xlo)
-        xlo = xz;
-    if(xy+xz < xlo)
-        xlo = xy+xz;
-        
-    double ylo = 0.0;
-    if (yz< ylo)
-        ylo = yz;
-    double zlo = 0.0;
-    
-    double xhi = hmat[0];
-    tmp = 0.0;
-    if (xy > tmp)
-        tmp = xy;
-    if (xz > tmp)
-        tmp = xz;
-    if (xy+xz> tmp)
-        tmp = xy+xz;
-    xhi += tmp;
-    
-    double yhi = hmat[4];
-    if(yz > 0.0)
-        yhi += yz;
-        
-    double zhi = hmat[8];
-    
-    extent_x = xhi - xlo;
-    extent_y = yhi - ylo;
-    extent_z = zhi - zlo; 
-
-
-}
 void simulation_system::build_layered_system(vector<string> & atmtyps, vector<int> & poly_orders, double max_2b_cut, double max_3b_cut, double max_4b_cut)
 {
     
-    // use smallest lattice length to determine number of ghost atom layers (n_layers)
-     
-    vector<double> latdist = {latcon_a,latcon_b,latcon_c};
+
+    double eff_length = std::max({max_2b_cut,max_3b_cut,max_4b_cut}) ;    
+
+    vector<double> cell_a({hmat[0], hmat[3], hmat[6]}) ;
+    vector<double> cell_b({hmat[1], hmat[4], hmat[7]}) ;
+    vector<double> cell_c({hmat[2], hmat[5], hmat[8]}) ;        
+
+    find_cell_nlayers(n_layers, cell_a, cell_b, cell_c, eff_length) ;
+    cell_face_distances(face_dist, n_layers, cell_a, cell_b, cell_c) ;
+
+    double image_distance = std::min({face_dist[0], face_dist[1], face_dist[2]}) ;
+
+    cout << "Calculated number of image layers = " << n_layers[0] << " " << n_layers[1] << " " << n_layers[2] << endl ;        
+    cout << "Distances between image faces = " << face_dist[0] << " " << face_dist[1] << " " << face_dist[2] << endl ;
+
     
-    double lat_min = *min_element(latdist.begin(),latdist.end());
-    
-    double eff_length = max_2b_cut*2.0;
-    
-    // n_layers is set to ensure that max 2b rcut is less than half smallest box length
-     
-    n_layers = ceil(eff_length/lat_min+1);
-    
-    double eff_lx = latcon_a * (2*n_layers + 1);
-    double eff_ly = latcon_b * (2*n_layers + 1);
-    double eff_lz = latcon_c * (2*n_layers + 1);
-    
-    if ((max_2b_cut>0.5*eff_lx)||(max_2b_cut>0.5*eff_ly)||(max_2b_cut>0.5*eff_lz))
-    {
-        cout << "ERROR: Maximum 2b cutoff is greater than half at least one box length." << endl;
-        cout << "       Increase requested n_layers." << endl;
-        cout << "       Max 2b cutoff:            " << max_2b_cut << endl;
-        cout << "       Effective cell length(x): " << eff_lx << endl;
-        cout << "       Effective cell length(y): " << eff_ly << endl;
-        cout << "       Effective cell length(z): " << eff_lz << endl;
-        cout << "       nlayers:                  " << n_layers << endl;
-        exit(0);
-    }        
     if (poly_orders[1] >0)
     {
-        if ((max_3b_cut>0.5*eff_lx)||(max_3b_cut>0.5*eff_ly)||(max_3b_cut>0.5*eff_lz))
+        if (max_3b_cut> image_distance) 
         {
             cout << "ERROR: Maximum 3b cutoff is greater than half at least one box length." << endl;
             cout << "       Increase requested n_layers." << endl;
             cout << "       Max 3b cutoff:            " << max_3b_cut << endl;
-            cout << "       Effective cell length(x): " << eff_lx << endl;
-            cout << "       Effective cell length(y): " << eff_ly << endl;
-            cout << "       Effective cell length(z): " << eff_lz << endl;
-            cout << "       nlayers:                  " << n_layers << endl;
+            cout << "       Nearest image distance = " << image_distance << endl ;            
+            cout << "       nlayers:                  " << n_layers[0] 
+                 << " " << n_layers[1] << " " << n_layers[2] << endl;
             exit(0);
         }
     }
     if (poly_orders[2] >0)
     {
-        if ((max_4b_cut>0.5*eff_lx)||(max_4b_cut>0.5*eff_ly)||(max_4b_cut>0.5*eff_lz))
+        if (max_4b_cut> image_distance) 
         {
             cout << "ERROR: Maximum 4b cutoff is greater than half at least one box length." << endl;
             cout << "       Increase requested n_layers." << endl;
+            cout << "       Nearest image distance = " << image_distance << endl ;                        
             cout << "       Max 4b cutoff:            " << max_4b_cut << endl;
-            cout << "       Effective cell length(x): " << eff_lx << endl;
-            cout << "       Effective cell length(y): " << eff_ly << endl;
-            cout << "       Effective cell length(z): " << eff_lz << endl;
-            cout << "       nlayers:                  " << n_layers << endl;
+            cout << "       nlayers:                  " << n_layers[0] 
+                 << " " << n_layers[1] << " " << n_layers[2] << endl;            
             exit(0);
         }
     }
 
-    // Build the layers. First clear out the associated vectors so you don't run into memory issues on multiple calls:
-  
-    sys_atmtyps.erase(sys_atmtyps.begin() + n_atoms, sys_atmtyps.end());
-    sys_x      .erase(sys_x      .begin() + n_atoms, sys_x      .end());
-    sys_y      .erase(sys_y      .begin() + n_atoms, sys_y      .end());
-    sys_z      .erase(sys_z      .begin() + n_atoms, sys_z      .end());
-    sys_parent .erase(sys_parent .begin() + n_atoms, sys_parent .end());
- 
+    // Build the layers
+
     double tmp_x, tmp_y, tmp_z;
 
-    for (int i=-n_layers; i<=n_layers; i++) // x
+    for (int i=-n_layers[0] ; i<=n_layers[0] ; i++) // cell_a
     {
-        for (int j=-n_layers; j<=n_layers; j++) // y
+        for (int j=-n_layers[1] ; j<=n_layers[1] ; j++) // cell_b
         {
-            for (int k=-n_layers; k<=n_layers; k++) // z
+            for (int k=-n_layers[2] ; k<=n_layers[2] ; k++) // cell_c
             {                
                 if ((i==0)&&(j==0)&&(k==0))
                     continue;
                     
                 for (int a=0; a<n_atoms; a++)
                 {
-                    n_ghost++;    
-                    
                     sys_atmtyps.push_back(atmtyps[a]);    
-                    
-                    sys_x.push_back(0.0); // Holder    
-                    sys_y.push_back(0.0);
-                    sys_z.push_back(0.0);
-                    
-                    // Transform into inverse space 
 
-                    tmp_x = invr_hmat[0]*sys_x[a] + invr_hmat[1]*sys_y[a] + invr_hmat[2]*sys_z[a];
-                    tmp_y = invr_hmat[3]*sys_x[a] + invr_hmat[4]*sys_y[a] + invr_hmat[5]*sys_z[a];
-                    tmp_z = invr_hmat[6]*sys_x[a] + invr_hmat[7]*sys_y[a] + invr_hmat[8]*sys_z[a];
-                    
-                    tmp_x += i;
-                    tmp_y += j;    
-                    tmp_z += k;
+                    // Copy atom position.
+                    sys_x.push_back(sys_x[a]); 
+                    sys_y.push_back(sys_y[a]);
+                    sys_z.push_back(sys_z[a]);
 
-                    sys_x[n_ghost-1] = hmat[0]*tmp_x + hmat[1]*tmp_y + hmat[2]*tmp_z;
-                    sys_y[n_ghost-1] = hmat[3]*tmp_x + hmat[4]*tmp_y + hmat[5]*tmp_z;
-                    sys_z[n_ghost-1] = hmat[6]*tmp_x + hmat[7]*tmp_y + hmat[8]*tmp_z;    
+                    // Increment ghost position by lattice vectors.
+                    sys_x[n_ghost] += i * cell_a[0] + j * cell_b[0] + k * cell_c[0] ;
+                    sys_y[n_ghost] += i * cell_a[1] + j * cell_b[1] + k * cell_c[1] ;
+                    sys_z[n_ghost] += i * cell_a[2] + j * cell_b[2] + k * cell_c[2] ;                                        
+                    n_ghost++;    
 
                     sys_parent.push_back(a);
-                    
-
                 }
             }
         }
     }
-    
 }
+
 void simulation_system::build_neigh_lists(vector<int> & poly_orders, vector<vector<int> > & neighlist_2b, vector<vector<int> > & neighlist_3b, vector<vector<int> > & neighlist_4b, double max_2b_cut, double max_3b_cut, double max_4b_cut)
 {
-    vector<double> maxpos(3, -1.0e100) ;
-    vector<double> minpos(3, +1.0e100) ;
-
-    // Determine limits on position of all particles.
-    for(int i=0; i<n_ghost; i++)
-    {
-        if ( sys_x[i] > maxpos[0] )
-            maxpos[0] = sys_x[i] ;
-        if ( sys_y[i] > maxpos[1] )
-            maxpos[1] = sys_y[i] ;
-        if ( sys_z[i] > maxpos[2] )
-            maxpos[2] = sys_z[i] ;
-
-        if ( sys_x[i] < minpos[0] )
-            minpos[0] = sys_x[i] ;
-        if ( sys_y[i] < minpos[1] )
-            minpos[1] = sys_y[i] ;
-        if ( sys_z[i] < minpos[2] )
-            minpos[2] = sys_z[i] ;
-
-    }
-
     // Make the 2b neighbor lists
     
     neighlist_2b.resize(n_ghost);
@@ -622,113 +419,29 @@ void simulation_system::build_neigh_lists(vector<int> & poly_orders, vector<vect
     // Determine search distances
 
     double search_dist = max_2b_cut;
-    
+    bool no_bins = false ;  // Do not use binned neighbor algorithm ?
+     
     if (max_3b_cut > search_dist)
         search_dist = max_3b_cut;
     if (max_4b_cut > search_dist)
         search_dist = max_4b_cut;    
     
     // Prepare bins
-
-    int nbins_x = ceil((maxpos[0]-minpos[0])/search_dist) ;
-    int nbins_y = ceil((maxpos[1]-minpos[1])/search_dist) ;
-    int nbins_z = ceil((maxpos[2]-minpos[2])/search_dist) ;
-    if ( (nbins_x < 3) || (nbins_y < 3) || (nbins_z < 3) )
-    {
-       cout << "Error: require at least 3 neighbor bins in all directions.\n" ;
-       cout << "The number of layers is not correct\n" ;
-    }
     
-    int total_bins = nbins_x * nbins_y * nbins_z;
-    
-    vector<vector<int> > bin(total_bins);
-
-    for (int i=0; i<total_bins; i++) 
-        vector<int>().swap(bin[i]);
-    
-    int bin_x_idx, bin_y_idx, bin_z_idx, ibin;
-
-    // Populate bins    
-
-    for(int i=0; i<n_ghost; i++)
-    {
-        bin_x_idx = floor( (sys_x[i] - minpos[0] ) / search_dist );
-        bin_y_idx = floor( (sys_y[i] - minpos[1] ) / search_dist );
-        bin_z_idx = floor( (sys_z[i] - minpos[2] ) / search_dist );
-        
-        if ( bin_x_idx < 0 || bin_y_idx < 0 || bin_z_idx < 0 ) 
-        {
-            cout << "ERROR: Negative bin computed" << endl; // Check .xyz box lengths  and atom coords
-            exit(0);
-        }
-        
-        // Calculate bin BIN_IDX of the atom.
-        int ibin = bin_x_idx + bin_y_idx * nbins_x + bin_z_idx * nbins_x* nbins_y;
-        
-        if ( ibin >= total_bins ) 
-        {
-            cout << "Error: ibin out of range\n";
-            cout << ibin << " " << total_bins << endl;
-            exit(1);
-        }
-
-        // Push the atom into the bin 
-        bin[ibin].push_back(i);
-        
-    }
 
     // Generate neighbor lists on basis of bins
-    
-    for(int ai=0; ai<n_atoms; ai++)
+    if ( no_bins )
     {
-        bin_x_idx = floor( (sys_x[ai] - minpos[0]) / search_dist ) ;
-        bin_y_idx = floor( (sys_y[ai] - minpos[1]) / search_dist ) ;
-        bin_z_idx = floor( (sys_z[ai] - minpos[2]) / search_dist ) ;
+        // Simple order N^2 algorithm for testing.
+        neighlist_no_bins(neighlist_2b, search_dist) ;
 
-        if ( bin_x_idx < 1 || bin_y_idx < 1 || bin_z_idx < 1 ) 
-        {
-            cout << "ERROR: Bad bin computed" << endl; // Check .xyz box lengths  and atom coords
-            cout << bin_x_idx << " " << bin_y_idx << " " << bin_z_idx << endl;
-            cout << sys_x[ai] << " " << sys_y[ai] << " " << sys_z[ai] << endl;
-            exit(0);
-        }
+    }
+    else
+    {
+        // Populate bins    
+        neighlist_bins(neighlist_2b, search_dist) ;
 
-        // Loop over relevant bins only, not all atoms.
-        
-        int ibin, aj, ajj, ajend;
-        
-        for (int i=bin_x_idx-1; i<= bin_x_idx+1; i++)    //BIN_IDX_a1.X 
-        {
-            for (int j=bin_y_idx-1; j<=bin_y_idx+1; j++ ) //BIN_IDX_a1.Y
-            {
-                for (int k=bin_z_idx-1; k<=bin_z_idx+1; k++ ) // BIN_IDX_a1.Z
-                {
-                    ibin = i + j * nbins_x + k * nbins_x * nbins_y;
-
-                    if (ibin >= total_bins) 
-                    {
-                        cout << "Error: binning BIN_IDX out of range\n";
-                        cout << "BIN_IDX.X = " << i << "BIN_IDX.Y = " << j << "BIN_IDX.Z = " << k << endl;
-                        exit(1);
-                    }
-
-                    ajend = bin[ibin].size();
-                    
-                    for (int aj=0; aj<ajend; aj++) 
-                    {
-                        ajj = bin[ibin][aj];
-
-                        if ( ajj == ai ) 
-                            continue;
-
-                        if ( ai <= sys_parent[ajj]) 
-                            if (get_dist(ai,ajj) < search_dist )
-                                neighlist_2b[ai].push_back(ajj);        
-                    }
-                }
-            }
-        }
-    }    
+    }
 
     if ((poly_orders[1] == 0)&&(poly_orders[2]==0))
         return;    
@@ -866,21 +579,23 @@ void simulation_system::build_neigh_lists(vector<int> & poly_orders, vector<vect
 void simulation_system::run_checks(const vector<double>& max_cuts, vector<int>&poly_orders)
 {
     // Sanity check 1: Are the cell vectors long enough?
+    const double eps = 1.0e-12 ;
     
     for(int i=0;i<max_cuts.size(); i++)
     {
-        if ( 
-            (max_cuts[i] > 2*latcon_a * (2*n_layers + 1)) || 
-            (max_cuts[i] > 2*latcon_b * (2*n_layers + 1)) ||
-            (max_cuts[i] > 2*latcon_c * (2*n_layers + 1))
-            )
+        if (
+            // The non-ghost simulation cell is replicated so that it is at least 1 cutoff wide in all directions.
+            // That non-ghost cell needs to be layered at least once in all directions, so you get 3 * cutoff as the limit.
+            3.0 * max_cuts[i] > face_dist[0] * (1.0 + eps) || 
+            3.0 * max_cuts[i] > face_dist[1] * (1.0 + eps) ||
+            3.0 * max_cuts[i] > face_dist[2] * (1.0 + eps) )
         {
-            cout << "ERROR: Layered system is smaller than 2x the model " << i+2 <<"-body maximum outer cutoff." << endl;
+            cout << "ERROR: Layered system is smaller than 3x the model " << i+2 <<"-body maximum outer cutoff." << endl;
             cout << "Please report this error to the developers." << endl;
             cout << "Model maximum cutoff: " << max_cuts[i] << endl;
-            cout << "Layered system lattice constant (a): " << latcon_a * (2*n_layers + 1) << endl;
-            cout << "Layered system lattice constant (b): " << latcon_b * (2*n_layers + 1) << endl;
-            cout << "Layered system lattice constant (c): " << latcon_c * (2*n_layers + 1) << endl;
+            cout << "Layered system face distance (a): " << face_dist[0] << endl;
+            cout << "Layered system face distance (b): " << face_dist[1] << endl;
+            cout << "Layered system face distance (c): " << face_dist[2] << endl;  
             exit(0);
             
         }
@@ -916,18 +631,6 @@ serial_chimes_interface::serial_chimes_interface(bool small)
     // Initialize Pointers, etc for chimes calculator interfacing (2-body only for now)
     // To set up for many body calculations, see the LAMMPS implementation
 
-    dist_3b.resize(3);
-    dist_4b.resize(6);
-    
-    dr   .resize(3);
-    dr_3b.resize(3*3) ;
-    dr_4b.resize(6*3);
-    
-    force_ptr_2b.resize(2,std::vector<double*>(3));
-    
-    typ_idxs_2b.resize(2);
-    typ_idxs_3b.resize(3);
-    typ_idxs_4b.resize(4);
     
     max_2b_cut = 0.0;
     max_3b_cut = 0.0;
@@ -950,15 +653,26 @@ void serial_chimes_interface::init_chimesFF(string chimesFF_paramfile, int rank)
 
 void serial_chimes_interface::build_neigh_lists(vector<string> & atmtyps, vector<double> & x_in, vector<double> & y_in, vector<double> & z_in, vector<double> & cella_in, vector<double> & cellb_in, vector<double> & cellc_in)
 {
-    neigh.init(atmtyps, x_in, y_in, z_in, cella_in, cellb_in, cellc_in, max_cutoff_2B(true), allow_replication);
-    neigh.reorient();
-    neigh.build_layered_system(atmtyps, poly_orders, max_cutoff_2B(true), max_cutoff_3B(true), max_cutoff_4B(true));
-    neigh.set_atomtyp_indices(type_list);
-    neigh.build_neigh_lists(poly_orders, neighlist_2b, neighlist_3b, neighlist_4b, max_cutoff_2B(true), max_cutoff_3B(true), max_cutoff_4B(true));
+    sys.build_neigh_lists(poly_orders, neighlist_2b, neighlist_3b, neighlist_4b, max_cutoff_2B(true), max_cutoff_3B(true), max_cutoff_4B(true));
 }
 
 void serial_chimes_interface::calculate(vector<double> & x_in, vector<double> & y_in, vector<double> & z_in, vector<double> & cella_in, vector<double> & cellb_in, vector<double> & cellc_in, vector<string> & atmtyps, double & energy, vector<vector<double> > & force, vector<double> & stress)
-{   
+{
+    // Pointers, etc for chimes calculator interfacing (2-body only for now)
+    // To set up for many body calculations, see the LAMMPS implementation
+        
+    double                     dist;
+    vector        <double>     dist_3b(3) ;
+    vector        <double>     dist_4b(6);
+        
+    vector        <double>     dr(3) ;
+    vector        <double>     dr_3b(3*3) ;
+    vector        <double>     dr_4b(6*3) ;
+        
+    vector<int>                typ_idxs_2b(2) ;
+    vector<int>                typ_idxs_3b(3) ;
+    vector<int>                typ_idxs_4b(4) ;
+
     // Read system, set up lattice constants/hmats
 
     // Determine the max outer cutoff (MUST be 2-body, based on ChIMES logic)
@@ -988,6 +702,9 @@ void serial_chimes_interface::calculate(vector<double> & x_in, vector<double> & 
     vector<double> force_4b(4*CHDIM) ;
     vector<double> force_3b(3*CHDIM) ;
     vector<double> force_2b(2*CHDIM) ;
+
+    vector<double> force_all(sys.n_atoms*CHDIM, 0.0) ;  
+    
     chimes2BTmp chimes_2btmp(poly_orders[0]) ;
     chimes3BTmp chimes_3btmp(poly_orders[1]) ;
     chimes4BTmp chimes_4btmp(poly_orders[2]) ;      
@@ -1017,8 +734,8 @@ void serial_chimes_interface::calculate(vector<double> & x_in, vector<double> & 
 
             for (int idx=0; idx<3; idx++)
             {
-                force[sys.sys_rep_parent[i]][idx]                  += force_2b[0*CHDIM+idx] ;
-                force[sys.sys_rep_parent[sys.sys_parent[jj]]][idx] += force_2b[1*CHDIM+idx] ;     
+                force_all[i*CHDIM+idx]               += force_2b[0*CHDIM+idx] ;
+                force_all[sys.sys_parent[jj]*CHDIM+idx]  += force_2b[1*CHDIM+idx] ;     
             }
         }
     }
@@ -1051,9 +768,9 @@ void serial_chimes_interface::calculate(vector<double> & x_in, vector<double> & 
             compute_3B(dist_3b, dr_3b, typ_idxs_3b, force_3b, stress_chimes, energy, chimes_3btmp);
 
             for (int idx=0; idx<3; idx++) {
-                force[sys.sys_rep_parent[sys.sys_parent[ii]]][idx] += force_3b[0*CHDIM+idx] ;
-                force[sys.sys_rep_parent[sys.sys_parent[jj]]][idx] += force_3b[1*CHDIM+idx] ;
-                force[sys.sys_rep_parent[sys.sys_parent[kk]]][idx] += force_3b[2*CHDIM+idx] ;
+                force_all[sys.sys_parent[ii]*CHDIM+idx] += force_3b[0*CHDIM+idx] ;
+                force_all[sys.sys_parent[jj]*CHDIM+idx] += force_3b[1*CHDIM+idx] ;
+                force_all[sys.sys_parent[kk]*CHDIM+idx] += force_3b[2*CHDIM+idx] ;
             }
         }
     }
@@ -1092,18 +809,31 @@ void serial_chimes_interface::calculate(vector<double> & x_in, vector<double> & 
 
             for (int idx=0; idx<3; idx++)
             {
-                force[sys.sys_rep_parent[sys.sys_parent[ii]]][idx] += force_4b[0*CHDIM+idx] ;
-                force[sys.sys_rep_parent[sys.sys_parent[jj]]][idx] += force_4b[1*CHDIM+idx] ;
-                force[sys.sys_rep_parent[sys.sys_parent[kk]]][idx] += force_4b[2*CHDIM+idx] ;
-                force[sys.sys_rep_parent[sys.sys_parent[ll]]][idx] += force_4b[3*CHDIM+idx] ;
+                force_all[sys.sys_parent[ii]*CHDIM+idx] += force_4b[0*CHDIM+idx] ;
+                force_all[sys.sys_parent[jj]*CHDIM+idx] += force_4b[1*CHDIM+idx] ;
+                force_all[sys.sys_parent[kk]*CHDIM+idx] += force_4b[2*CHDIM+idx] ;
+                force_all[sys.sys_parent[ll]*CHDIM+idx] += force_4b[3*CHDIM+idx] ;
             }    
         }    
     }
 
     // Correct for use of replicates, if applicable
+
+    if ( sys.max_replicates > 0 )
+    {
+        double rep_scale = 1.0 ;
+        for ( int i = 0 ; i < 3 ; i++ )
+        {
+            rep_scale *= sys.n_replicates[i] + 1.0 ;
+        }
+        energy /= rep_scale ;
+    }
+
+    for ( int ii = 0 ; ii < sys.n_non_repl ; ii++)
+        for (int idx = 0 ; idx < CHDIM ; idx++)            
+            force[ii][idx] = force_all[CHDIM * ii + idx] ;
+
     
-    energy /= pow(sys.n_replicates+1.0,3.0);
-   
     ////////////////////////
     // Finish pressure calculation
     ////////////////////////
@@ -1123,11 +853,255 @@ void serial_chimes_interface::calculate(vector<double> & x_in, vector<double> & 
         stress[idx] /= sys.vol;  
 }
 
+double simulation_system::nearest_image(int layer)
+// Returns the distance to the nearest image of an atom (does not depend on atom position in cell)
+// belonging to a particular ghost particle layer number.
+{
+    vector<double> cell_a(3), cell_b(3), cell_c(3) ;
+    vector<double> displacement(3) ;
+    const double eps = 1.0e-12 ;
+    
+    cell_a[0] = hmat[0] ; cell_a[1] = hmat[3] ; cell_a[2] = hmat[6] ;
+    cell_b[0] = hmat[1] ; cell_b[1] = hmat[4] ; cell_b[2] = hmat[7] ;
+    cell_c[0] = hmat[2] ; cell_c[1] = hmat[5] ; cell_c[2] = hmat[8] ;
+
+    if ( fabs(a_dot_b(cell_a, cell_b)) < eps &&
+         fabs(a_dot_b(cell_a, cell_c)) < eps &&
+         fabs(a_dot_b(cell_b, cell_c)) < eps ) {
+        // Orthorhombic cell.  Use mag_a to allow for arbitrary orientation of cell vectors.
+        return( layer * std::min({mag_a(cell_a), mag_a(cell_b), mag_a(cell_c)} ) ) ;
+    }
+
+    // Non-orthorhombic cell 
+    double min_d = 1.0e100 ;
+    
+    for ( int i = -layer ; i <= layer ; i++ ) {
+        for ( int j = -layer ; j <= layer ; j++ ) {
+            for ( int k = -layer ; k <= layer ; k++ ) {
+                // This restricts us to a specific layer, ignoring the interior layers.
+                if ( i != layer && j != layer && k != layer )
+                    continue ;
+
+                double distance = 0.0 ;
+                for ( int l = 0 ; l < 3 ; l++ ) {
+                    displacement[l] = i * cell_a[l] + j * cell_b[l] + k * cell_c[l] ;
+                    distance += displacement[l] * displacement[l] ;
+                }
+                if ( distance < min_d ) 
+                    min_d = distance ;
+            }
+        }
+    }
+    return sqrt(min_d) ;
+}
+
+void simulation_system::neighlist_no_bins(vector<vector<int>> &neighlist_2b, double search_dist)
+// Simple order N^2 algorithm for neighbor list generation.  Use for testing purposes.
+{
+            
+    for(int ai=0; ai<n_atoms; ai++) {
+        for ( int aj = 0 ; aj < n_ghost ; aj++ ) {
+            if ( ai != aj && ai <= sys_parent[aj] && get_dist(ai, aj) < search_dist )
+                neighlist_2b[ai].push_back(aj) ;
+        }
+    }
+}
+
+void simulation_system::neighlist_bins(vector<vector<int>> &neighlist_2b, double search_dist)
+// Fast order N algorithm for neighbor list generation.  This uses a cartesian binning
+// grid that does not necessarily align with cell boundaries.  There is no need for
+// alignment when using the explicit image convention.
+{
+
+    vector<double> maxpos(3, -1.0e100) ;
+    vector<double> minpos(3, +1.0e100) ;
 
 
+    // Determine limits on position of all particles.
+    for(int i=0; i<n_ghost; i++)
+    {
+        if ( sys_x[i] > maxpos[0] ) 
+            maxpos[0] = sys_x[i] ;
+        if ( sys_y[i] > maxpos[1] ) 
+            maxpos[1] = sys_y[i] ;
+        if ( sys_z[i] > maxpos[2] )
+            maxpos[2] = sys_z[i] ;
+
+        if ( sys_x[i] < minpos[0] ) 
+            minpos[0] = sys_x[i] ;
+        if ( sys_y[i] < minpos[1] ) 
+            minpos[1] = sys_y[i] ;
+        if ( sys_z[i] < minpos[2] )
+            minpos[2] = sys_z[i] ;
+        
+    }
+
+    // Determine the appropriate number of bins.
+    vector<int> nbins(3) ;
+
+    for ( int i = 0 ; i < 3 ; i++ )
+    {
+        nbins[i] = ceil((maxpos[i]-minpos[i]) / search_dist) ;
+        if ( nbins[i] < 3 )
+        {
+            cout << "Error: require at least 3 neighbor bins in all directions.\n" ;
+            cout << "The number of layers is not correct\n" ;
+        }
+    }
+    
+    int total_bins = nbins[0] * nbins[1] * nbins[2] ;
+    vector<vector<int> > bin(total_bins);
+
+    vector<int> bin_idx(3) ;
+
+    // Put every atom into a bin.
+    for ( int i = 0 ; i < n_ghost ; i++ )
+    {
+        
+        bin_idx[0] = floor( (sys_x[i] - minpos[0]) / search_dist ) ;
+        bin_idx[1] = floor( (sys_y[i] - minpos[1]) / search_dist ) ;
+        bin_idx[2] = floor( (sys_z[i] - minpos[2]) / search_dist ) ;
+    
+        for ( int j = 0 ; j < 3 ; j++ )
+        {
+            if ( bin_idx[j] < 0 ) 
+            {
+                cout << "ERROR: Negative bin computed = " << j << " " << bin_idx[j] << endl; // Check .xyz box lengths  and atom coords
+                exit(0);
+            }
+            if ( bin_idx[j] >= nbins[j] )
+            {
+                cout << "ERROR: Bin index overflow" << j << " " << bin_idx[j] << endl; // Check .xyz box lengths  and atom coords
+                exit(0);
+            }   
+        }
+        
+        // Calculate bin BIN_IDX of the atom.
+        int ibin = bin_idx[0] + bin_idx[1] * nbins[0] + bin_idx[2] * nbins[0]* nbins[1];
+        
+        if ( ibin >= total_bins || ibin < 0 ) 
+        {
+            cout << "Error: ibin out of range\n";
+            cout << ibin << " " << total_bins << endl;
+            exit(1);
+        }
+
+        // Push the atom into the bin 
+        bin[ibin].push_back(i);
+        
+    }
+
+    // Calculate neighbors of non-ghost atoms only.  Non-ghost atoms can have ghost neighbors.
+    for(int ai=0; ai<n_atoms; ai++)
+    {
+        bin_idx[0] = floor( (sys_x[ai] - minpos[0]) / search_dist ) ;
+        bin_idx[1] = floor( (sys_y[ai] - minpos[1]) / search_dist ) ;
+        bin_idx[2] = floor( (sys_z[ai] - minpos[2]) / search_dist ) ;        
+
+        for ( int j = 0 ; j < 3 ; j++ )
+        {
+            if ( bin_idx[j] < 1 && bin_idx[j] >= nbins[j] - 1 ) 
+            {
+                cout << "Error: Bad bin for non-ghost atom computed" << endl; // Check .xyz box lengths  and atom coords
+                cout << bin_idx[0] << " " << bin_idx[1] << " " << bin_idx[2] << endl;
+                cout << sys_x[ai] << " " << sys_y[ai] << " " << sys_z[ai] << endl;
+                exit(0);
+            }
+        }
+        
+
+        // Loop over relevant bins only to find neighbors, not all atoms.
+        int ibin, aj, ajj, ajend;
+        
+        for (int i=bin_idx[0]-1; i<= bin_idx[0]+1; i++)    
+        {
+            for (int j=bin_idx[1]-1; j<=bin_idx[1]+1; j++ ) 
+            {
+                for (int k=bin_idx[2]-1; k<=bin_idx[2]+1; k++ ) 
+                {
+                    ibin = i + j * nbins[0] + k * nbins[0] * nbins[1] ;
+
+                    if (ibin >= total_bins || ibin < 0 ) 
+                    {
+                        cout << "Error: atom bin out of range\n";
+                        cout << "ibin = " << ibin << endl ;
+                        cout << "bin_idx[0] = " << i << "bin_idx[1] = " << j << "bin_idx[2] = " << k << endl;
+                        exit(1);
+                    }
+
+                    ajend = bin[ibin].size();
+                    
+                    for (int aj=0; aj<ajend; aj++) 
+                    {
+                        ajj = bin[ibin][aj];
+
+                        if ( ajj == ai ) 
+                            continue;
+
+                        if ( ai <= sys_parent[ajj]) 
+                            if (get_dist(ai,ajj) < search_dist )
+                                neighlist_2b[ai].push_back(ajj);        
+                    }
+                }
+            }
+        }
+    }
+}
+
+void simulation_system::find_cell_nlayers(vector<int> & layers, const vector<double> &cell_a, const vector<double> &cell_b,
+                                          const vector<double> &cell_c, double cutoff_length)
+// Find the required number of layers based on the distances between the cell faces.
+{
+    // layers = 0 for primitive simulation cell.
+    for ( int i = 0 ; i < 3 ; i++ ) {
+        layers[i] = 0 ;
+    }
+    vector<double> w(3) ;
+
+    cell_face_distances(w, layers, cell_a, cell_b, cell_c) ;
+
+    // 3 * cutoff < w[j] * (1 + 2 * nlayers[j])
+    for ( int j = 0 ; j < 3 ; j++ ) 
+        layers[j] = std::max(ceil( (1.5 * cutoff_length / w[j]) - 0.5 ),1.0) ;
+}
 
 
+void simulation_system::cell_face_distances(vector<double> &w, const vector<int> layers,
+                                            const vector<double> &a, const vector<double> &b, const vector<double> &c)
+// Calculate the perpendicular distances between cell faces, which are stored in w, given that the
+// cell vectors a, b, c are replicated by the given number of layers.
+{
+    vector<double> acell(3) ;
+    vector<double> bcell(3) ;
+    vector<double> ccell(3) ;
 
+    // Vector cross products.
+    vector<double> axb(3) ;
+    vector<double> cxa(3) ;
+    vector<double> bxc(3) ;
+    
+    const double eps = 1.0e-12 ;
 
+    // Get simulation cell vectors.
+    for ( int j = 0 ; j < 3 ; j++ )
+    {
+        acell[j] = a[j] * (2.0*layers[0] + 1.0) ;
+        bcell[j] = b[j] * (2.0*layers[1] + 1.0) ;
+        ccell[j] = c[j] * (2.0*layers[2] + 1.0) ;
+    }
+
+    a_cross_b(acell, bcell, axb) ;
+    a_cross_b(ccell, acell, cxa) ;
+    a_cross_b(bcell, ccell, bxc) ;    
+
+    if ( mag_a(bxc) < eps || mag_a(cxa) < eps || mag_a(bxc) < eps ) {
+        cout << "Error: cell vectors were degenerate\n" ;
+        exit(0) ;
+    }
+    
+    w[0] = fabs( a_dot_b(acell, bxc) / mag_a(bxc) )  ;
+    w[1] = fabs( a_dot_b(bcell, cxa) / mag_a(cxa) ) ;
+    w[2] = fabs( a_dot_b(ccell, axb) / mag_a(axb) ) ;
+}
 
 

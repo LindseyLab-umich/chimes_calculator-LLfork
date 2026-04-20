@@ -4,7 +4,7 @@
 ! Contributing Author: Bálint Aradi (2021)
 
 program test_F08_api
-  use chimescalc_serial08, only : ChimesCalc, ChimesCalc_init
+  use chimes_serial08, only : ChimesCalc, ChimesCalc_init
   implicit none
 
   integer, parameter :: dp = kind(1.0d0)
@@ -36,7 +36,7 @@ program test_F08_api
     print*,"Exiting code.\n"
     STOP
   endif
-
+      
   if (io_num .eq. 3) then
     call GET_COMMAND_ARGUMENT(3, wq_char)
     read(wq_char,*,iostat=stat)  small
@@ -70,7 +70,7 @@ program test_F08_api
   call chimes%calculate(coords, latvecs, energy, forces, stress)
 
   print *, "Success!"
-  print '(A,1X, F0.6)', "Energy (kcal/mol):", energy
+  print '(A,1X, F0.6)', "Energy (kcal/mol)", energy
   print *, "Stress tensors (GPa)"
   print '(A,1X, F15.6)', "s_xx: ", stress(1, 1) * GPa
   print '(A,1X, F15.6)', "s_yy: ", stress(2, 2) * GPa
@@ -78,7 +78,7 @@ program test_F08_api
   print '(A,1X, F15.6)', "s_xy: ", stress(1, 2) * GPa
   print '(A,1X, F15.6)', "s_xz: ", stress(1, 3) * GPa
   print '(A,1X, F15.6)', "s_yz: ", stress(2, 3) * GPa
-  print *, "Forces (kcal/mol/A)"
+  print *, "Forces (kcal/mol)"
   print '(F15.6)', forces
 
 #if DEBUG==1

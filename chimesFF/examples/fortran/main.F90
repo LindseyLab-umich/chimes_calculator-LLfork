@@ -3,7 +3,7 @@
 ! Contributing Author:  Nir Goldman (2020) 
 
       program test_F_api
-      use chimescalc
+      use wrapper
       use, intrinsic :: ISO_C_binding
       implicit none
       integer io_num
@@ -80,8 +80,6 @@
       call f_init_chimes(rank)
       c_file = string2Cstring(param_file)
       call  f_chimes_read_params(c_file)
-      call  f_chimes_build_pair_int_trip_map()
-      call  f_chimes_build_pair_int_quad_map()
       order2b=f_get_chimes_2b_order();
       order3b=f_get_chimes_3b_order();
       order4b=f_get_chimes_4b_order();

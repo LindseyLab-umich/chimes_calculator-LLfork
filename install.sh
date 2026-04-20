@@ -1,71 +1,26 @@
 #!/bin/bash
 
 # Builds all relevant chimes_calculator executables/library files 
-#
-# If working on a machine with a corresponding .mod file in the modfiles folder
-# (e.g., modfiles/LLNL-LC.mod), execute with, e.g.:
-#
-#   export hosttype=LLNL-LC; ./install.sh
-# 
-# Otherwise, load necessary modules manually and execute with 
-# 
+# Run with:
 # ./install.sh 
-# 
-# Note that additional arguments can be specified, i.e.:
-#
-#   ./install.sh <debug option (0 or 1)> <install prefix (full path)>
+# or
+# ./install.sh <debug option (0 or 1)> <install prefix (full path)>  <LLNL computer (0 or 1)> <VERBOSE 0 or 1>
 
 # Verbose is required for testing.
 
-BUILD=`pwd`/build
 DEBUG=${1-0}  # False (0) by default.
-PREFX=${2-$BUILD} # Empty by default
+PREFX=${2-""} # Empty by default
+LLNL=${3-0}
 VERBOSE=${4-0}
+
+echo "DEBUG=$DEBUG"
+echo "PREFIX=$PREFX"
+echo "LLNL=$LLNL"
+echo "VERBOSE=$VERBOSE"
 
 # Clean up previous installation, 
 
 ./uninstall.sh $PREFX
-
-# Load modules based on user-specified host-type
-
-if [ -z "$hosttype" ] ; then
-    echo ""
-    echo "WARNING: No hosttype specified"
-    echo "Be sure to load modules/configure compilers by hand before running this script!"
-    echo ""
-elif [[ "$hosttype" == "LLNL-LC" ]] ; then
-    source modfiles/LLNL-LC.mod
-    ICC=`which icc`
-	IFORT=`which ifort`
-	my_flags="$my_flags -DCMAKE_CXX_COMPILER=${ICC} -DCMAKE_Fortran_COMPILER=${IFORT} -DCMAKE_C_COMPILER=${ICC}"
-	my_flags="$my_flags -DCMAKE_CXX_FLAGS_RELEASE=\"-O3 -fno-alias -fno-fnalias -xhost\""
-    
-elif [[ "$hosttype" == "UM-ARC" ]] ; then
-    source modfiles/UM-ARC.mod
-elif [[ "$hosttype" == "JHU-ARCH" ]] ; then
-    source modfiles/JHU-ARCH.mod
-    ICC=`which icc`
-    MPI=`which mpicxx`   
-elif [[ "$hosttype" == "UT-TACC" ]] ; then
-    source modfiles/UT-TACC.mod	
-else
-    echo ""
-    echo "ERROR: Unknown hosttype ($hosttype) specified"
-    echo ""
-
-    echo "Valid options are:"
-    for i in `ls modfiles`; do echo "   ${i%.mod}"; done
-    echo ""
-    echo "Please run again with: export hosttype=<host type>; ./install.sh"
-    echo "Or manually load modules and run with: ./install.sh"
-    exit 0
-fi
-
-echo "Detected hosttype: $hosttype"
-if [ ! -z "$hasmod" ] ; then
-    module list
-fi
-
 
 # Move into build directory 
 
@@ -76,6 +31,34 @@ if [[ $VERBOSE -eq 1 ]] ; then
     my_flags="-DVERBOSE=1"
 else
     my_flags="-DVERBOSE=0"
+fi    
+
+# Generate cmake flags
+#
+# CMAKE is broken for fortran builds with Intel compilers.
+# Uncomment to use intel compilers for C and C++ interfaces.
+#
+if [[ $LLNL -eq 1 ]] ; then
+    if [[ "$SYS_TYPE" == "toss_3_x86_64_ib" ]] ; then
+	# Try newest intel compiler for best performance.
+	module load cmake/3.14.5
+	module load intel/2021.3
+	ICC=`which icc`
+	IFORT=`which ifort`
+	my_flags="$my_flags -DCMAKE_CXX_COMPILER=${ICC} -DCMAKE_Fortran_COMPILER=${IFORT} -DCMAKE_C_COMPILER=${ICC}"
+	my_flags="$my_flags -DCMAKE_CXX_FLAGS_RELEASE=\"-O3 -fno-alias -fno-fnalias -xhost\""
+    elif [[ "$SYS_TYPE" == "toss_4_x86_64_ib" ]] ; then
+	module load cmake/3.14.5
+	module load intel-classic/19.1.2
+	ICC=`which icc`
+	IFORT=`which ifort`
+	my_flags="$my_flags -DCMAKE_CXX_COMPILER=${ICC} -DCMAKE_Fortran_COMPILER=${IFORT} -DCMAKE_C_COMPILER=${ICC}"
+	my_flags="$my_flags -DCMAKE_CXX_FLAGS_RELEASE=\"-O3 -fno-alias -fno-fnalias -xhost\""
+    else	
+	echo "Unknown LLNL operating system type: $SYS_TYPE"
+    fi
+else
+    echo "Compiling for a non-LLNL computer system"
 fi    
 
 if [ ! -z $PREFX ] ; then
@@ -91,6 +74,7 @@ fi
 
 # Setup, make and install
 
+echo "Invoking cmake $my_flags"
 cmake $my_flags ..
 make
 if [ ! -z $PREFX ] ; then

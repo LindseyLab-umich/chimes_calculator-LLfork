@@ -23,15 +23,15 @@ serial_chimes_interface.o : $(SERIAL_SRC)
 	$(CXX) -c $(SERIAL_SRC) -I $(SERIAL_LOC) -I $(CHIMESFF_LOC) 
 
 WRAPPER_LOC=$(C_LOC)/../../api
-WRAPPER_SRC=$(WRAPPER_LOC)/chimescalc_serial_C.cpp
-WRAPPER_HDR=$(WRAPPER_LOC)/chimescalc_serial_C.h
+WRAPPER_SRC=$(WRAPPER_LOC)/wrapper-C.cpp
+WRAPPER_HDR=$(WRAPPER_LOC)/wrapper-h.cpp
 
-chimescalc_serial_C.o : $(WRAPPER_SRC)
+wrapper-C.o : $(WRAPPER_SRC) 
 	$(CXX) -c $(WRAPPER_SRC) -I $(WRAPPER_LOC) -I $(SERIAL_LOC) -I $(CHIMESFF_LOC)	
 	
 	
-chimescalc_serial_C.so:
-	$(CXX) -shared -o libchimescalc-serial_dl.so chimescalc_serial_C.o serial_chimes_interface.o chimesFF.o
+wrapper-C.so: 	
+	$(CXX) -shared -o lib-C_wrapper-serial_interface.so wrapper-C.o serial_chimes_interface.o chimesFF.o	
 	
 clean:
 	rm -f *.o
@@ -44,6 +44,6 @@ clean-all:
 all:
 	make chimesFF.o
 	make serial_chimes_interface.o
-	make chimescalc_serial_C.o
-	make chimescalc_serial_C.so
+	make wrapper-C.o
+	make wrapper-C.so
 	make clean

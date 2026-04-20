@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
-#include "chimescalc_serial_C.h"
+#include "wrapper-C.h"
 
 int main (int argc, char **argv) 
 {
@@ -56,14 +56,14 @@ int main (int argc, char **argv)
     atom[i] = atom_types[i];
   }
   fclose(fconf);
-  set_chimes_serial(small);
+  set_chimes(small);
   
   printf("Read args:\n");
-  for (i=1; i<argc; i++)
+  for ( i=1; i<argc; i++)
 	  printf("%i %s\n",i, argv[i]);
 
   int rank = 0;
-  init_chimes_serial(argv[1],&rank);
+  init_chimes(argv[1],&rank);
   
   calculate_chimes(natom, xc, yc, zc, atom, ca, cb, cc, &energy, fx, fy, fz, stress);
   for (i = 0; i < 9; i++) {
@@ -83,8 +83,9 @@ int main (int argc, char **argv)
   for (i = 0; i <natom; i++)
   	printf("\t%f\t%f\t%f\n", fx[i], fy[i], fz[i]);
   printf("\n");
-  
-  #if DEBUG==1
+
+
+#if VERBOSE==1
   
   FILE *fout;
   fout = fopen("debug.dat","w");
@@ -97,10 +98,9 @@ int main (int argc, char **argv)
   fprintf(fout,"%0.6f\n", stress[5]);
   
   for (i = 0; i <natom; i++)
-  	fprintf(fout,"%0.6f\n%0.6e\n%0.6e\n", fx[i], fy[i],fz[i]);
+  	fprintf(fout,"%0.6f\n%0.6f\n%0.6f\n", fx[i], fy[i],fz[i]);
   fclose(fout);
   
-  
-  #endif
+#endif // VERBOSE
 
 }
