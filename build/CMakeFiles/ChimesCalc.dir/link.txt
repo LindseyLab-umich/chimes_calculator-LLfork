@@ -1,0 +1,1 @@
+/opt/apps/gcc/13.2.0/bin/c++ -fPIC  -O3 -funroll-all-loops -shared -Wl,-soname,libchimescalc.so -o libchimescalc.so CMakeFiles/ChimesCalc.dir/chimesFF/src/chimesFF.cpp.o CMakeFiles/ChimesCalc.dir/chimesFF/api/chimescalc_C.cpp.o CMakeFiles/ChimesCalc.dir/serial_interface/src/serial_chimes_interface.cpp.o CMakeFiles/ChimesCalc.dir/serial_interface/api/chimescalc_serial_C.cpp.o 

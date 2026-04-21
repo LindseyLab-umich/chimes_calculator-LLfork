@@ -1,0 +1,5 @@
+# The fortran modules provided by this target.
+provides
+ chimescalc.mod
+ chimescalc_serial.mod
+ chimescalc_serial08.mod

@@ -1,0 +1,15 @@
+/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/lib64/libchimescalc.so
+/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/include/chimescalc/chimesFF.h
+/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/include/chimescalc/chimescalc_C.h
+/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/include/chimescalc/serial_chimes_interface.h
+/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/include/chimescalc/chimescalc_serial_C.h
+/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/bin/chimescalc
+/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/lib64/libchimescalc_dl.so
+/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/lib64/libchimescalc_fortran.so
+/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/include/chimescalc/modfiles/chimescalc_serial08.mod
+/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/include/chimescalc/modfiles/chimescalc_serial.mod
+/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/include/chimescalc/modfiles/chimescalc.mod
+/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/lib64/cmake/chimescalc/chimescalc-targets.cmake
+/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/lib64/cmake/chimescalc/chimescalc-targets-release.cmake
+/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/lib64/cmake/chimescalc/chimescalc-config.cmake
+/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/lib64/cmake/chimescalc/chimescalc-config-version.cmake

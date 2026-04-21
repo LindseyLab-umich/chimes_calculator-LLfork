@@ -1,0 +1,17 @@
+/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/CMakeFiles/ChimesCalc.dir
+/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/CMakeFiles/ChimesCalcExe.dir
+/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/CMakeFiles/chimescalc-test_direct-C.dir
+/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/CMakeFiles/chimescalc-test_serial-C.dir
+/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/CMakeFiles/chimescalc-test_serial-C_instance.dir
+/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/CMakeFiles/ChimesCalc_dynamic.dir
+/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/CMakeFiles/ChimesCalc_Fortran.dir
+/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/CMakeFiles/chimescalc-test_serial-F.dir
+/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/CMakeFiles/chimescalc-test_serial-F_instance.dir
+/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/CMakeFiles/chimescalc-test_serial-F08.dir
+/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/CMakeFiles/test.dir
+/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/CMakeFiles/edit_cache.dir
+/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/CMakeFiles/rebuild_cache.dir
+/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/CMakeFiles/list_install_components.dir
+/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/CMakeFiles/install.dir
+/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/CMakeFiles/install/local.dir
+/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/CMakeFiles/install/strip.dir

@@ -1,0 +1,17 @@
+Lmod has detected the following error: The following module(s) are unknown:
+"cuda/12.8"
+
+Please check the spelling or version number. Also try "module spider ..."
+It is also possible your cache file is out-of-date; it may help to try:
+  $ module --ignore_cache load "cuda/12.8"
+
+Also make sure that all modulefiles written in TCL start with the string
+#%Module
+
+
+
+realpath: ../lib/kokkos/bin/nvcc_wrapper: No such file or directory
+CMake Error: The source directory "/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/etc/lmp/cmake" does not exist.
+Specify --help for usage, or press the help button on the CMake GUI.
+make: *** No targets specified and no makefile found.  Stop.
+ldd: ./lmp: No such file or directory
