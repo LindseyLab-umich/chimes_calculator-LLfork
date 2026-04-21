@@ -1,0 +1,1 @@
+/opt/apps/gcc/13.2.0/bin/c++  -O3 -funroll-all-loops CMakeFiles/ChimesCalcExe.dir/serial_interface/examples/cpp/main.cpp.o -o chimescalc  -Wl,-rpath,/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build: libchimescalc.so 

@@ -1,0 +1,1034 @@
+
+---
+events:
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/apps/cmake/3.28.1/share/cmake-3.28/Modules/CMakeDetermineSystem.cmake:233 (message)"
+      - "CMakeLists.txt:7 (project)"
+    message: |
+      The system is: Linux - 5.14.0-503.23.2.el9_5.x86_64 - x86_64
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/apps/cmake/3.28.1/share/cmake-3.28/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/opt/apps/cmake/3.28.1/share/cmake-3.28/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/opt/apps/cmake/3.28.1/share/cmake-3.28/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:7 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+      Compiler: /opt/apps/gcc/13.2.0/bin/c++ 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      0
+      
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.out"
+      
+      The CXX compiler identification is GNU, found in:
+        /work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/CMakeFiles/3.28.1/CompilerIdCXX/a.out
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/apps/cmake/3.28.1/share/cmake-3.28/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/opt/apps/cmake/3.28.1/share/cmake-3.28/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/opt/apps/cmake/3.28.1/share/cmake-3.28/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:7 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+      Compiler: /opt/apps/gcc/13.2.0/bin/gcc 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      0
+      
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
+      
+      The C compiler identification is GNU, found in:
+        /work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/CMakeFiles/3.28.1/CompilerIdC/a.out
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/apps/cmake/3.28.1/share/cmake-3.28/Modules/CMakeDetermineCompilerABI.cmake:57 (try_compile)"
+      - "/opt/apps/cmake/3.28.1/share/cmake-3.28/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:7 (project)"
+    checks:
+      - "Detecting CXX compiler ABI info"
+    directories:
+      source: "/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/CMakeFiles/CMakeScratch/TryCompile-LUMRXv"
+      binary: "/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/CMakeFiles/CMakeScratch/TryCompile-LUMRXv"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: ""
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "CMAKE_CXX_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: '/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/CMakeFiles/CMakeScratch/TryCompile-LUMRXv'
+        
+        Run Build Command(s): /opt/apps/cmake/3.28.1/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_200d1/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_200d1.dir/build.make CMakeFiles/cmTC_200d1.dir/build
+        gmake[1]: Entering directory '/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/CMakeFiles/CMakeScratch/TryCompile-LUMRXv'
+        Building CXX object CMakeFiles/cmTC_200d1.dir/CMakeCXXCompilerABI.cpp.o
+        /opt/apps/gcc/13.2.0/bin/c++   -v -o CMakeFiles/cmTC_200d1.dir/CMakeCXXCompilerABI.cpp.o -c /opt/apps/cmake/3.28.1/share/cmake-3.28/Modules/CMakeCXXCompilerABI.cpp
+        Using built-in specs.
+        COLLECT_GCC=/opt/apps/gcc/13.2.0/bin/c++
+        Target: x86_64-pc-linux-gnu
+        Configured with: /admin/build/admin/rpms/stampede3/BUILD/gcc-13.2.0/configure --enable-libssp --enable-gold=yes --enable-ld=default --enable-plugins --enable-lto --with-tune=generic --enable-languages=c,c++,fortran --disable-multilib --prefix=/opt/apps/gcc/13.2.0 --with-gmp=/opt/apps/gcc/13.2.0 --with-mlgmp=/opt/apps/gcc/13.2.0 --with-mpfr=/opt/apps/gcc/13.2.0 --with-mpc=/opt/apps/gcc/13.2.0 --with-isl=/opt/apps/gcc/13.2.0
+        Thread model: posix
+        Supported LTO compression algorithms: zlib zstd
+        gcc version 13.2.0 (GCC) 
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_200d1.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_200d1.dir/'
+         /opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/cc1plus -quiet -v -D_GNU_SOURCE /opt/apps/cmake/3.28.1/share/cmake-3.28/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_200d1.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -o /tmp/cc33bRRT.s
+        GNU C++17 (GCC) version 13.2.0 (x86_64-pc-linux-gnu)
+        	compiled by GNU C version 13.2.0, GMP version 6.2.1, MPFR version 4.1.0, MPC version 1.2.1, isl version isl-0.18-GMP
+        
+        GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+        ignoring nonexistent directory "/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../x86_64-pc-linux-gnu/include"
+        ignoring nonexistent directory "/scratch/projects/compilers/intel24.0/oneapi/dnnl/2024.0/include"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         /opt/intel/oneapi/ccl/2021.11/include
+         /opt/intel/oneapi/mpi/2021.11/include
+         /opt/intel/oneapi/mkl/2024.0/include
+         /opt/intel/oneapi/ipp/2021.10/include
+         /opt/intel/oneapi/ippcp/2021.9/include
+         /opt/intel/oneapi/dpl/2022.3/include
+         /opt/intel/oneapi/dpcpp-ct/2024.0/include
+         /scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/include/dal
+         /opt/intel/oneapi/dev-utilities/2024.0/include
+         /opt/intel/oneapi/compiler/2024.0/include
+         /opt/intel/oneapi/tbb/2021.11/include
+         /opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../include/c++/13.2.0
+         /opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../include/c++/13.2.0/x86_64-pc-linux-gnu
+         /opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../include/c++/13.2.0/backward
+         /opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/include
+         /usr/local/include
+         /opt/apps/gcc/13.2.0/include
+         /opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/include-fixed
+         /usr/include
+        End of search list.
+        Compiler executable checksum: 7fbeffcce850b700ee2708fa63b6ff34
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_200d1.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_200d1.dir/'
+         /opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../x86_64-pc-linux-gnu/bin/as -v --64 -o CMakeFiles/cmTC_200d1.dir/CMakeCXXCompilerABI.cpp.o /tmp/cc33bRRT.s
+        GNU assembler version 2.37 (x86_64-pc-linux-gnu) using BFD version (GNU Binutils) 2.37
+        COMPILER_PATH=/opt/apps/xalt/xalt/bin/:/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/:/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/:/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../x86_64-pc-linux-gnu/bin/
+        LIBRARY_PATH=/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/opt/intel/oneapi/ccl/2021.11/lib/:/opt/intel/oneapi/mpi/2021.11/opt/mpi/libfabric/lib/:/opt/intel/oneapi/mpi/2021.11/lib/:/opt/intel/oneapi/mkl/2024.0/lib/:/opt/intel/oneapi/ipp/2021.10/lib/:/opt/intel/oneapi/ippcp/2021.9/lib/:/opt/intel/oneapi/dpl/2022.3/lib/:/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/lib/:/opt/intel/oneapi/compiler/2024.0/opt/compiler/lib/:/opt/intel/oneapi/compiler/2024.0/lib/:/opt/intel/oneapi/tbb/2021.11/lib/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../x86_64-pc-linux-gnu/lib/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../:/lib/:/usr/lib/
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_200d1.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_200d1.dir/CMakeCXXCompilerABI.cpp.'
+        Linking CXX executable cmTC_200d1
+        /opt/apps/cmake/3.28.1/bin/cmake -E cmake_link_script CMakeFiles/cmTC_200d1.dir/link.txt --verbose=1
+        /opt/apps/gcc/13.2.0/bin/c++  -v CMakeFiles/cmTC_200d1.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_200d1 
+        Using built-in specs.
+        COLLECT_GCC=/opt/apps/gcc/13.2.0/bin/c++
+        COLLECT_LTO_WRAPPER=/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/lto-wrapper
+        Target: x86_64-pc-linux-gnu
+        Configured with: /admin/build/admin/rpms/stampede3/BUILD/gcc-13.2.0/configure --enable-libssp --enable-gold=yes --enable-ld=default --enable-plugins --enable-lto --with-tune=generic --enable-languages=c,c++,fortran --disable-multilib --prefix=/opt/apps/gcc/13.2.0 --with-gmp=/opt/apps/gcc/13.2.0 --with-mlgmp=/opt/apps/gcc/13.2.0 --with-mpfr=/opt/apps/gcc/13.2.0 --with-mpc=/opt/apps/gcc/13.2.0 --with-isl=/opt/apps/gcc/13.2.0
+        Thread model: posix
+        Supported LTO compression algorithms: zlib zstd
+        gcc version 13.2.0 (GCC) 
+        COMPILER_PATH=/opt/apps/xalt/xalt/bin/:/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/:/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/:/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../x86_64-pc-linux-gnu/bin/
+        LIBRARY_PATH=/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/opt/intel/oneapi/ccl/2021.11/lib/:/opt/intel/oneapi/mpi/2021.11/opt/mpi/libfabric/lib/:/opt/intel/oneapi/mpi/2021.11/lib/:/opt/intel/oneapi/mkl/2024.0/lib/:/opt/intel/oneapi/ipp/2021.10/lib/:/opt/intel/oneapi/ippcp/2021.9/lib/:/opt/intel/oneapi/dpl/2022.3/lib/:/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/lib/:/opt/intel/oneapi/compiler/2024.0/opt/compiler/lib/:/opt/intel/oneapi/compiler/2024.0/lib/:/opt/intel/oneapi/tbb/2021.11/lib/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../x86_64-pc-linux-gnu/lib/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../:/lib/:/usr/lib/
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_200d1' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_200d1.'
+         /opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/collect2 -plugin /opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/liblto_plugin.so -plugin-opt=/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccbvYHFW.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_200d1 /lib/../lib64/crt1.o /lib/../lib64/crti.o /opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/crtbegin.o -L/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0 -L/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/opt/intel/oneapi/ccl/2021.11/lib -L/opt/intel/oneapi/mpi/2021.11/opt/mpi/libfabric/lib -L/opt/intel/oneapi/mpi/2021.11/lib -L/opt/intel/oneapi/mkl/2024.0/lib -L/opt/intel/oneapi/ipp/2021.10/lib -L/opt/intel/oneapi/ippcp/2021.9/lib -L/opt/intel/oneapi/dpl/2022.3/lib -L/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/lib -L/opt/intel/oneapi/compiler/2024.0/opt/compiler/lib -L/opt/intel/oneapi/compiler/2024.0/lib -L/opt/intel/oneapi/tbb/2021.11/lib -L/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../x86_64-pc-linux-gnu/lib -L/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../.. CMakeFiles/cmTC_200d1.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/crtend.o /lib/../lib64/crtn.o
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_200d1' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_200d1.'
+        gmake[1]: Leaving directory '/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/CMakeFiles/CMakeScratch/TryCompile-LUMRXv'
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/apps/cmake/3.28.1/share/cmake-3.28/Modules/CMakeDetermineCompilerABI.cmake:127 (message)"
+      - "/opt/apps/cmake/3.28.1/share/cmake-3.28/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:7 (project)"
+    message: |
+      Parsed CXX implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [/opt/intel/oneapi/ccl/2021.11/include]
+          add: [/opt/intel/oneapi/mpi/2021.11/include]
+          add: [/opt/intel/oneapi/mkl/2024.0/include]
+          add: [/opt/intel/oneapi/ipp/2021.10/include]
+          add: [/opt/intel/oneapi/ippcp/2021.9/include]
+          add: [/opt/intel/oneapi/dpl/2022.3/include]
+          add: [/opt/intel/oneapi/dpcpp-ct/2024.0/include]
+          add: [/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/include/dal]
+          add: [/opt/intel/oneapi/dev-utilities/2024.0/include]
+          add: [/opt/intel/oneapi/compiler/2024.0/include]
+          add: [/opt/intel/oneapi/tbb/2021.11/include]
+          add: [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../include/c++/13.2.0]
+          add: [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../include/c++/13.2.0/x86_64-pc-linux-gnu]
+          add: [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../include/c++/13.2.0/backward]
+          add: [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/include]
+          add: [/usr/local/include]
+          add: [/opt/apps/gcc/13.2.0/include]
+          add: [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/include-fixed]
+          add: [/usr/include]
+        end of search list found
+        collapse include dir [/opt/intel/oneapi/ccl/2021.11/include] ==> [/opt/intel/oneapi/ccl/2021.11/include]
+        collapse include dir [/opt/intel/oneapi/mpi/2021.11/include] ==> [/opt/intel/oneapi/mpi/2021.11/include]
+        collapse include dir [/opt/intel/oneapi/mkl/2024.0/include] ==> [/opt/intel/oneapi/mkl/2024.0/include]
+        collapse include dir [/opt/intel/oneapi/ipp/2021.10/include] ==> [/opt/intel/oneapi/ipp/2021.10/include]
+        collapse include dir [/opt/intel/oneapi/ippcp/2021.9/include] ==> [/opt/intel/oneapi/ippcp/2021.9/include]
+        collapse include dir [/opt/intel/oneapi/dpl/2022.3/include] ==> [/opt/intel/oneapi/dpl/2022.3/include]
+        collapse include dir [/opt/intel/oneapi/dpcpp-ct/2024.0/include] ==> [/opt/intel/oneapi/dpcpp-ct/2024.0/include]
+        collapse include dir [/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/include/dal] ==> [/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/include/dal]
+        collapse include dir [/opt/intel/oneapi/dev-utilities/2024.0/include] ==> [/opt/intel/oneapi/dev-utilities/2024.0/include]
+        collapse include dir [/opt/intel/oneapi/compiler/2024.0/include] ==> [/opt/intel/oneapi/compiler/2024.0/include]
+        collapse include dir [/opt/intel/oneapi/tbb/2021.11/include] ==> [/opt/intel/oneapi/tbb/2021.11/include]
+        collapse include dir [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../include/c++/13.2.0] ==> [/opt/apps/gcc/13.2.0/include/c++/13.2.0]
+        collapse include dir [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../include/c++/13.2.0/x86_64-pc-linux-gnu] ==> [/opt/apps/gcc/13.2.0/include/c++/13.2.0/x86_64-pc-linux-gnu]
+        collapse include dir [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../include/c++/13.2.0/backward] ==> [/opt/apps/gcc/13.2.0/include/c++/13.2.0/backward]
+        collapse include dir [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/include] ==> [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/include]
+        collapse include dir [/usr/local/include] ==> [/usr/local/include]
+        collapse include dir [/opt/apps/gcc/13.2.0/include] ==> [/opt/apps/gcc/13.2.0/include]
+        collapse include dir [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/include-fixed] ==> [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/include-fixed]
+        collapse include dir [/usr/include] ==> [/usr/include]
+        implicit include dirs: [/opt/intel/oneapi/ccl/2021.11/include;/opt/intel/oneapi/mpi/2021.11/include;/opt/intel/oneapi/mkl/2024.0/include;/opt/intel/oneapi/ipp/2021.10/include;/opt/intel/oneapi/ippcp/2021.9/include;/opt/intel/oneapi/dpl/2022.3/include;/opt/intel/oneapi/dpcpp-ct/2024.0/include;/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/include/dal;/opt/intel/oneapi/dev-utilities/2024.0/include;/opt/intel/oneapi/compiler/2024.0/include;/opt/intel/oneapi/tbb/2021.11/include;/opt/apps/gcc/13.2.0/include/c++/13.2.0;/opt/apps/gcc/13.2.0/include/c++/13.2.0/x86_64-pc-linux-gnu;/opt/apps/gcc/13.2.0/include/c++/13.2.0/backward;/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/include;/usr/local/include;/opt/apps/gcc/13.2.0/include;/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/include-fixed;/usr/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/apps/cmake/3.28.1/share/cmake-3.28/Modules/CMakeDetermineCompilerABI.cmake:159 (message)"
+      - "/opt/apps/cmake/3.28.1/share/cmake-3.28/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:7 (project)"
+    message: |
+      Parsed CXX implicit link information:
+        link line regex: [^( *|.*[/\\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        ignore line: [Change Dir: '/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/CMakeFiles/CMakeScratch/TryCompile-LUMRXv']
+        ignore line: []
+        ignore line: [Run Build Command(s): /opt/apps/cmake/3.28.1/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_200d1/fast]
+        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_200d1.dir/build.make CMakeFiles/cmTC_200d1.dir/build]
+        ignore line: [gmake[1]: Entering directory '/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/CMakeFiles/CMakeScratch/TryCompile-LUMRXv']
+        ignore line: [Building CXX object CMakeFiles/cmTC_200d1.dir/CMakeCXXCompilerABI.cpp.o]
+        ignore line: [/opt/apps/gcc/13.2.0/bin/c++   -v -o CMakeFiles/cmTC_200d1.dir/CMakeCXXCompilerABI.cpp.o -c /opt/apps/cmake/3.28.1/share/cmake-3.28/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=/opt/apps/gcc/13.2.0/bin/c++]
+        ignore line: [Target: x86_64-pc-linux-gnu]
+        ignore line: [Configured with: /admin/build/admin/rpms/stampede3/BUILD/gcc-13.2.0/configure --enable-libssp --enable-gold=yes --enable-ld=default --enable-plugins --enable-lto --with-tune=generic --enable-languages=c,c++,fortran --disable-multilib --prefix=/opt/apps/gcc/13.2.0 --with-gmp=/opt/apps/gcc/13.2.0 --with-mlgmp=/opt/apps/gcc/13.2.0 --with-mpfr=/opt/apps/gcc/13.2.0 --with-mpc=/opt/apps/gcc/13.2.0 --with-isl=/opt/apps/gcc/13.2.0]
+        ignore line: [Thread model: posix]
+        ignore line: [Supported LTO compression algorithms: zlib zstd]
+        ignore line: [gcc version 13.2.0 (GCC) ]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_200d1.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_200d1.dir/']
+        ignore line: [ /opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/cc1plus -quiet -v -D_GNU_SOURCE /opt/apps/cmake/3.28.1/share/cmake-3.28/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_200d1.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -o /tmp/cc33bRRT.s]
+        ignore line: [GNU C++17 (GCC) version 13.2.0 (x86_64-pc-linux-gnu)]
+        ignore line: [	compiled by GNU C version 13.2.0  GMP version 6.2.1  MPFR version 4.1.0  MPC version 1.2.1  isl version isl-0.18-GMP]
+        ignore line: []
+        ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
+        ignore line: [ignoring nonexistent directory "/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../x86_64-pc-linux-gnu/include"]
+        ignore line: [ignoring nonexistent directory "/scratch/projects/compilers/intel24.0/oneapi/dnnl/2024.0/include"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ /opt/intel/oneapi/ccl/2021.11/include]
+        ignore line: [ /opt/intel/oneapi/mpi/2021.11/include]
+        ignore line: [ /opt/intel/oneapi/mkl/2024.0/include]
+        ignore line: [ /opt/intel/oneapi/ipp/2021.10/include]
+        ignore line: [ /opt/intel/oneapi/ippcp/2021.9/include]
+        ignore line: [ /opt/intel/oneapi/dpl/2022.3/include]
+        ignore line: [ /opt/intel/oneapi/dpcpp-ct/2024.0/include]
+        ignore line: [ /scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/include/dal]
+        ignore line: [ /opt/intel/oneapi/dev-utilities/2024.0/include]
+        ignore line: [ /opt/intel/oneapi/compiler/2024.0/include]
+        ignore line: [ /opt/intel/oneapi/tbb/2021.11/include]
+        ignore line: [ /opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../include/c++/13.2.0]
+        ignore line: [ /opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../include/c++/13.2.0/x86_64-pc-linux-gnu]
+        ignore line: [ /opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../include/c++/13.2.0/backward]
+        ignore line: [ /opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/include]
+        ignore line: [ /usr/local/include]
+        ignore line: [ /opt/apps/gcc/13.2.0/include]
+        ignore line: [ /opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/include-fixed]
+        ignore line: [ /usr/include]
+        ignore line: [End of search list.]
+        ignore line: [Compiler executable checksum: 7fbeffcce850b700ee2708fa63b6ff34]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_200d1.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_200d1.dir/']
+        ignore line: [ /opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../x86_64-pc-linux-gnu/bin/as -v --64 -o CMakeFiles/cmTC_200d1.dir/CMakeCXXCompilerABI.cpp.o /tmp/cc33bRRT.s]
+        ignore line: [GNU assembler version 2.37 (x86_64-pc-linux-gnu) using BFD version (GNU Binutils) 2.37]
+        ignore line: [COMPILER_PATH=/opt/apps/xalt/xalt/bin/:/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/:/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/:/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../x86_64-pc-linux-gnu/bin/]
+        ignore line: [LIBRARY_PATH=/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/opt/intel/oneapi/ccl/2021.11/lib/:/opt/intel/oneapi/mpi/2021.11/opt/mpi/libfabric/lib/:/opt/intel/oneapi/mpi/2021.11/lib/:/opt/intel/oneapi/mkl/2024.0/lib/:/opt/intel/oneapi/ipp/2021.10/lib/:/opt/intel/oneapi/ippcp/2021.9/lib/:/opt/intel/oneapi/dpl/2022.3/lib/:/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/lib/:/opt/intel/oneapi/compiler/2024.0/opt/compiler/lib/:/opt/intel/oneapi/compiler/2024.0/lib/:/opt/intel/oneapi/tbb/2021.11/lib/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../x86_64-pc-linux-gnu/lib/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../:/lib/:/usr/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_200d1.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_200d1.dir/CMakeCXXCompilerABI.cpp.']
+        ignore line: [Linking CXX executable cmTC_200d1]
+        ignore line: [/opt/apps/cmake/3.28.1/bin/cmake -E cmake_link_script CMakeFiles/cmTC_200d1.dir/link.txt --verbose=1]
+        ignore line: [/opt/apps/gcc/13.2.0/bin/c++  -v CMakeFiles/cmTC_200d1.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_200d1 ]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=/opt/apps/gcc/13.2.0/bin/c++]
+        ignore line: [COLLECT_LTO_WRAPPER=/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/lto-wrapper]
+        ignore line: [Target: x86_64-pc-linux-gnu]
+        ignore line: [Configured with: /admin/build/admin/rpms/stampede3/BUILD/gcc-13.2.0/configure --enable-libssp --enable-gold=yes --enable-ld=default --enable-plugins --enable-lto --with-tune=generic --enable-languages=c,c++,fortran --disable-multilib --prefix=/opt/apps/gcc/13.2.0 --with-gmp=/opt/apps/gcc/13.2.0 --with-mlgmp=/opt/apps/gcc/13.2.0 --with-mpfr=/opt/apps/gcc/13.2.0 --with-mpc=/opt/apps/gcc/13.2.0 --with-isl=/opt/apps/gcc/13.2.0]
+        ignore line: [Thread model: posix]
+        ignore line: [Supported LTO compression algorithms: zlib zstd]
+        ignore line: [gcc version 13.2.0 (GCC) ]
+        ignore line: [COMPILER_PATH=/opt/apps/xalt/xalt/bin/:/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/:/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/:/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../x86_64-pc-linux-gnu/bin/]
+        ignore line: [LIBRARY_PATH=/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/opt/intel/oneapi/ccl/2021.11/lib/:/opt/intel/oneapi/mpi/2021.11/opt/mpi/libfabric/lib/:/opt/intel/oneapi/mpi/2021.11/lib/:/opt/intel/oneapi/mkl/2024.0/lib/:/opt/intel/oneapi/ipp/2021.10/lib/:/opt/intel/oneapi/ippcp/2021.9/lib/:/opt/intel/oneapi/dpl/2022.3/lib/:/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/lib/:/opt/intel/oneapi/compiler/2024.0/opt/compiler/lib/:/opt/intel/oneapi/compiler/2024.0/lib/:/opt/intel/oneapi/tbb/2021.11/lib/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../x86_64-pc-linux-gnu/lib/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../:/lib/:/usr/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_200d1' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_200d1.']
+        link line: [ /opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/collect2 -plugin /opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/liblto_plugin.so -plugin-opt=/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccbvYHFW.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_200d1 /lib/../lib64/crt1.o /lib/../lib64/crti.o /opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/crtbegin.o -L/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0 -L/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/opt/intel/oneapi/ccl/2021.11/lib -L/opt/intel/oneapi/mpi/2021.11/opt/mpi/libfabric/lib -L/opt/intel/oneapi/mpi/2021.11/lib -L/opt/intel/oneapi/mkl/2024.0/lib -L/opt/intel/oneapi/ipp/2021.10/lib -L/opt/intel/oneapi/ippcp/2021.9/lib -L/opt/intel/oneapi/dpl/2022.3/lib -L/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/lib -L/opt/intel/oneapi/compiler/2024.0/opt/compiler/lib -L/opt/intel/oneapi/compiler/2024.0/lib -L/opt/intel/oneapi/tbb/2021.11/lib -L/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../x86_64-pc-linux-gnu/lib -L/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../.. CMakeFiles/cmTC_200d1.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/crtend.o /lib/../lib64/crtn.o]
+          arg [/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/collect2] ==> ignore
+          arg [-plugin] ==> ignore
+          arg [/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/liblto_plugin.so] ==> ignore
+          arg [-plugin-opt=/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/lto-wrapper] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/ccbvYHFW.res] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [--eh-frame-hdr] ==> ignore
+          arg [-m] ==> ignore
+          arg [elf_x86_64] ==> ignore
+          arg [-dynamic-linker] ==> ignore
+          arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
+          arg [-o] ==> ignore
+          arg [cmTC_200d1] ==> ignore
+          arg [/lib/../lib64/crt1.o] ==> obj [/lib/../lib64/crt1.o]
+          arg [/lib/../lib64/crti.o] ==> obj [/lib/../lib64/crti.o]
+          arg [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/crtbegin.o] ==> obj [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/crtbegin.o]
+          arg [-L/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0] ==> dir [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0]
+          arg [-L/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../lib64] ==> dir [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../lib64]
+          arg [-L/lib/../lib64] ==> dir [/lib/../lib64]
+          arg [-L/usr/lib/../lib64] ==> dir [/usr/lib/../lib64]
+          arg [-L/opt/intel/oneapi/ccl/2021.11/lib] ==> dir [/opt/intel/oneapi/ccl/2021.11/lib]
+          arg [-L/opt/intel/oneapi/mpi/2021.11/opt/mpi/libfabric/lib] ==> dir [/opt/intel/oneapi/mpi/2021.11/opt/mpi/libfabric/lib]
+          arg [-L/opt/intel/oneapi/mpi/2021.11/lib] ==> dir [/opt/intel/oneapi/mpi/2021.11/lib]
+          arg [-L/opt/intel/oneapi/mkl/2024.0/lib] ==> dir [/opt/intel/oneapi/mkl/2024.0/lib]
+          arg [-L/opt/intel/oneapi/ipp/2021.10/lib] ==> dir [/opt/intel/oneapi/ipp/2021.10/lib]
+          arg [-L/opt/intel/oneapi/ippcp/2021.9/lib] ==> dir [/opt/intel/oneapi/ippcp/2021.9/lib]
+          arg [-L/opt/intel/oneapi/dpl/2022.3/lib] ==> dir [/opt/intel/oneapi/dpl/2022.3/lib]
+          arg [-L/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/lib] ==> dir [/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/lib]
+          arg [-L/opt/intel/oneapi/compiler/2024.0/opt/compiler/lib] ==> dir [/opt/intel/oneapi/compiler/2024.0/opt/compiler/lib]
+          arg [-L/opt/intel/oneapi/compiler/2024.0/lib] ==> dir [/opt/intel/oneapi/compiler/2024.0/lib]
+          arg [-L/opt/intel/oneapi/tbb/2021.11/lib] ==> dir [/opt/intel/oneapi/tbb/2021.11/lib]
+          arg [-L/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../x86_64-pc-linux-gnu/lib] ==> dir [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../x86_64-pc-linux-gnu/lib]
+          arg [-L/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../..] ==> dir [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../..]
+          arg [CMakeFiles/cmTC_200d1.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+          arg [-lstdc++] ==> lib [stdc++]
+          arg [-lm] ==> lib [m]
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [-lgcc] ==> lib [gcc]
+          arg [-lc] ==> lib [c]
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [-lgcc] ==> lib [gcc]
+          arg [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/crtend.o] ==> obj [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/crtend.o]
+          arg [/lib/../lib64/crtn.o] ==> obj [/lib/../lib64/crtn.o]
+        collapse obj [/lib/../lib64/crt1.o] ==> [/lib64/crt1.o]
+        collapse obj [/lib/../lib64/crti.o] ==> [/lib64/crti.o]
+        collapse obj [/lib/../lib64/crtn.o] ==> [/lib64/crtn.o]
+        collapse library dir [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0] ==> [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0]
+        collapse library dir [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../lib64] ==> [/opt/apps/gcc/13.2.0/lib64]
+        collapse library dir [/lib/../lib64] ==> [/lib64]
+        collapse library dir [/usr/lib/../lib64] ==> [/usr/lib64]
+        collapse library dir [/opt/intel/oneapi/ccl/2021.11/lib] ==> [/opt/intel/oneapi/ccl/2021.11/lib]
+        collapse library dir [/opt/intel/oneapi/mpi/2021.11/opt/mpi/libfabric/lib] ==> [/opt/intel/oneapi/mpi/2021.11/opt/mpi/libfabric/lib]
+        collapse library dir [/opt/intel/oneapi/mpi/2021.11/lib] ==> [/opt/intel/oneapi/mpi/2021.11/lib]
+        collapse library dir [/opt/intel/oneapi/mkl/2024.0/lib] ==> [/opt/intel/oneapi/mkl/2024.0/lib]
+        collapse library dir [/opt/intel/oneapi/ipp/2021.10/lib] ==> [/opt/intel/oneapi/ipp/2021.10/lib]
+        collapse library dir [/opt/intel/oneapi/ippcp/2021.9/lib] ==> [/opt/intel/oneapi/ippcp/2021.9/lib]
+        collapse library dir [/opt/intel/oneapi/dpl/2022.3/lib] ==> [/opt/intel/oneapi/dpl/2022.3/lib]
+        collapse library dir [/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/lib] ==> [/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/lib]
+        collapse library dir [/opt/intel/oneapi/compiler/2024.0/opt/compiler/lib] ==> [/opt/intel/oneapi/compiler/2024.0/opt/compiler/lib]
+        collapse library dir [/opt/intel/oneapi/compiler/2024.0/lib] ==> [/opt/intel/oneapi/compiler/2024.0/lib]
+        collapse library dir [/opt/intel/oneapi/tbb/2021.11/lib] ==> [/opt/intel/oneapi/tbb/2021.11/lib]
+        collapse library dir [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../x86_64-pc-linux-gnu/lib] ==> [/opt/apps/gcc/13.2.0/x86_64-pc-linux-gnu/lib]
+        collapse library dir [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../..] ==> [/opt/apps/gcc/13.2.0/lib]
+        implicit libs: [stdc++;m;gcc_s;gcc;c;gcc_s;gcc]
+        implicit objs: [/lib64/crt1.o;/lib64/crti.o;/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/crtbegin.o;/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/crtend.o;/lib64/crtn.o]
+        implicit dirs: [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0;/opt/apps/gcc/13.2.0/lib64;/lib64;/usr/lib64;/opt/intel/oneapi/ccl/2021.11/lib;/opt/intel/oneapi/mpi/2021.11/opt/mpi/libfabric/lib;/opt/intel/oneapi/mpi/2021.11/lib;/opt/intel/oneapi/mkl/2024.0/lib;/opt/intel/oneapi/ipp/2021.10/lib;/opt/intel/oneapi/ippcp/2021.9/lib;/opt/intel/oneapi/dpl/2022.3/lib;/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/lib;/opt/intel/oneapi/compiler/2024.0/opt/compiler/lib;/opt/intel/oneapi/compiler/2024.0/lib;/opt/intel/oneapi/tbb/2021.11/lib;/opt/apps/gcc/13.2.0/x86_64-pc-linux-gnu/lib;/opt/apps/gcc/13.2.0/lib]
+        implicit fwks: []
+      
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/apps/cmake/3.28.1/share/cmake-3.28/Modules/CMakeDetermineCompilerABI.cmake:57 (try_compile)"
+      - "/opt/apps/cmake/3.28.1/share/cmake-3.28/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:7 (project)"
+    checks:
+      - "Detecting C compiler ABI info"
+    directories:
+      source: "/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/CMakeFiles/CMakeScratch/TryCompile-u23sRu"
+      binary: "/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/CMakeFiles/CMakeScratch/TryCompile-u23sRu"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "CMAKE_C_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: '/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/CMakeFiles/CMakeScratch/TryCompile-u23sRu'
+        
+        Run Build Command(s): /opt/apps/cmake/3.28.1/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_4406a/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_4406a.dir/build.make CMakeFiles/cmTC_4406a.dir/build
+        gmake[1]: Entering directory '/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/CMakeFiles/CMakeScratch/TryCompile-u23sRu'
+        Building C object CMakeFiles/cmTC_4406a.dir/CMakeCCompilerABI.c.o
+        /opt/apps/gcc/13.2.0/bin/gcc   -v -o CMakeFiles/cmTC_4406a.dir/CMakeCCompilerABI.c.o -c /opt/apps/cmake/3.28.1/share/cmake-3.28/Modules/CMakeCCompilerABI.c
+        Using built-in specs.
+        COLLECT_GCC=/opt/apps/gcc/13.2.0/bin/gcc
+        Target: x86_64-pc-linux-gnu
+        Configured with: /admin/build/admin/rpms/stampede3/BUILD/gcc-13.2.0/configure --enable-libssp --enable-gold=yes --enable-ld=default --enable-plugins --enable-lto --with-tune=generic --enable-languages=c,c++,fortran --disable-multilib --prefix=/opt/apps/gcc/13.2.0 --with-gmp=/opt/apps/gcc/13.2.0 --with-mlgmp=/opt/apps/gcc/13.2.0 --with-mpfr=/opt/apps/gcc/13.2.0 --with-mpc=/opt/apps/gcc/13.2.0 --with-isl=/opt/apps/gcc/13.2.0
+        Thread model: posix
+        Supported LTO compression algorithms: zlib zstd
+        gcc version 13.2.0 (GCC) 
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_4406a.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_4406a.dir/'
+         /opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/cc1 -quiet -v /opt/apps/cmake/3.28.1/share/cmake-3.28/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_4406a.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -version -o /tmp/ccbQSQZH.s
+        GNU C17 (GCC) version 13.2.0 (x86_64-pc-linux-gnu)
+        	compiled by GNU C version 13.2.0, GMP version 6.2.1, MPFR version 4.1.0, MPC version 1.2.1, isl version isl-0.18-GMP
+        
+        GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+        ignoring nonexistent directory "/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../x86_64-pc-linux-gnu/include"
+        ignoring nonexistent directory "/scratch/projects/compilers/intel24.0/oneapi/dnnl/2024.0/include"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         /opt/intel/oneapi/ccl/2021.11/include
+         /opt/intel/oneapi/mpi/2021.11/include
+         /opt/intel/oneapi/mkl/2024.0/include
+         /opt/intel/oneapi/ipp/2021.10/include
+         /opt/intel/oneapi/ippcp/2021.9/include
+         /opt/intel/oneapi/dpl/2022.3/include
+         /opt/intel/oneapi/dpcpp-ct/2024.0/include
+         /scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/include/dal
+         /opt/intel/oneapi/dev-utilities/2024.0/include
+         /opt/intel/oneapi/compiler/2024.0/include
+         /opt/intel/oneapi/tbb/2021.11/include
+         /opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/include
+         /usr/local/include
+         /opt/apps/gcc/13.2.0/include
+         /opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/include-fixed
+         /usr/include
+        End of search list.
+        Compiler executable checksum: bcacac16aa4418d1d5c74beda2758021
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_4406a.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_4406a.dir/'
+         /opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../x86_64-pc-linux-gnu/bin/as -v --64 -o CMakeFiles/cmTC_4406a.dir/CMakeCCompilerABI.c.o /tmp/ccbQSQZH.s
+        GNU assembler version 2.37 (x86_64-pc-linux-gnu) using BFD version (GNU Binutils) 2.37
+        COMPILER_PATH=/opt/apps/xalt/xalt/bin/:/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/:/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/:/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../x86_64-pc-linux-gnu/bin/
+        LIBRARY_PATH=/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/opt/intel/oneapi/ccl/2021.11/lib/:/opt/intel/oneapi/mpi/2021.11/opt/mpi/libfabric/lib/:/opt/intel/oneapi/mpi/2021.11/lib/:/opt/intel/oneapi/mkl/2024.0/lib/:/opt/intel/oneapi/ipp/2021.10/lib/:/opt/intel/oneapi/ippcp/2021.9/lib/:/opt/intel/oneapi/dpl/2022.3/lib/:/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/lib/:/opt/intel/oneapi/compiler/2024.0/opt/compiler/lib/:/opt/intel/oneapi/compiler/2024.0/lib/:/opt/intel/oneapi/tbb/2021.11/lib/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../x86_64-pc-linux-gnu/lib/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../:/lib/:/usr/lib/
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_4406a.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_4406a.dir/CMakeCCompilerABI.c.'
+        Linking C executable cmTC_4406a
+        /opt/apps/cmake/3.28.1/bin/cmake -E cmake_link_script CMakeFiles/cmTC_4406a.dir/link.txt --verbose=1
+        /opt/apps/gcc/13.2.0/bin/gcc  -v CMakeFiles/cmTC_4406a.dir/CMakeCCompilerABI.c.o -o cmTC_4406a 
+        Using built-in specs.
+        COLLECT_GCC=/opt/apps/gcc/13.2.0/bin/gcc
+        COLLECT_LTO_WRAPPER=/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/lto-wrapper
+        Target: x86_64-pc-linux-gnu
+        Configured with: /admin/build/admin/rpms/stampede3/BUILD/gcc-13.2.0/configure --enable-libssp --enable-gold=yes --enable-ld=default --enable-plugins --enable-lto --with-tune=generic --enable-languages=c,c++,fortran --disable-multilib --prefix=/opt/apps/gcc/13.2.0 --with-gmp=/opt/apps/gcc/13.2.0 --with-mlgmp=/opt/apps/gcc/13.2.0 --with-mpfr=/opt/apps/gcc/13.2.0 --with-mpc=/opt/apps/gcc/13.2.0 --with-isl=/opt/apps/gcc/13.2.0
+        Thread model: posix
+        Supported LTO compression algorithms: zlib zstd
+        gcc version 13.2.0 (GCC) 
+        COMPILER_PATH=/opt/apps/xalt/xalt/bin/:/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/:/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/:/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../x86_64-pc-linux-gnu/bin/
+        LIBRARY_PATH=/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/opt/intel/oneapi/ccl/2021.11/lib/:/opt/intel/oneapi/mpi/2021.11/opt/mpi/libfabric/lib/:/opt/intel/oneapi/mpi/2021.11/lib/:/opt/intel/oneapi/mkl/2024.0/lib/:/opt/intel/oneapi/ipp/2021.10/lib/:/opt/intel/oneapi/ippcp/2021.9/lib/:/opt/intel/oneapi/dpl/2022.3/lib/:/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/lib/:/opt/intel/oneapi/compiler/2024.0/opt/compiler/lib/:/opt/intel/oneapi/compiler/2024.0/lib/:/opt/intel/oneapi/tbb/2021.11/lib/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../x86_64-pc-linux-gnu/lib/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../:/lib/:/usr/lib/
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_4406a' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_4406a.'
+         /opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/collect2 -plugin /opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/liblto_plugin.so -plugin-opt=/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccYCj2xK.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_4406a /lib/../lib64/crt1.o /lib/../lib64/crti.o /opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/crtbegin.o -L/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0 -L/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/opt/intel/oneapi/ccl/2021.11/lib -L/opt/intel/oneapi/mpi/2021.11/opt/mpi/libfabric/lib -L/opt/intel/oneapi/mpi/2021.11/lib -L/opt/intel/oneapi/mkl/2024.0/lib -L/opt/intel/oneapi/ipp/2021.10/lib -L/opt/intel/oneapi/ippcp/2021.9/lib -L/opt/intel/oneapi/dpl/2022.3/lib -L/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/lib -L/opt/intel/oneapi/compiler/2024.0/opt/compiler/lib -L/opt/intel/oneapi/compiler/2024.0/lib -L/opt/intel/oneapi/tbb/2021.11/lib -L/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../x86_64-pc-linux-gnu/lib -L/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../.. CMakeFiles/cmTC_4406a.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/crtend.o /lib/../lib64/crtn.o
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_4406a' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_4406a.'
+        gmake[1]: Leaving directory '/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/CMakeFiles/CMakeScratch/TryCompile-u23sRu'
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/apps/cmake/3.28.1/share/cmake-3.28/Modules/CMakeDetermineCompilerABI.cmake:127 (message)"
+      - "/opt/apps/cmake/3.28.1/share/cmake-3.28/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:7 (project)"
+    message: |
+      Parsed C implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [/opt/intel/oneapi/ccl/2021.11/include]
+          add: [/opt/intel/oneapi/mpi/2021.11/include]
+          add: [/opt/intel/oneapi/mkl/2024.0/include]
+          add: [/opt/intel/oneapi/ipp/2021.10/include]
+          add: [/opt/intel/oneapi/ippcp/2021.9/include]
+          add: [/opt/intel/oneapi/dpl/2022.3/include]
+          add: [/opt/intel/oneapi/dpcpp-ct/2024.0/include]
+          add: [/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/include/dal]
+          add: [/opt/intel/oneapi/dev-utilities/2024.0/include]
+          add: [/opt/intel/oneapi/compiler/2024.0/include]
+          add: [/opt/intel/oneapi/tbb/2021.11/include]
+          add: [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/include]
+          add: [/usr/local/include]
+          add: [/opt/apps/gcc/13.2.0/include]
+          add: [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/include-fixed]
+          add: [/usr/include]
+        end of search list found
+        collapse include dir [/opt/intel/oneapi/ccl/2021.11/include] ==> [/opt/intel/oneapi/ccl/2021.11/include]
+        collapse include dir [/opt/intel/oneapi/mpi/2021.11/include] ==> [/opt/intel/oneapi/mpi/2021.11/include]
+        collapse include dir [/opt/intel/oneapi/mkl/2024.0/include] ==> [/opt/intel/oneapi/mkl/2024.0/include]
+        collapse include dir [/opt/intel/oneapi/ipp/2021.10/include] ==> [/opt/intel/oneapi/ipp/2021.10/include]
+        collapse include dir [/opt/intel/oneapi/ippcp/2021.9/include] ==> [/opt/intel/oneapi/ippcp/2021.9/include]
+        collapse include dir [/opt/intel/oneapi/dpl/2022.3/include] ==> [/opt/intel/oneapi/dpl/2022.3/include]
+        collapse include dir [/opt/intel/oneapi/dpcpp-ct/2024.0/include] ==> [/opt/intel/oneapi/dpcpp-ct/2024.0/include]
+        collapse include dir [/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/include/dal] ==> [/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/include/dal]
+        collapse include dir [/opt/intel/oneapi/dev-utilities/2024.0/include] ==> [/opt/intel/oneapi/dev-utilities/2024.0/include]
+        collapse include dir [/opt/intel/oneapi/compiler/2024.0/include] ==> [/opt/intel/oneapi/compiler/2024.0/include]
+        collapse include dir [/opt/intel/oneapi/tbb/2021.11/include] ==> [/opt/intel/oneapi/tbb/2021.11/include]
+        collapse include dir [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/include] ==> [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/include]
+        collapse include dir [/usr/local/include] ==> [/usr/local/include]
+        collapse include dir [/opt/apps/gcc/13.2.0/include] ==> [/opt/apps/gcc/13.2.0/include]
+        collapse include dir [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/include-fixed] ==> [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/include-fixed]
+        collapse include dir [/usr/include] ==> [/usr/include]
+        implicit include dirs: [/opt/intel/oneapi/ccl/2021.11/include;/opt/intel/oneapi/mpi/2021.11/include;/opt/intel/oneapi/mkl/2024.0/include;/opt/intel/oneapi/ipp/2021.10/include;/opt/intel/oneapi/ippcp/2021.9/include;/opt/intel/oneapi/dpl/2022.3/include;/opt/intel/oneapi/dpcpp-ct/2024.0/include;/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/include/dal;/opt/intel/oneapi/dev-utilities/2024.0/include;/opt/intel/oneapi/compiler/2024.0/include;/opt/intel/oneapi/tbb/2021.11/include;/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/include;/usr/local/include;/opt/apps/gcc/13.2.0/include;/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/include-fixed;/usr/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/apps/cmake/3.28.1/share/cmake-3.28/Modules/CMakeDetermineCompilerABI.cmake:159 (message)"
+      - "/opt/apps/cmake/3.28.1/share/cmake-3.28/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:7 (project)"
+    message: |
+      Parsed C implicit link information:
+        link line regex: [^( *|.*[/\\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        ignore line: [Change Dir: '/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/CMakeFiles/CMakeScratch/TryCompile-u23sRu']
+        ignore line: []
+        ignore line: [Run Build Command(s): /opt/apps/cmake/3.28.1/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_4406a/fast]
+        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_4406a.dir/build.make CMakeFiles/cmTC_4406a.dir/build]
+        ignore line: [gmake[1]: Entering directory '/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/CMakeFiles/CMakeScratch/TryCompile-u23sRu']
+        ignore line: [Building C object CMakeFiles/cmTC_4406a.dir/CMakeCCompilerABI.c.o]
+        ignore line: [/opt/apps/gcc/13.2.0/bin/gcc   -v -o CMakeFiles/cmTC_4406a.dir/CMakeCCompilerABI.c.o -c /opt/apps/cmake/3.28.1/share/cmake-3.28/Modules/CMakeCCompilerABI.c]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=/opt/apps/gcc/13.2.0/bin/gcc]
+        ignore line: [Target: x86_64-pc-linux-gnu]
+        ignore line: [Configured with: /admin/build/admin/rpms/stampede3/BUILD/gcc-13.2.0/configure --enable-libssp --enable-gold=yes --enable-ld=default --enable-plugins --enable-lto --with-tune=generic --enable-languages=c,c++,fortran --disable-multilib --prefix=/opt/apps/gcc/13.2.0 --with-gmp=/opt/apps/gcc/13.2.0 --with-mlgmp=/opt/apps/gcc/13.2.0 --with-mpfr=/opt/apps/gcc/13.2.0 --with-mpc=/opt/apps/gcc/13.2.0 --with-isl=/opt/apps/gcc/13.2.0]
+        ignore line: [Thread model: posix]
+        ignore line: [Supported LTO compression algorithms: zlib zstd]
+        ignore line: [gcc version 13.2.0 (GCC) ]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_4406a.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_4406a.dir/']
+        ignore line: [ /opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/cc1 -quiet -v /opt/apps/cmake/3.28.1/share/cmake-3.28/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_4406a.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -version -o /tmp/ccbQSQZH.s]
+        ignore line: [GNU C17 (GCC) version 13.2.0 (x86_64-pc-linux-gnu)]
+        ignore line: [	compiled by GNU C version 13.2.0  GMP version 6.2.1  MPFR version 4.1.0  MPC version 1.2.1  isl version isl-0.18-GMP]
+        ignore line: []
+        ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
+        ignore line: [ignoring nonexistent directory "/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../x86_64-pc-linux-gnu/include"]
+        ignore line: [ignoring nonexistent directory "/scratch/projects/compilers/intel24.0/oneapi/dnnl/2024.0/include"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ /opt/intel/oneapi/ccl/2021.11/include]
+        ignore line: [ /opt/intel/oneapi/mpi/2021.11/include]
+        ignore line: [ /opt/intel/oneapi/mkl/2024.0/include]
+        ignore line: [ /opt/intel/oneapi/ipp/2021.10/include]
+        ignore line: [ /opt/intel/oneapi/ippcp/2021.9/include]
+        ignore line: [ /opt/intel/oneapi/dpl/2022.3/include]
+        ignore line: [ /opt/intel/oneapi/dpcpp-ct/2024.0/include]
+        ignore line: [ /scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/include/dal]
+        ignore line: [ /opt/intel/oneapi/dev-utilities/2024.0/include]
+        ignore line: [ /opt/intel/oneapi/compiler/2024.0/include]
+        ignore line: [ /opt/intel/oneapi/tbb/2021.11/include]
+        ignore line: [ /opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/include]
+        ignore line: [ /usr/local/include]
+        ignore line: [ /opt/apps/gcc/13.2.0/include]
+        ignore line: [ /opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/include-fixed]
+        ignore line: [ /usr/include]
+        ignore line: [End of search list.]
+        ignore line: [Compiler executable checksum: bcacac16aa4418d1d5c74beda2758021]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_4406a.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_4406a.dir/']
+        ignore line: [ /opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../x86_64-pc-linux-gnu/bin/as -v --64 -o CMakeFiles/cmTC_4406a.dir/CMakeCCompilerABI.c.o /tmp/ccbQSQZH.s]
+        ignore line: [GNU assembler version 2.37 (x86_64-pc-linux-gnu) using BFD version (GNU Binutils) 2.37]
+        ignore line: [COMPILER_PATH=/opt/apps/xalt/xalt/bin/:/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/:/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/:/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../x86_64-pc-linux-gnu/bin/]
+        ignore line: [LIBRARY_PATH=/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/opt/intel/oneapi/ccl/2021.11/lib/:/opt/intel/oneapi/mpi/2021.11/opt/mpi/libfabric/lib/:/opt/intel/oneapi/mpi/2021.11/lib/:/opt/intel/oneapi/mkl/2024.0/lib/:/opt/intel/oneapi/ipp/2021.10/lib/:/opt/intel/oneapi/ippcp/2021.9/lib/:/opt/intel/oneapi/dpl/2022.3/lib/:/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/lib/:/opt/intel/oneapi/compiler/2024.0/opt/compiler/lib/:/opt/intel/oneapi/compiler/2024.0/lib/:/opt/intel/oneapi/tbb/2021.11/lib/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../x86_64-pc-linux-gnu/lib/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../:/lib/:/usr/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_4406a.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_4406a.dir/CMakeCCompilerABI.c.']
+        ignore line: [Linking C executable cmTC_4406a]
+        ignore line: [/opt/apps/cmake/3.28.1/bin/cmake -E cmake_link_script CMakeFiles/cmTC_4406a.dir/link.txt --verbose=1]
+        ignore line: [/opt/apps/gcc/13.2.0/bin/gcc  -v CMakeFiles/cmTC_4406a.dir/CMakeCCompilerABI.c.o -o cmTC_4406a ]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=/opt/apps/gcc/13.2.0/bin/gcc]
+        ignore line: [COLLECT_LTO_WRAPPER=/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/lto-wrapper]
+        ignore line: [Target: x86_64-pc-linux-gnu]
+        ignore line: [Configured with: /admin/build/admin/rpms/stampede3/BUILD/gcc-13.2.0/configure --enable-libssp --enable-gold=yes --enable-ld=default --enable-plugins --enable-lto --with-tune=generic --enable-languages=c,c++,fortran --disable-multilib --prefix=/opt/apps/gcc/13.2.0 --with-gmp=/opt/apps/gcc/13.2.0 --with-mlgmp=/opt/apps/gcc/13.2.0 --with-mpfr=/opt/apps/gcc/13.2.0 --with-mpc=/opt/apps/gcc/13.2.0 --with-isl=/opt/apps/gcc/13.2.0]
+        ignore line: [Thread model: posix]
+        ignore line: [Supported LTO compression algorithms: zlib zstd]
+        ignore line: [gcc version 13.2.0 (GCC) ]
+        ignore line: [COMPILER_PATH=/opt/apps/xalt/xalt/bin/:/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/:/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/:/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../x86_64-pc-linux-gnu/bin/]
+        ignore line: [LIBRARY_PATH=/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/opt/intel/oneapi/ccl/2021.11/lib/:/opt/intel/oneapi/mpi/2021.11/opt/mpi/libfabric/lib/:/opt/intel/oneapi/mpi/2021.11/lib/:/opt/intel/oneapi/mkl/2024.0/lib/:/opt/intel/oneapi/ipp/2021.10/lib/:/opt/intel/oneapi/ippcp/2021.9/lib/:/opt/intel/oneapi/dpl/2022.3/lib/:/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/lib/:/opt/intel/oneapi/compiler/2024.0/opt/compiler/lib/:/opt/intel/oneapi/compiler/2024.0/lib/:/opt/intel/oneapi/tbb/2021.11/lib/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../x86_64-pc-linux-gnu/lib/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../:/lib/:/usr/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_4406a' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_4406a.']
+        link line: [ /opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/collect2 -plugin /opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/liblto_plugin.so -plugin-opt=/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccYCj2xK.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_4406a /lib/../lib64/crt1.o /lib/../lib64/crti.o /opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/crtbegin.o -L/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0 -L/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/opt/intel/oneapi/ccl/2021.11/lib -L/opt/intel/oneapi/mpi/2021.11/opt/mpi/libfabric/lib -L/opt/intel/oneapi/mpi/2021.11/lib -L/opt/intel/oneapi/mkl/2024.0/lib -L/opt/intel/oneapi/ipp/2021.10/lib -L/opt/intel/oneapi/ippcp/2021.9/lib -L/opt/intel/oneapi/dpl/2022.3/lib -L/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/lib -L/opt/intel/oneapi/compiler/2024.0/opt/compiler/lib -L/opt/intel/oneapi/compiler/2024.0/lib -L/opt/intel/oneapi/tbb/2021.11/lib -L/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../x86_64-pc-linux-gnu/lib -L/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../.. CMakeFiles/cmTC_4406a.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/crtend.o /lib/../lib64/crtn.o]
+          arg [/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/collect2] ==> ignore
+          arg [-plugin] ==> ignore
+          arg [/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/liblto_plugin.so] ==> ignore
+          arg [-plugin-opt=/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/lto-wrapper] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/ccYCj2xK.res] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+          arg [-plugin-opt=-pass-through=-lc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+          arg [--eh-frame-hdr] ==> ignore
+          arg [-m] ==> ignore
+          arg [elf_x86_64] ==> ignore
+          arg [-dynamic-linker] ==> ignore
+          arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
+          arg [-o] ==> ignore
+          arg [cmTC_4406a] ==> ignore
+          arg [/lib/../lib64/crt1.o] ==> obj [/lib/../lib64/crt1.o]
+          arg [/lib/../lib64/crti.o] ==> obj [/lib/../lib64/crti.o]
+          arg [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/crtbegin.o] ==> obj [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/crtbegin.o]
+          arg [-L/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0] ==> dir [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0]
+          arg [-L/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../lib64] ==> dir [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../lib64]
+          arg [-L/lib/../lib64] ==> dir [/lib/../lib64]
+          arg [-L/usr/lib/../lib64] ==> dir [/usr/lib/../lib64]
+          arg [-L/opt/intel/oneapi/ccl/2021.11/lib] ==> dir [/opt/intel/oneapi/ccl/2021.11/lib]
+          arg [-L/opt/intel/oneapi/mpi/2021.11/opt/mpi/libfabric/lib] ==> dir [/opt/intel/oneapi/mpi/2021.11/opt/mpi/libfabric/lib]
+          arg [-L/opt/intel/oneapi/mpi/2021.11/lib] ==> dir [/opt/intel/oneapi/mpi/2021.11/lib]
+          arg [-L/opt/intel/oneapi/mkl/2024.0/lib] ==> dir [/opt/intel/oneapi/mkl/2024.0/lib]
+          arg [-L/opt/intel/oneapi/ipp/2021.10/lib] ==> dir [/opt/intel/oneapi/ipp/2021.10/lib]
+          arg [-L/opt/intel/oneapi/ippcp/2021.9/lib] ==> dir [/opt/intel/oneapi/ippcp/2021.9/lib]
+          arg [-L/opt/intel/oneapi/dpl/2022.3/lib] ==> dir [/opt/intel/oneapi/dpl/2022.3/lib]
+          arg [-L/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/lib] ==> dir [/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/lib]
+          arg [-L/opt/intel/oneapi/compiler/2024.0/opt/compiler/lib] ==> dir [/opt/intel/oneapi/compiler/2024.0/opt/compiler/lib]
+          arg [-L/opt/intel/oneapi/compiler/2024.0/lib] ==> dir [/opt/intel/oneapi/compiler/2024.0/lib]
+          arg [-L/opt/intel/oneapi/tbb/2021.11/lib] ==> dir [/opt/intel/oneapi/tbb/2021.11/lib]
+          arg [-L/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../x86_64-pc-linux-gnu/lib] ==> dir [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../x86_64-pc-linux-gnu/lib]
+          arg [-L/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../..] ==> dir [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../..]
+          arg [CMakeFiles/cmTC_4406a.dir/CMakeCCompilerABI.c.o] ==> ignore
+          arg [-lgcc] ==> lib [gcc]
+          arg [--push-state] ==> ignore
+          arg [--as-needed] ==> ignore
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [--pop-state] ==> ignore
+          arg [-lc] ==> lib [c]
+          arg [-lgcc] ==> lib [gcc]
+          arg [--push-state] ==> ignore
+          arg [--as-needed] ==> ignore
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [--pop-state] ==> ignore
+          arg [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/crtend.o] ==> obj [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/crtend.o]
+          arg [/lib/../lib64/crtn.o] ==> obj [/lib/../lib64/crtn.o]
+        collapse obj [/lib/../lib64/crt1.o] ==> [/lib64/crt1.o]
+        collapse obj [/lib/../lib64/crti.o] ==> [/lib64/crti.o]
+        collapse obj [/lib/../lib64/crtn.o] ==> [/lib64/crtn.o]
+        collapse library dir [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0] ==> [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0]
+        collapse library dir [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../lib64] ==> [/opt/apps/gcc/13.2.0/lib64]
+        collapse library dir [/lib/../lib64] ==> [/lib64]
+        collapse library dir [/usr/lib/../lib64] ==> [/usr/lib64]
+        collapse library dir [/opt/intel/oneapi/ccl/2021.11/lib] ==> [/opt/intel/oneapi/ccl/2021.11/lib]
+        collapse library dir [/opt/intel/oneapi/mpi/2021.11/opt/mpi/libfabric/lib] ==> [/opt/intel/oneapi/mpi/2021.11/opt/mpi/libfabric/lib]
+        collapse library dir [/opt/intel/oneapi/mpi/2021.11/lib] ==> [/opt/intel/oneapi/mpi/2021.11/lib]
+        collapse library dir [/opt/intel/oneapi/mkl/2024.0/lib] ==> [/opt/intel/oneapi/mkl/2024.0/lib]
+        collapse library dir [/opt/intel/oneapi/ipp/2021.10/lib] ==> [/opt/intel/oneapi/ipp/2021.10/lib]
+        collapse library dir [/opt/intel/oneapi/ippcp/2021.9/lib] ==> [/opt/intel/oneapi/ippcp/2021.9/lib]
+        collapse library dir [/opt/intel/oneapi/dpl/2022.3/lib] ==> [/opt/intel/oneapi/dpl/2022.3/lib]
+        collapse library dir [/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/lib] ==> [/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/lib]
+        collapse library dir [/opt/intel/oneapi/compiler/2024.0/opt/compiler/lib] ==> [/opt/intel/oneapi/compiler/2024.0/opt/compiler/lib]
+        collapse library dir [/opt/intel/oneapi/compiler/2024.0/lib] ==> [/opt/intel/oneapi/compiler/2024.0/lib]
+        collapse library dir [/opt/intel/oneapi/tbb/2021.11/lib] ==> [/opt/intel/oneapi/tbb/2021.11/lib]
+        collapse library dir [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../x86_64-pc-linux-gnu/lib] ==> [/opt/apps/gcc/13.2.0/x86_64-pc-linux-gnu/lib]
+        collapse library dir [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../..] ==> [/opt/apps/gcc/13.2.0/lib]
+        implicit libs: [gcc;gcc_s;c;gcc;gcc_s]
+        implicit objs: [/lib64/crt1.o;/lib64/crti.o;/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/crtbegin.o;/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/crtend.o;/lib64/crtn.o]
+        implicit dirs: [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0;/opt/apps/gcc/13.2.0/lib64;/lib64;/usr/lib64;/opt/intel/oneapi/ccl/2021.11/lib;/opt/intel/oneapi/mpi/2021.11/opt/mpi/libfabric/lib;/opt/intel/oneapi/mpi/2021.11/lib;/opt/intel/oneapi/mkl/2024.0/lib;/opt/intel/oneapi/ipp/2021.10/lib;/opt/intel/oneapi/ippcp/2021.9/lib;/opt/intel/oneapi/dpl/2022.3/lib;/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/lib;/opt/intel/oneapi/compiler/2024.0/opt/compiler/lib;/opt/intel/oneapi/compiler/2024.0/lib;/opt/intel/oneapi/tbb/2021.11/lib;/opt/apps/gcc/13.2.0/x86_64-pc-linux-gnu/lib;/opt/apps/gcc/13.2.0/lib]
+        implicit fwks: []
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/apps/cmake/3.28.1/share/cmake-3.28/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/opt/apps/cmake/3.28.1/share/cmake-3.28/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/opt/apps/cmake/3.28.1/share/cmake-3.28/Modules/CMakeDetermineFortranCompiler.cmake:186 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "config.cmake:75 (enable_language)"
+      - "CMakeLists.txt:19 (include)"
+    message: |
+      Compiling the Fortran compiler identification source file "CMakeFortranCompilerId.F" succeeded.
+      Compiler: /opt/apps/gcc/13.2.0/bin/gfortran 
+      Build flags: 
+      Id flags: -v 
+      
+      The output was:
+      0
+      Driving: /opt/apps/gcc/13.2.0/bin/gfortran -v CMakeFortranCompilerId.F -l gfortran -l m -shared-libgcc
+      Using built-in specs.
+      COLLECT_GCC=/opt/apps/gcc/13.2.0/bin/gfortran
+      COLLECT_LTO_WRAPPER=/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/lto-wrapper
+      Target: x86_64-pc-linux-gnu
+      Configured with: /admin/build/admin/rpms/stampede3/BUILD/gcc-13.2.0/configure --enable-libssp --enable-gold=yes --enable-ld=default --enable-plugins --enable-lto --with-tune=generic --enable-languages=c,c++,fortran --disable-multilib --prefix=/opt/apps/gcc/13.2.0 --with-gmp=/opt/apps/gcc/13.2.0 --with-mlgmp=/opt/apps/gcc/13.2.0 --with-mpfr=/opt/apps/gcc/13.2.0 --with-mpc=/opt/apps/gcc/13.2.0 --with-isl=/opt/apps/gcc/13.2.0
+      Thread model: posix
+      Supported LTO compression algorithms: zlib zstd
+      gcc version 13.2.0 (GCC) 
+      COLLECT_GCC_OPTIONS='-v' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'a-'
+       /opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/f951 CMakeFortranCompilerId.F -ffixed-form -cpp=/tmp/cc3KENPk.f90 -quiet -v CMakeFortranCompilerId.F -quiet -dumpdir a- -dumpbase CMakeFortranCompilerId.F -dumpbase-ext .F -mtune=generic -march=x86-64 -version -fintrinsic-modules-path /opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/finclude -fpre-include=/usr/include/finclude/math-vector-fortran.h -o /tmp/ccLx3bJp.s
+      GNU Fortran (GCC) version 13.2.0 (x86_64-pc-linux-gnu)
+      	compiled by GNU C version 13.2.0, GMP version 6.2.1, MPFR version 4.1.0, MPC version 1.2.1, isl version isl-0.18-GMP
+      
+      GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+      ignoring nonexistent directory "/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../x86_64-pc-linux-gnu/include"
+      ignoring nonexistent directory "/scratch/projects/compilers/intel24.0/oneapi/dnnl/2024.0/include"
+      #include "..." search starts here:
+      #include <...> search starts here:
+       /opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/finclude
+       /opt/intel/oneapi/ccl/2021.11/include
+       /opt/intel/oneapi/mpi/2021.11/include
+       /opt/intel/oneapi/mkl/2024.0/include
+       /opt/intel/oneapi/ipp/2021.10/include
+       /opt/intel/oneapi/ippcp/2021.9/include
+       /opt/intel/oneapi/dpl/2022.3/include
+       /opt/intel/oneapi/dpcpp-ct/2024.0/include
+       /scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/include/dal
+       /opt/intel/oneapi/dev-utilities/2024.0/include
+       /opt/intel/oneapi/compiler/2024.0/include
+       /opt/intel/oneapi/tbb/2021.11/include
+       /opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/include
+       /usr/local/include
+       /opt/apps/gcc/13.2.0/include
+       /opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/include-fixed
+       /usr/include
+      End of search list.
+      COLLECT_GCC_OPTIONS='-v' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'a-'
+       /opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../x86_64-pc-linux-gnu/bin/as -v --64 -o /tmp/ccTaRhO3.o /tmp/ccLx3bJp.s
+      GNU assembler version 2.37 (x86_64-pc-linux-gnu) using BFD version (GNU Binutils) 2.37
+      Reading specs from /opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../lib64/libgfortran.spec
+      rename spec lib to liborig
+      COLLECT_GCC_OPTIONS='-v' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'a-'
+      COMPILER_PATH=/opt/apps/xalt/xalt/bin/:/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/:/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/:/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../x86_64-pc-linux-gnu/bin/
+      LIBRARY_PATH=/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/opt/intel/oneapi/ccl/2021.11/lib/:/opt/intel/oneapi/mpi/2021.11/opt/mpi/libfabric/lib/:/opt/intel/oneapi/mpi/2021.11/lib/:/opt/intel/oneapi/mkl/2024.0/lib/:/opt/intel/oneapi/ipp/2021.10/lib/:/opt/intel/oneapi/ippcp/2021.9/lib/:/opt/intel/oneapi/dpl/2022.3/lib/:/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/lib/:/opt/intel/oneapi/compiler/2024.0/opt/compiler/lib/:/opt/intel/oneapi/compiler/2024.0/lib/:/opt/intel/oneapi/tbb/2021.11/lib/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../x86_64-pc-linux-gnu/lib/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../:/lib/:/usr/lib/
+      COLLECT_GCC_OPTIONS='-v' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'a.'
+       /opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/collect2 -plugin /opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/liblto_plugin.so -plugin-opt=/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccoXAhiG.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lquadmath -plugin-opt=-pass-through=-lm -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 /lib/../lib64/crt1.o /lib/../lib64/crti.o /opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/crtbegin.o -L/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0 -L/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/opt/intel/oneapi/ccl/2021.11/lib -L/opt/intel/oneapi/mpi/2021.11/opt/mpi/libfabric/lib -L/opt/intel/oneapi/mpi/2021.11/lib -L/opt/intel/oneapi/mkl/2024.0/lib -L/opt/intel/oneapi/ipp/2021.10/lib -L/opt/intel/oneapi/ippcp/2021.9/lib -L/opt/intel/oneapi/dpl/2022.3/lib -L/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/lib -L/opt/intel/oneapi/compiler/2024.0/opt/compiler/lib -L/opt/intel/oneapi/compiler/2024.0/lib -L/opt/intel/oneapi/tbb/2021.11/lib -L/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../x86_64-pc-linux-gnu/lib -L/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../.. /tmp/ccTaRhO3.o -lgfortran -lm -lgcc_s -lgcc --as-needed -lquadmath --no-as-needed -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/crtend.o /lib/../lib64/crtn.o
+      COLLECT_GCC_OPTIONS='-v' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'a.'
+      
+      
+      Compilation of the Fortran compiler identification source "CMakeFortranCompilerId.F" produced "a.out"
+      
+      The Fortran compiler identification is GNU, found in:
+        /work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/CMakeFiles/3.28.1/CompilerIdFortran/a.out
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/apps/cmake/3.28.1/share/cmake-3.28/Modules/CMakeDetermineCompilerABI.cmake:57 (try_compile)"
+      - "/opt/apps/cmake/3.28.1/share/cmake-3.28/Modules/CMakeTestFortranCompiler.cmake:20 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "config.cmake:75 (enable_language)"
+      - "CMakeLists.txt:19 (include)"
+    checks:
+      - "Detecting Fortran compiler ABI info"
+    directories:
+      source: "/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/CMakeFiles/CMakeScratch/TryCompile-RoSKBQ"
+      binary: "/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/CMakeFiles/CMakeScratch/TryCompile-RoSKBQ"
+    cmakeVariables:
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_Fortran_FLAGS: ""
+      CMAKE_Fortran_FLAGS_DEBUG: "-g"
+    buildResult:
+      variable: "CMAKE_Fortran_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: '/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/CMakeFiles/CMakeScratch/TryCompile-RoSKBQ'
+        
+        Run Build Command(s): /opt/apps/cmake/3.28.1/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_c0c2a/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_c0c2a.dir/build.make CMakeFiles/cmTC_c0c2a.dir/build
+        gmake[1]: Entering directory '/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/CMakeFiles/CMakeScratch/TryCompile-RoSKBQ'
+        Building Fortran object CMakeFiles/cmTC_c0c2a.dir/CMakeFortranCompilerABI.F90.o
+        /opt/apps/gcc/13.2.0/bin/gfortran   -v -c /opt/apps/cmake/3.28.1/share/cmake-3.28/Modules/CMakeFortranCompilerABI.F90 -o CMakeFiles/cmTC_c0c2a.dir/CMakeFortranCompilerABI.F90.o
+        Using built-in specs.
+        COLLECT_GCC=/opt/apps/gcc/13.2.0/bin/gfortran
+        Target: x86_64-pc-linux-gnu
+        Configured with: /admin/build/admin/rpms/stampede3/BUILD/gcc-13.2.0/configure --enable-libssp --enable-gold=yes --enable-ld=default --enable-plugins --enable-lto --with-tune=generic --enable-languages=c,c++,fortran --disable-multilib --prefix=/opt/apps/gcc/13.2.0 --with-gmp=/opt/apps/gcc/13.2.0 --with-mlgmp=/opt/apps/gcc/13.2.0 --with-mpfr=/opt/apps/gcc/13.2.0 --with-mpc=/opt/apps/gcc/13.2.0 --with-isl=/opt/apps/gcc/13.2.0
+        Thread model: posix
+        Supported LTO compression algorithms: zlib zstd
+        gcc version 13.2.0 (GCC) 
+        COLLECT_GCC_OPTIONS='-v' '-c' '-o' 'CMakeFiles/cmTC_c0c2a.dir/CMakeFortranCompilerABI.F90.o' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_c0c2a.dir/'
+         /opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/f951 /opt/apps/cmake/3.28.1/share/cmake-3.28/Modules/CMakeFortranCompilerABI.F90 -cpp=/tmp/ccEskLwr.f90 -quiet -v /opt/apps/cmake/3.28.1/share/cmake-3.28/Modules/CMakeFortranCompilerABI.F90 -quiet -dumpdir CMakeFiles/cmTC_c0c2a.dir/ -dumpbase CMakeFortranCompilerABI.F90.F90 -dumpbase-ext .F90 -mtune=generic -march=x86-64 -version -fintrinsic-modules-path /opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/finclude -fpre-include=/usr/include/finclude/math-vector-fortran.h -o /tmp/cckVGHXo.s
+        GNU Fortran (GCC) version 13.2.0 (x86_64-pc-linux-gnu)
+        	compiled by GNU C version 13.2.0, GMP version 6.2.1, MPFR version 4.1.0, MPC version 1.2.1, isl version isl-0.18-GMP
+        
+        GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+        ignoring nonexistent directory "/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../x86_64-pc-linux-gnu/include"
+        ignoring nonexistent directory "/scratch/projects/compilers/intel24.0/oneapi/dnnl/2024.0/include"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         /opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/finclude
+         /opt/intel/oneapi/ccl/2021.11/include
+         /opt/intel/oneapi/mpi/2021.11/include
+         /opt/intel/oneapi/mkl/2024.0/include
+         /opt/intel/oneapi/ipp/2021.10/include
+         /opt/intel/oneapi/ippcp/2021.9/include
+         /opt/intel/oneapi/dpl/2022.3/include
+         /opt/intel/oneapi/dpcpp-ct/2024.0/include
+         /scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/include/dal
+         /opt/intel/oneapi/dev-utilities/2024.0/include
+         /opt/intel/oneapi/compiler/2024.0/include
+         /opt/intel/oneapi/tbb/2021.11/include
+         /opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/include
+         /usr/local/include
+         /opt/apps/gcc/13.2.0/include
+         /opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/include-fixed
+         /usr/include
+        End of search list.
+        COLLECT_GCC_OPTIONS='-v' '-c' '-o' 'CMakeFiles/cmTC_c0c2a.dir/CMakeFortranCompilerABI.F90.o' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_c0c2a.dir/'
+         /opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../x86_64-pc-linux-gnu/bin/as -v --64 -o CMakeFiles/cmTC_c0c2a.dir/CMakeFortranCompilerABI.F90.o /tmp/cckVGHXo.s
+        GNU assembler version 2.37 (x86_64-pc-linux-gnu) using BFD version (GNU Binutils) 2.37
+        COMPILER_PATH=/opt/apps/xalt/xalt/bin/:/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/:/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/:/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../x86_64-pc-linux-gnu/bin/
+        LIBRARY_PATH=/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/opt/intel/oneapi/ccl/2021.11/lib/:/opt/intel/oneapi/mpi/2021.11/opt/mpi/libfabric/lib/:/opt/intel/oneapi/mpi/2021.11/lib/:/opt/intel/oneapi/mkl/2024.0/lib/:/opt/intel/oneapi/ipp/2021.10/lib/:/opt/intel/oneapi/ippcp/2021.9/lib/:/opt/intel/oneapi/dpl/2022.3/lib/:/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/lib/:/opt/intel/oneapi/compiler/2024.0/opt/compiler/lib/:/opt/intel/oneapi/compiler/2024.0/lib/:/opt/intel/oneapi/tbb/2021.11/lib/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../x86_64-pc-linux-gnu/lib/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../:/lib/:/usr/lib/
+        COLLECT_GCC_OPTIONS='-v' '-c' '-o' 'CMakeFiles/cmTC_c0c2a.dir/CMakeFortranCompilerABI.F90.o' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_c0c2a.dir/CMakeFortranCompilerABI.F90.'
+        Linking Fortran executable cmTC_c0c2a
+        /opt/apps/cmake/3.28.1/bin/cmake -E cmake_link_script CMakeFiles/cmTC_c0c2a.dir/link.txt --verbose=1
+        /opt/apps/gcc/13.2.0/bin/gfortran  -v CMakeFiles/cmTC_c0c2a.dir/CMakeFortranCompilerABI.F90.o -o cmTC_c0c2a 
+        Driving: /opt/apps/gcc/13.2.0/bin/gfortran -v CMakeFiles/cmTC_c0c2a.dir/CMakeFortranCompilerABI.F90.o -o cmTC_c0c2a -l gfortran -l m -shared-libgcc
+        Using built-in specs.
+        COLLECT_GCC=/opt/apps/gcc/13.2.0/bin/gfortran
+        COLLECT_LTO_WRAPPER=/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/lto-wrapper
+        Target: x86_64-pc-linux-gnu
+        Configured with: /admin/build/admin/rpms/stampede3/BUILD/gcc-13.2.0/configure --enable-libssp --enable-gold=yes --enable-ld=default --enable-plugins --enable-lto --with-tune=generic --enable-languages=c,c++,fortran --disable-multilib --prefix=/opt/apps/gcc/13.2.0 --with-gmp=/opt/apps/gcc/13.2.0 --with-mlgmp=/opt/apps/gcc/13.2.0 --with-mpfr=/opt/apps/gcc/13.2.0 --with-mpc=/opt/apps/gcc/13.2.0 --with-isl=/opt/apps/gcc/13.2.0
+        Thread model: posix
+        Supported LTO compression algorithms: zlib zstd
+        gcc version 13.2.0 (GCC) 
+        Reading specs from /opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../lib64/libgfortran.spec
+        rename spec lib to liborig
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_c0c2a' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_c0c2a-'
+        COMPILER_PATH=/opt/apps/xalt/xalt/bin/:/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/:/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/:/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../x86_64-pc-linux-gnu/bin/
+        LIBRARY_PATH=/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/opt/intel/oneapi/ccl/2021.11/lib/:/opt/intel/oneapi/mpi/2021.11/opt/mpi/libfabric/lib/:/opt/intel/oneapi/mpi/2021.11/lib/:/opt/intel/oneapi/mkl/2024.0/lib/:/opt/intel/oneapi/ipp/2021.10/lib/:/opt/intel/oneapi/ippcp/2021.9/lib/:/opt/intel/oneapi/dpl/2022.3/lib/:/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/lib/:/opt/intel/oneapi/compiler/2024.0/opt/compiler/lib/:/opt/intel/oneapi/compiler/2024.0/lib/:/opt/intel/oneapi/tbb/2021.11/lib/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../x86_64-pc-linux-gnu/lib/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../:/lib/:/usr/lib/
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_c0c2a' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_c0c2a.'
+         /opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/collect2 -plugin /opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/liblto_plugin.so -plugin-opt=/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccWWeYpS.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lquadmath -plugin-opt=-pass-through=-lm -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_c0c2a /lib/../lib64/crt1.o /lib/../lib64/crti.o /opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/crtbegin.o -L/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0 -L/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/opt/intel/oneapi/ccl/2021.11/lib -L/opt/intel/oneapi/mpi/2021.11/opt/mpi/libfabric/lib -L/opt/intel/oneapi/mpi/2021.11/lib -L/opt/intel/oneapi/mkl/2024.0/lib -L/opt/intel/oneapi/ipp/2021.10/lib -L/opt/intel/oneapi/ippcp/2021.9/lib -L/opt/intel/oneapi/dpl/2022.3/lib -L/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/lib -L/opt/intel/oneapi/compiler/2024.0/opt/compiler/lib -L/opt/intel/oneapi/compiler/2024.0/lib -L/opt/intel/oneapi/tbb/2021.11/lib -L/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../x86_64-pc-linux-gnu/lib -L/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../.. CMakeFiles/cmTC_c0c2a.dir/CMakeFortranCompilerABI.F90.o -lgfortran -lm -lgcc_s -lgcc --as-needed -lquadmath --no-as-needed -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/crtend.o /lib/../lib64/crtn.o
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_c0c2a' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_c0c2a.'
+        gmake[1]: Leaving directory '/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/CMakeFiles/CMakeScratch/TryCompile-RoSKBQ'
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/apps/cmake/3.28.1/share/cmake-3.28/Modules/CMakeDetermineCompilerABI.cmake:127 (message)"
+      - "/opt/apps/cmake/3.28.1/share/cmake-3.28/Modules/CMakeTestFortranCompiler.cmake:20 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "config.cmake:75 (enable_language)"
+      - "CMakeLists.txt:19 (include)"
+    message: |
+      Parsed Fortran implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/finclude]
+          add: [/opt/intel/oneapi/ccl/2021.11/include]
+          add: [/opt/intel/oneapi/mpi/2021.11/include]
+          add: [/opt/intel/oneapi/mkl/2024.0/include]
+          add: [/opt/intel/oneapi/ipp/2021.10/include]
+          add: [/opt/intel/oneapi/ippcp/2021.9/include]
+          add: [/opt/intel/oneapi/dpl/2022.3/include]
+          add: [/opt/intel/oneapi/dpcpp-ct/2024.0/include]
+          add: [/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/include/dal]
+          add: [/opt/intel/oneapi/dev-utilities/2024.0/include]
+          add: [/opt/intel/oneapi/compiler/2024.0/include]
+          add: [/opt/intel/oneapi/tbb/2021.11/include]
+          add: [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/include]
+          add: [/usr/local/include]
+          add: [/opt/apps/gcc/13.2.0/include]
+          add: [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/include-fixed]
+          add: [/usr/include]
+        end of search list found
+        collapse include dir [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/finclude] ==> [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/finclude]
+        collapse include dir [/opt/intel/oneapi/ccl/2021.11/include] ==> [/opt/intel/oneapi/ccl/2021.11/include]
+        collapse include dir [/opt/intel/oneapi/mpi/2021.11/include] ==> [/opt/intel/oneapi/mpi/2021.11/include]
+        collapse include dir [/opt/intel/oneapi/mkl/2024.0/include] ==> [/opt/intel/oneapi/mkl/2024.0/include]
+        collapse include dir [/opt/intel/oneapi/ipp/2021.10/include] ==> [/opt/intel/oneapi/ipp/2021.10/include]
+        collapse include dir [/opt/intel/oneapi/ippcp/2021.9/include] ==> [/opt/intel/oneapi/ippcp/2021.9/include]
+        collapse include dir [/opt/intel/oneapi/dpl/2022.3/include] ==> [/opt/intel/oneapi/dpl/2022.3/include]
+        collapse include dir [/opt/intel/oneapi/dpcpp-ct/2024.0/include] ==> [/opt/intel/oneapi/dpcpp-ct/2024.0/include]
+        collapse include dir [/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/include/dal] ==> [/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/include/dal]
+        collapse include dir [/opt/intel/oneapi/dev-utilities/2024.0/include] ==> [/opt/intel/oneapi/dev-utilities/2024.0/include]
+        collapse include dir [/opt/intel/oneapi/compiler/2024.0/include] ==> [/opt/intel/oneapi/compiler/2024.0/include]
+        collapse include dir [/opt/intel/oneapi/tbb/2021.11/include] ==> [/opt/intel/oneapi/tbb/2021.11/include]
+        collapse include dir [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/include] ==> [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/include]
+        collapse include dir [/usr/local/include] ==> [/usr/local/include]
+        collapse include dir [/opt/apps/gcc/13.2.0/include] ==> [/opt/apps/gcc/13.2.0/include]
+        collapse include dir [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/include-fixed] ==> [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/include-fixed]
+        collapse include dir [/usr/include] ==> [/usr/include]
+        implicit include dirs: [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/finclude;/opt/intel/oneapi/ccl/2021.11/include;/opt/intel/oneapi/mpi/2021.11/include;/opt/intel/oneapi/mkl/2024.0/include;/opt/intel/oneapi/ipp/2021.10/include;/opt/intel/oneapi/ippcp/2021.9/include;/opt/intel/oneapi/dpl/2022.3/include;/opt/intel/oneapi/dpcpp-ct/2024.0/include;/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/include/dal;/opt/intel/oneapi/dev-utilities/2024.0/include;/opt/intel/oneapi/compiler/2024.0/include;/opt/intel/oneapi/tbb/2021.11/include;/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/include;/usr/local/include;/opt/apps/gcc/13.2.0/include;/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/include-fixed;/usr/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/apps/cmake/3.28.1/share/cmake-3.28/Modules/CMakeDetermineCompilerABI.cmake:159 (message)"
+      - "/opt/apps/cmake/3.28.1/share/cmake-3.28/Modules/CMakeTestFortranCompiler.cmake:20 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "config.cmake:75 (enable_language)"
+      - "CMakeLists.txt:19 (include)"
+    message: |
+      Parsed Fortran implicit link information:
+        link line regex: [^( *|.*[/\\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        ignore line: [Change Dir: '/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/CMakeFiles/CMakeScratch/TryCompile-RoSKBQ']
+        ignore line: []
+        ignore line: [Run Build Command(s): /opt/apps/cmake/3.28.1/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_c0c2a/fast]
+        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_c0c2a.dir/build.make CMakeFiles/cmTC_c0c2a.dir/build]
+        ignore line: [gmake[1]: Entering directory '/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/CMakeFiles/CMakeScratch/TryCompile-RoSKBQ']
+        ignore line: [Building Fortran object CMakeFiles/cmTC_c0c2a.dir/CMakeFortranCompilerABI.F90.o]
+        ignore line: [/opt/apps/gcc/13.2.0/bin/gfortran   -v -c /opt/apps/cmake/3.28.1/share/cmake-3.28/Modules/CMakeFortranCompilerABI.F90 -o CMakeFiles/cmTC_c0c2a.dir/CMakeFortranCompilerABI.F90.o]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=/opt/apps/gcc/13.2.0/bin/gfortran]
+        ignore line: [Target: x86_64-pc-linux-gnu]
+        ignore line: [Configured with: /admin/build/admin/rpms/stampede3/BUILD/gcc-13.2.0/configure --enable-libssp --enable-gold=yes --enable-ld=default --enable-plugins --enable-lto --with-tune=generic --enable-languages=c,c++,fortran --disable-multilib --prefix=/opt/apps/gcc/13.2.0 --with-gmp=/opt/apps/gcc/13.2.0 --with-mlgmp=/opt/apps/gcc/13.2.0 --with-mpfr=/opt/apps/gcc/13.2.0 --with-mpc=/opt/apps/gcc/13.2.0 --with-isl=/opt/apps/gcc/13.2.0]
+        ignore line: [Thread model: posix]
+        ignore line: [Supported LTO compression algorithms: zlib zstd]
+        ignore line: [gcc version 13.2.0 (GCC) ]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-c' '-o' 'CMakeFiles/cmTC_c0c2a.dir/CMakeFortranCompilerABI.F90.o' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_c0c2a.dir/']
+        ignore line: [ /opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/f951 /opt/apps/cmake/3.28.1/share/cmake-3.28/Modules/CMakeFortranCompilerABI.F90 -cpp=/tmp/ccEskLwr.f90 -quiet -v /opt/apps/cmake/3.28.1/share/cmake-3.28/Modules/CMakeFortranCompilerABI.F90 -quiet -dumpdir CMakeFiles/cmTC_c0c2a.dir/ -dumpbase CMakeFortranCompilerABI.F90.F90 -dumpbase-ext .F90 -mtune=generic -march=x86-64 -version -fintrinsic-modules-path /opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/finclude -fpre-include=/usr/include/finclude/math-vector-fortran.h -o /tmp/cckVGHXo.s]
+        ignore line: [GNU Fortran (GCC) version 13.2.0 (x86_64-pc-linux-gnu)]
+        ignore line: [	compiled by GNU C version 13.2.0  GMP version 6.2.1  MPFR version 4.1.0  MPC version 1.2.1  isl version isl-0.18-GMP]
+        ignore line: []
+        ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
+        ignore line: [ignoring nonexistent directory "/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../x86_64-pc-linux-gnu/include"]
+        ignore line: [ignoring nonexistent directory "/scratch/projects/compilers/intel24.0/oneapi/dnnl/2024.0/include"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ /opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/finclude]
+        ignore line: [ /opt/intel/oneapi/ccl/2021.11/include]
+        ignore line: [ /opt/intel/oneapi/mpi/2021.11/include]
+        ignore line: [ /opt/intel/oneapi/mkl/2024.0/include]
+        ignore line: [ /opt/intel/oneapi/ipp/2021.10/include]
+        ignore line: [ /opt/intel/oneapi/ippcp/2021.9/include]
+        ignore line: [ /opt/intel/oneapi/dpl/2022.3/include]
+        ignore line: [ /opt/intel/oneapi/dpcpp-ct/2024.0/include]
+        ignore line: [ /scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/include/dal]
+        ignore line: [ /opt/intel/oneapi/dev-utilities/2024.0/include]
+        ignore line: [ /opt/intel/oneapi/compiler/2024.0/include]
+        ignore line: [ /opt/intel/oneapi/tbb/2021.11/include]
+        ignore line: [ /opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/include]
+        ignore line: [ /usr/local/include]
+        ignore line: [ /opt/apps/gcc/13.2.0/include]
+        ignore line: [ /opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/include-fixed]
+        ignore line: [ /usr/include]
+        ignore line: [End of search list.]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-c' '-o' 'CMakeFiles/cmTC_c0c2a.dir/CMakeFortranCompilerABI.F90.o' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_c0c2a.dir/']
+        ignore line: [ /opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../x86_64-pc-linux-gnu/bin/as -v --64 -o CMakeFiles/cmTC_c0c2a.dir/CMakeFortranCompilerABI.F90.o /tmp/cckVGHXo.s]
+        ignore line: [GNU assembler version 2.37 (x86_64-pc-linux-gnu) using BFD version (GNU Binutils) 2.37]
+        ignore line: [COMPILER_PATH=/opt/apps/xalt/xalt/bin/:/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/:/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/:/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../x86_64-pc-linux-gnu/bin/]
+        ignore line: [LIBRARY_PATH=/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/opt/intel/oneapi/ccl/2021.11/lib/:/opt/intel/oneapi/mpi/2021.11/opt/mpi/libfabric/lib/:/opt/intel/oneapi/mpi/2021.11/lib/:/opt/intel/oneapi/mkl/2024.0/lib/:/opt/intel/oneapi/ipp/2021.10/lib/:/opt/intel/oneapi/ippcp/2021.9/lib/:/opt/intel/oneapi/dpl/2022.3/lib/:/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/lib/:/opt/intel/oneapi/compiler/2024.0/opt/compiler/lib/:/opt/intel/oneapi/compiler/2024.0/lib/:/opt/intel/oneapi/tbb/2021.11/lib/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../x86_64-pc-linux-gnu/lib/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../:/lib/:/usr/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-c' '-o' 'CMakeFiles/cmTC_c0c2a.dir/CMakeFortranCompilerABI.F90.o' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_c0c2a.dir/CMakeFortranCompilerABI.F90.']
+        ignore line: [Linking Fortran executable cmTC_c0c2a]
+        ignore line: [/opt/apps/cmake/3.28.1/bin/cmake -E cmake_link_script CMakeFiles/cmTC_c0c2a.dir/link.txt --verbose=1]
+        ignore line: [/opt/apps/gcc/13.2.0/bin/gfortran  -v CMakeFiles/cmTC_c0c2a.dir/CMakeFortranCompilerABI.F90.o -o cmTC_c0c2a ]
+        ignore line: [Driving: /opt/apps/gcc/13.2.0/bin/gfortran -v CMakeFiles/cmTC_c0c2a.dir/CMakeFortranCompilerABI.F90.o -o cmTC_c0c2a -l gfortran -l m -shared-libgcc]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=/opt/apps/gcc/13.2.0/bin/gfortran]
+        ignore line: [COLLECT_LTO_WRAPPER=/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/lto-wrapper]
+        ignore line: [Target: x86_64-pc-linux-gnu]
+        ignore line: [Configured with: /admin/build/admin/rpms/stampede3/BUILD/gcc-13.2.0/configure --enable-libssp --enable-gold=yes --enable-ld=default --enable-plugins --enable-lto --with-tune=generic --enable-languages=c,c++,fortran --disable-multilib --prefix=/opt/apps/gcc/13.2.0 --with-gmp=/opt/apps/gcc/13.2.0 --with-mlgmp=/opt/apps/gcc/13.2.0 --with-mpfr=/opt/apps/gcc/13.2.0 --with-mpc=/opt/apps/gcc/13.2.0 --with-isl=/opt/apps/gcc/13.2.0]
+        ignore line: [Thread model: posix]
+        ignore line: [Supported LTO compression algorithms: zlib zstd]
+        ignore line: [gcc version 13.2.0 (GCC) ]
+        ignore line: [Reading specs from /opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../lib64/libgfortran.spec]
+        ignore line: [rename spec lib to liborig]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_c0c2a' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_c0c2a-']
+        ignore line: [COMPILER_PATH=/opt/apps/xalt/xalt/bin/:/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/:/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/:/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../x86_64-pc-linux-gnu/bin/]
+        ignore line: [LIBRARY_PATH=/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/opt/intel/oneapi/ccl/2021.11/lib/:/opt/intel/oneapi/mpi/2021.11/opt/mpi/libfabric/lib/:/opt/intel/oneapi/mpi/2021.11/lib/:/opt/intel/oneapi/mkl/2024.0/lib/:/opt/intel/oneapi/ipp/2021.10/lib/:/opt/intel/oneapi/ippcp/2021.9/lib/:/opt/intel/oneapi/dpl/2022.3/lib/:/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/lib/:/opt/intel/oneapi/compiler/2024.0/opt/compiler/lib/:/opt/intel/oneapi/compiler/2024.0/lib/:/opt/intel/oneapi/tbb/2021.11/lib/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../x86_64-pc-linux-gnu/lib/:/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../:/lib/:/usr/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_c0c2a' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_c0c2a.']
+        link line: [ /opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/collect2 -plugin /opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/liblto_plugin.so -plugin-opt=/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccWWeYpS.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lquadmath -plugin-opt=-pass-through=-lm -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_c0c2a /lib/../lib64/crt1.o /lib/../lib64/crti.o /opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/crtbegin.o -L/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0 -L/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/opt/intel/oneapi/ccl/2021.11/lib -L/opt/intel/oneapi/mpi/2021.11/opt/mpi/libfabric/lib -L/opt/intel/oneapi/mpi/2021.11/lib -L/opt/intel/oneapi/mkl/2024.0/lib -L/opt/intel/oneapi/ipp/2021.10/lib -L/opt/intel/oneapi/ippcp/2021.9/lib -L/opt/intel/oneapi/dpl/2022.3/lib -L/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/lib -L/opt/intel/oneapi/compiler/2024.0/opt/compiler/lib -L/opt/intel/oneapi/compiler/2024.0/lib -L/opt/intel/oneapi/tbb/2021.11/lib -L/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../x86_64-pc-linux-gnu/lib -L/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../.. CMakeFiles/cmTC_c0c2a.dir/CMakeFortranCompilerABI.F90.o -lgfortran -lm -lgcc_s -lgcc --as-needed -lquadmath --no-as-needed -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/crtend.o /lib/../lib64/crtn.o]
+          arg [/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/collect2] ==> ignore
+          arg [-plugin] ==> ignore
+          arg [/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/liblto_plugin.so] ==> ignore
+          arg [-plugin-opt=/opt/apps/gcc/13.2.0/libexec/gcc/x86_64-pc-linux-gnu/13.2.0/lto-wrapper] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/ccWWeYpS.res] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lquadmath] ==> ignore
+          arg [-plugin-opt=-pass-through=-lm] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [--eh-frame-hdr] ==> ignore
+          arg [-m] ==> ignore
+          arg [elf_x86_64] ==> ignore
+          arg [-dynamic-linker] ==> ignore
+          arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
+          arg [-o] ==> ignore
+          arg [cmTC_c0c2a] ==> ignore
+          arg [/lib/../lib64/crt1.o] ==> obj [/lib/../lib64/crt1.o]
+          arg [/lib/../lib64/crti.o] ==> obj [/lib/../lib64/crti.o]
+          arg [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/crtbegin.o] ==> obj [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/crtbegin.o]
+          arg [-L/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0] ==> dir [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0]
+          arg [-L/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../lib64] ==> dir [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../lib64]
+          arg [-L/lib/../lib64] ==> dir [/lib/../lib64]
+          arg [-L/usr/lib/../lib64] ==> dir [/usr/lib/../lib64]
+          arg [-L/opt/intel/oneapi/ccl/2021.11/lib] ==> dir [/opt/intel/oneapi/ccl/2021.11/lib]
+          arg [-L/opt/intel/oneapi/mpi/2021.11/opt/mpi/libfabric/lib] ==> dir [/opt/intel/oneapi/mpi/2021.11/opt/mpi/libfabric/lib]
+          arg [-L/opt/intel/oneapi/mpi/2021.11/lib] ==> dir [/opt/intel/oneapi/mpi/2021.11/lib]
+          arg [-L/opt/intel/oneapi/mkl/2024.0/lib] ==> dir [/opt/intel/oneapi/mkl/2024.0/lib]
+          arg [-L/opt/intel/oneapi/ipp/2021.10/lib] ==> dir [/opt/intel/oneapi/ipp/2021.10/lib]
+          arg [-L/opt/intel/oneapi/ippcp/2021.9/lib] ==> dir [/opt/intel/oneapi/ippcp/2021.9/lib]
+          arg [-L/opt/intel/oneapi/dpl/2022.3/lib] ==> dir [/opt/intel/oneapi/dpl/2022.3/lib]
+          arg [-L/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/lib] ==> dir [/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/lib]
+          arg [-L/opt/intel/oneapi/compiler/2024.0/opt/compiler/lib] ==> dir [/opt/intel/oneapi/compiler/2024.0/opt/compiler/lib]
+          arg [-L/opt/intel/oneapi/compiler/2024.0/lib] ==> dir [/opt/intel/oneapi/compiler/2024.0/lib]
+          arg [-L/opt/intel/oneapi/tbb/2021.11/lib] ==> dir [/opt/intel/oneapi/tbb/2021.11/lib]
+          arg [-L/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../x86_64-pc-linux-gnu/lib] ==> dir [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../x86_64-pc-linux-gnu/lib]
+          arg [-L/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../..] ==> dir [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../..]
+          arg [CMakeFiles/cmTC_c0c2a.dir/CMakeFortranCompilerABI.F90.o] ==> ignore
+          arg [-lgfortran] ==> lib [gfortran]
+          arg [-lm] ==> lib [m]
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [-lgcc] ==> lib [gcc]
+          arg [--as-needed] ==> ignore
+          arg [-lquadmath] ==> lib [quadmath]
+          arg [--no-as-needed] ==> ignore
+          arg [-lm] ==> lib [m]
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [-lgcc] ==> lib [gcc]
+          arg [-lc] ==> lib [c]
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [-lgcc] ==> lib [gcc]
+          arg [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/crtend.o] ==> obj [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/crtend.o]
+          arg [/lib/../lib64/crtn.o] ==> obj [/lib/../lib64/crtn.o]
+        collapse obj [/lib/../lib64/crt1.o] ==> [/lib64/crt1.o]
+        collapse obj [/lib/../lib64/crti.o] ==> [/lib64/crti.o]
+        collapse obj [/lib/../lib64/crtn.o] ==> [/lib64/crtn.o]
+        collapse library dir [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0] ==> [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0]
+        collapse library dir [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../lib64] ==> [/opt/apps/gcc/13.2.0/lib64]
+        collapse library dir [/lib/../lib64] ==> [/lib64]
+        collapse library dir [/usr/lib/../lib64] ==> [/usr/lib64]
+        collapse library dir [/opt/intel/oneapi/ccl/2021.11/lib] ==> [/opt/intel/oneapi/ccl/2021.11/lib]
+        collapse library dir [/opt/intel/oneapi/mpi/2021.11/opt/mpi/libfabric/lib] ==> [/opt/intel/oneapi/mpi/2021.11/opt/mpi/libfabric/lib]
+        collapse library dir [/opt/intel/oneapi/mpi/2021.11/lib] ==> [/opt/intel/oneapi/mpi/2021.11/lib]
+        collapse library dir [/opt/intel/oneapi/mkl/2024.0/lib] ==> [/opt/intel/oneapi/mkl/2024.0/lib]
+        collapse library dir [/opt/intel/oneapi/ipp/2021.10/lib] ==> [/opt/intel/oneapi/ipp/2021.10/lib]
+        collapse library dir [/opt/intel/oneapi/ippcp/2021.9/lib] ==> [/opt/intel/oneapi/ippcp/2021.9/lib]
+        collapse library dir [/opt/intel/oneapi/dpl/2022.3/lib] ==> [/opt/intel/oneapi/dpl/2022.3/lib]
+        collapse library dir [/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/lib] ==> [/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/lib]
+        collapse library dir [/opt/intel/oneapi/compiler/2024.0/opt/compiler/lib] ==> [/opt/intel/oneapi/compiler/2024.0/opt/compiler/lib]
+        collapse library dir [/opt/intel/oneapi/compiler/2024.0/lib] ==> [/opt/intel/oneapi/compiler/2024.0/lib]
+        collapse library dir [/opt/intel/oneapi/tbb/2021.11/lib] ==> [/opt/intel/oneapi/tbb/2021.11/lib]
+        collapse library dir [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../../../x86_64-pc-linux-gnu/lib] ==> [/opt/apps/gcc/13.2.0/x86_64-pc-linux-gnu/lib]
+        collapse library dir [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/../../..] ==> [/opt/apps/gcc/13.2.0/lib]
+        implicit libs: [gfortran;m;gcc_s;gcc;quadmath;m;gcc_s;gcc;c;gcc_s;gcc]
+        implicit objs: [/lib64/crt1.o;/lib64/crti.o;/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/crtbegin.o;/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0/crtend.o;/lib64/crtn.o]
+        implicit dirs: [/opt/apps/gcc/13.2.0/lib/gcc/x86_64-pc-linux-gnu/13.2.0;/opt/apps/gcc/13.2.0/lib64;/lib64;/usr/lib64;/opt/intel/oneapi/ccl/2021.11/lib;/opt/intel/oneapi/mpi/2021.11/opt/mpi/libfabric/lib;/opt/intel/oneapi/mpi/2021.11/lib;/opt/intel/oneapi/mkl/2024.0/lib;/opt/intel/oneapi/ipp/2021.10/lib;/opt/intel/oneapi/ippcp/2021.9/lib;/opt/intel/oneapi/dpl/2022.3/lib;/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/lib;/opt/intel/oneapi/compiler/2024.0/opt/compiler/lib;/opt/intel/oneapi/compiler/2024.0/lib;/opt/intel/oneapi/tbb/2021.11/lib;/opt/apps/gcc/13.2.0/x86_64-pc-linux-gnu/lib;/opt/apps/gcc/13.2.0/lib]
+        implicit fwks: []
+      
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/apps/cmake/3.28.1/share/cmake-3.28/Modules/CheckLibraryExists.cmake:69 (try_compile)"
+      - "CMakeLists.txt:26 (CHECK_LIBRARY_EXISTS)"
+    checks:
+      - "Looking for round in m"
+    directories:
+      source: "/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/CMakeFiles/CMakeScratch/TryCompile-dJkRtv"
+      binary: "/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/CMakeFiles/CMakeScratch/TryCompile-dJkRtv"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " "
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "NEEDS_LIB_M"
+      cached: true
+      stdout: |
+        Change Dir: '/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/CMakeFiles/CMakeScratch/TryCompile-dJkRtv'
+        
+        Run Build Command(s): /opt/apps/cmake/3.28.1/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_0edf6/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_0edf6.dir/build.make CMakeFiles/cmTC_0edf6.dir/build
+        gmake[1]: Entering directory '/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/CMakeFiles/CMakeScratch/TryCompile-dJkRtv'
+        Building C object CMakeFiles/cmTC_0edf6.dir/CheckFunctionExists.c.o
+        /opt/apps/gcc/13.2.0/bin/gcc   -DCHECK_FUNCTION_EXISTS=round -o CMakeFiles/cmTC_0edf6.dir/CheckFunctionExists.c.o -c /work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/CMakeFiles/CMakeScratch/TryCompile-dJkRtv/CheckFunctionExists.c
+        <command-line>: warning: conflicting types for built-in function ‘round’; expected ‘double(double)’ [-Wbuiltin-declaration-mismatch]
+        /work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/CMakeFiles/CMakeScratch/TryCompile-dJkRtv/CheckFunctionExists.c:7:3: note: in expansion of macro ‘CHECK_FUNCTION_EXISTS’
+            7 |   CHECK_FUNCTION_EXISTS(void);
+              |   ^~~~~~~~~~~~~~~~~~~~~
+        /work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/CMakeFiles/CMakeScratch/TryCompile-dJkRtv/CheckFunctionExists.c:1:1: note: ‘round’ is declared in header ‘<math.h>’
+          +++ |+#include <math.h>
+            1 | #ifdef CHECK_FUNCTION_EXISTS
+        Linking C executable cmTC_0edf6
+        /opt/apps/cmake/3.28.1/bin/cmake -E cmake_link_script CMakeFiles/cmTC_0edf6.dir/link.txt --verbose=1
+        /opt/apps/gcc/13.2.0/bin/gcc   -DCHECK_FUNCTION_EXISTS=round CMakeFiles/cmTC_0edf6.dir/CheckFunctionExists.c.o -o cmTC_0edf6  -lm 
+        gmake[1]: Leaving directory '/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build/CMakeFiles/CMakeScratch/TryCompile-dJkRtv'
+        
+      exitCode: 0
+...

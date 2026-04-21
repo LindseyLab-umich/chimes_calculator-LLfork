@@ -1,0 +1,1 @@
+/opt/apps/gcc/13.2.0/bin/gcc  -O3 -funroll-all-loops "CMakeFiles/chimescalc-test_direct-C.dir/chimesFF/examples/c/main.c.o" -o chimescalc-test_direct-C  -Wl,-rpath,/work2/09982/aoladipupo/stampede3/codes/chimes_calculator-LLfork/build libchimescalc.so -lm 
