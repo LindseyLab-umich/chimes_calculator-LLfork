@@ -1,73 +1,60 @@
-########################################
-########################################
-# United atom propane at 300 K, using ***Turbo*** ChIMES
-########################################
-########################################
+## General settings### 
+# -- These lines are always needed exactly as is
+
+units           real        
+newton          on     
+atom_style      atomic # No charges as in full      
+atom_modify     sort 0 0.0 
+
+#### Neighbor list setup ####  
+# -- These lines are always needed exactly as is
+
+neighbor        1.0 bin
+neigh_modify    delay 0 every 1 check yes
 
 
-##########################################
-# USER-SPECIFIED VARIABLES
-##########################################
+#### Define some universal vars  
+# -- These lines are always needed, but the user can modify temp (temperature) and iofrq (output frequency)
 
 variable temp equal 300
-variable seed equal 6306
+variable seed equal 1866
 variable iofrq equal 4 
 
-########################################
-# GENERAL CONTROLS
-######################################## 
-
-units           real                          # Required for CHIMES pair style
-newton          on                            # Required for CHIMES pair style
-atom_style      atomic                        # Required for CHIMES pair style
-atom_modify     sort 0 0.0                    # Required for CHIMES pair style
-atom_modify     map array                     # Required for CHIMES pair style
  
-neighbor        2.0 bin
-neigh_modify    delay 0 every 1 check yes     # Required for CHIMES pair style
+# -- These lines are always needed, but the data file name should be updated (following the case-x.indep-y.data.in convention) to match the in.lammps file's case/indep
 
-
-########################################
-# INITIALIZATION CONTROLS
-########################################
-
-read_data       data.in # 
+read_data       case-0.indep-0.data.in # 
 velocity        all create ${temp} ${seed} loop all mom yes rot yes dist gaussian
 
 
-########################################
-# FORCE FIELD CONTROLS 
-########################################
+#### Evaluate interactions with ChIMES ####  
+# -- These lines are always needed, exactly as is 
+# -- The number of instances of "chimesFF fitting" should match the number of *.fm_setup.in files you create/fit
+pair_style      hybrid/overlay chimesFF for_fitting chimesFF for_fitting
+pair_coeff      * * chimesFF  1  0params.txt.reduced
+pair_coeff      * * chimesFF  2  1params.txt.reduced
 
-# The number of instances of "chimesFF" should match the number of *.fm_setup.in files you create/fit when developing a TurboChIMES model
-# If using with the ALD, replace each instance of "chimesFF" with "chimesFF for_fitting" 
+#### Initiate dynamics and set i/o  
+# -- These lines are always needed, but the user can modify:
+#    1. The timestep
+#    2. Which fix is used, provided ${temp} is used to set the temperature
+#    3. The dump modify element line
+#    4. The user is free to ADD items to the thermo_style and dump custom, AT THE END of what is given here.
+#    5. The number of steps to run
 
-pair_style      hybrid/overlay chimesFF chimesFF 
-pair_coeff      * * chimesFF  1  0.params.txt.reduced
-pair_coeff      * * chimesFF  2  1.params.txt.reduced
-
-
-########################################
-# RUN, DUMP, AND THERMO CONTROLS 
-########################################
-
-##### Set the ensemble
 
 timestep        0.05
-fix             1 all nvt temp ${temp} ${temp} 5
 
-##### Define thermo output
+fix             1 all nvt temp ${temp} ${temp} 5
+fix_modify      1 energy yes
 
 compute         ke_tensor all temp
-thermo_style    custom step time ke pe etotal temp press pxx pyy pzz pxy pxz pyz vol c_ke_tensor[1] c_ke_tensor[2] c_ke_tensor[3] c_ke_tensor[4] c_ke_tensor[5] c_ke_tensor[6] econserve # econserve replaces fix_modify
+thermo_style    custom step time ke pe etotal temp press pxx pyy pzz pxy pxz pyz vol c_ke_tensor[1] c_ke_tensor[2] c_ke_tensor[3] c_ke_tensor[4] c_ke_tensor[5] c_ke_tensor[6]
 thermo_modify   line one format float %20.5f flush yes
 thermo          ${iofrq}
 
-##### Print dump files
-
 dump            1 all custom ${iofrq} traj.lammpstrj element xu yu zu fx fy fz
-dump_modify     1 element N H sort id
+dump_modify     1 element H O sort id
+restart 10000 restart.*
 
-##### Run the simulation
- 
-run             100
+run             200000
