@@ -1,0 +1,81 @@
+! ChIMES Multilayer CO Long Range Parameters for Publication (DOI: TBD)
+!
+! These parameters correspond to a ChIMES multilayer CO model for 2400K to 9000K with densities ranging from 1.8 - 4.0 g/ml.
+! The model was developed to compare the performance of single layer and multilayer ChIMES models against DFT.
+! It is not a fully optimized representation for general CO simulations and is intended primarily for benchmarking purposes.
+
+! Date  2026-04-06
+!
+! Number of equations            =  508200
+! DLARS code for LASSO used
+! DLARS alpha = 1.0000e-04
+! Reading output from prior DLARS calculation
+! RMS force error                =  1.5866e+03
+! max abs variable               =  3.8306e+01
+! number of fitting vars         =  12
+! Bayesian Information Criterion =  7.4903e+06
+!
+USECOUL: false
+FITCOUL: false
+USE3BCH: false
+USE4BCH: false
+EXCLD1B: false
+EXCLD2B: false
+
+PAIRTYP: CHEBYSHEV  4 0 0 -1 1
+
+ATOM TYPES: 2
+
+# TYPEIDX #	# ATM_TYP #	# ATMCHRG #	# ATMMASS #
+0		C		0		12.011
+1		O		0		15.999
+
+ATOM PAIRS: 3
+
+# PAIRIDX #	# ATM_TY1 #	# ATM_TY1 #	# S_MINIM #	# S_MAXIM #	# CHBDIST #	# MORSE_LAMBDA #
+	0               C               C               0.988           8               MORSE           1.35            
+	1               O               O               0.911           8               MORSE           2.55            
+	2               C               O               0.876           8               MORSE           1.15            
+
+FCUT TYPE: TERSOFF 0.75
+
+PAIR CHEBYSHEV PENALTY DIST:    0.02
+PAIR CHEBYSHEV PENALTY SCALING: 1000000.0
+
+ATOM PAIR TRIPLETS: 0
+ATOM PAIR QUADRUPLETS: 0
+
+PAIR CHEBYSHEV PARAMS 
+
+PAIRTYPE PARAMS: 0 C C
+
+  0   1.5763584307610e+01
+  1   3.8306151680700e+01
+  2   3.0885932638830e+01
+  3   1.0739113377360e+01
+ 
+PAIRTYPE PARAMS: 1 O O
+
+  0  -3.6945827407400e-01
+  1  -8.4102168386880e-01
+  2  -8.1363779867590e-01
+  3   2.5328282578680e-01
+ 
+PAIRTYPE PARAMS: 2 C O
+
+  0  -8.0005814830650e+00
+  1  -1.7380842499820e+01
+  2  -1.3471048290150e+01
+  3  -3.3130389025510e+00
+ 
+
+PAIRMAPS: 4
+0 CC
+2 CO
+2 OC
+1 OO
+
+NO ENERGY OFFSETS:  2
+ENERGY OFFSET 1   0.0000000000000e+00
+ENERGY OFFSET 2   0.0000000000000e+00
+ENDFILE

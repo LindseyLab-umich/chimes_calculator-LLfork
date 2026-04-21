@@ -1,0 +1,76 @@
+! ChIMES Multilayer Long Range Propane Parameters for Publication (DOI: TBD)
+!
+! These parameters correspond to a ChIMES multilayer propane model at 500 K and 1 g/mL.
+! The model was developed to compare the performance of single layer and multilayer ChIMES models against classical potential.
+! It is not a fully optimized representation for general propane simulations and is intended primarily for benchmarking purposes.
+
+! Date  2025-04-18
+!
+! Number of equations            =  648216
+! DLARS code for LASSO used
+! DLARS alpha = 1.0000e-04
+! Reading output from prior DLARS calculation
+! RMS force error                =  8.9979e+01
+! max abs variable               =  1.1051e+02
+! number of fitting vars         =  12
+! Bayesian Information Criterion =  5.8336e+06
+!
+USECOUL: false
+FITCOUL: false
+USE3BCH: false
+USE4BCH: false
+
+PAIRTYP: CHEBYSHEV  4 0 0 -1 1
+
+ATOM TYPES: 2
+
+# TYPEIDX #	# ATM_TYP #	# ATMCHRG #	# ATMMASS #
+0		C1		0		14.5
+1		C2		0		14.5
+
+ATOM PAIRS: 3
+
+# PAIRIDX #	# ATM_TY1 #	# ATM_TY1 #	# S_MINIM #	# S_MAXIM #	# CHBDIST #	# MORSE_LAMBDA #
+	0               C1              C1              2.05            7               MORSE           1.54            
+	1               C2              C2              2.18            7               MORSE           1.54            
+	2               C1              C2              1.09            7               MORSE           1.54            
+
+FCUT TYPE: TERSOFF 0.75
+
+PAIR CHEBYSHEV PENALTY DIST:    0.02
+PAIR CHEBYSHEV PENALTY SCALING: 1000000.0
+
+ATOM PAIR TRIPLETS: 0
+ATOM PAIR QUADRUPLETS: 0
+
+PAIR CHEBYSHEV PARAMS 
+
+PAIRTYPE PARAMS: 0 C1 C1
+
+  0   1.2195397568130e+00
+  1  -1.2373343919640e+01
+  2  -1.1287586390450e+01
+  3  -6.6650595465360e+00
+ 
+PAIRTYPE PARAMS: 1 C2 C2
+
+  0  -8.3499586135240e-01
+  1  -9.1127891752850e+00
+  2  -8.1964731771820e+00
+  3  -4.3033136079350e+00
+ 
+PAIRTYPE PARAMS: 2 C1 C2
+
+  0  -4.8496388121540e+01
+  1  -1.1050833577770e+02
+  2  -8.6574306224090e+01
+  3  -2.6622046289740e+01
+ 
+
+PAIRMAPS: 4
+0 C1C1
+2 C1C2
+2 C2C1
+1 C2C2
+
+ENDFILE
