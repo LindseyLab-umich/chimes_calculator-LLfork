@@ -1,1 +1,24 @@
 etc/lmp/tests/*/correct_output/*
+
+# Build / install outputs (do not commit)
+build/
+**/CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+install_manifest.txt
+*.o
+*.obj
+*.a
+*.so
+*.dylib
+*.dll
+*.exe
+*.mod
+*.MOD
+
+# Local build logs
+etc/lmp/build.err
+
+# Local vendored LAMMPS checkout (keep out of git)
+etc/lammps/
