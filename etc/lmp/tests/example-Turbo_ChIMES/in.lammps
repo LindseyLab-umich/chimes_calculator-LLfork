@@ -8,7 +8,7 @@ variable iofrq               equal 4                            # Output frequen
 variable tstep               equal 0.05                         # Timestep (fs)
 variable run_steps           equal 200000                       # Number of MD steps
 
-variable data_file           string case-0.indep-0.data.in
+variable data_file           string data.in
 
 ########################################
 # GENERAL CONTROLS
