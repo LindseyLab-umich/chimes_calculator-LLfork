@@ -6,7 +6,7 @@ variable temp                equal 300                          # Temperature (K
 variable seed                equal 1866                         # Random seed
 variable iofrq               equal 4                            # Output frequency
 variable tstep               equal 0.05                         # Timestep (fs)
-variable run_steps           equal 200000                       # Number of MD steps
+variable run_steps           equal 100                          # Number of MD steps
 
 variable data_file           string data.in
 
