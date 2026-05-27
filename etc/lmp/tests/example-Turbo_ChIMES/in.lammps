@@ -1,73 +1,87 @@
-########################################
-########################################
-# United atom propane at 300 K, using ***Turbo*** ChIMES
-########################################
-########################################
-
-
 ##########################################
 # USER-SPECIFIED VARIABLES
 ##########################################
 
-variable temp equal 300
-variable seed equal 6306
-variable iofrq equal 4 
+variable temp                equal 300                          # Temperature (K)
+variable seed                equal 1866                         # Random seed
+variable iofrq               equal 4                            # Output frequency
+variable tstep               equal 0.05                         # Timestep (fs)
+variable run_steps           equal 100                          # Number of MD steps
+
+variable data_file           string data.in
 
 ########################################
 # GENERAL CONTROLS
-######################################## 
+########################################
 
-units           real                          # Required for CHIMES pair style
-newton          on                            # Required for CHIMES pair style
-atom_style      atomic                        # Required for CHIMES pair style
-atom_modify     sort 0 0.0                    # Required for CHIMES pair style
-atom_modify     map array                     # Required for CHIMES pair style
- 
-neighbor        2.0 bin
-neigh_modify    delay 0 every 1 check yes     # Required for CHIMES pair style
+units           real                                     # Required for CHIMES pair style
+newton          on                                       # Required for CHIMES pair style
+atom_style      atomic                                   # No charges as in full
+atom_modify     sort 0 0.0                               # Prevent sorting
 
+########################################
+# NEIGHBOR LIST SETUP
+########################################
+
+neighbor        1.0 bin
+neigh_modify    delay 0 every 1 check yes
 
 ########################################
 # INITIALIZATION CONTROLS
 ########################################
 
-read_data       data.in # 
+read_data       ${data_file}
+
 velocity        all create ${temp} ${seed} loop all mom yes rot yes dist gaussian
 
-
 ########################################
-# FORCE FIELD CONTROLS 
-########################################
-
-# The number of instances of "chimesFF" should match the number of *.fm_setup.in files you create/fit when developing a TurboChIMES model
-# If using with the ALD, replace each instance of "chimesFF" with "chimesFF for_fitting" 
-
-pair_style      hybrid/overlay chimesFF chimesFF 
-pair_coeff      * * chimesFF  1  0.params.txt.reduced
-pair_coeff      * * chimesFF  2  1.params.txt.reduced
-
-
-########################################
-# RUN, DUMP, AND THERMO CONTROLS 
+# FORCE FIELD CONTROLS
 ########################################
 
-##### Set the ensemble
+# Number of "chimesFF for_fitting" entries should match
+# the number of *.fm_setup.in files
 
-timestep        0.05
+pair_style      hybrid/overlay chimesFF for_fitting chimesFF for_fitting
+
+pair_coeff      * * chimesFF 1 0params.txt.reduced
+pair_coeff      * * chimesFF 2 1params.txt.reduced
+
+########################################
+# ENSEMBLE CONTROLS
+########################################
+
 fix             1 all nvt temp ${temp} ${temp} 5
+fix_modify      1 energy yes
 
-##### Define thermo output
+########################################
+# THERMO OUTPUT CONTROLS
+########################################
 
 compute         ke_tensor all temp
-thermo_style    custom step time ke pe etotal temp press pxx pyy pzz pxy pxz pyz vol c_ke_tensor[1] c_ke_tensor[2] c_ke_tensor[3] c_ke_tensor[4] c_ke_tensor[5] c_ke_tensor[6] econserve # econserve replaces fix_modify
+
+thermo_style    custom step time ke pe etotal temp press pxx pyy pzz pxy pxz pyz vol c_ke_tensor[1] c_ke_tensor[2] c_ke_tensor[3] c_ke_tensor[4] c_ke_tensor[5] c_ke_tensor[6]
+
 thermo_modify   line one format float %20.5f flush yes
 thermo          ${iofrq}
 
-##### Print dump files
+########################################
+# DUMP CONTROLS
+########################################
 
 dump            1 all custom ${iofrq} traj.lammpstrj element xu yu zu fx fy fz
-dump_modify     1 element N H sort id
 
-##### Run the simulation
- 
-run             100
+dump_modify     1 element H O sort id
+
+########################################
+# RESTART CONTROLS
+########################################
+
+restart         10000 restart.*
+
+########################################
+# RUN CONTROLS
+########################################
+
+timestep        ${tstep}
+
+run             ${run_steps}
