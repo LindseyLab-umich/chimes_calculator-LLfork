@@ -1,60 +1,87 @@
-## General settings### 
-# -- These lines are always needed exactly as is
+##########################################
+# USER-SPECIFIED VARIABLES
+##########################################
 
-units           real        
-newton          on     
-atom_style      atomic # No charges as in full      
-atom_modify     sort 0 0.0 
+variable temp                equal 300                          # Temperature (K)
+variable seed                equal 1866                         # Random seed
+variable iofrq               equal 4                            # Output frequency
+variable tstep               equal 0.05                         # Timestep (fs)
+variable run_steps           equal 200000                       # Number of MD steps
 
-#### Neighbor list setup ####  
-# -- These lines are always needed exactly as is
+variable data_file           string case-0.indep-0.data.in
+
+########################################
+# GENERAL CONTROLS
+########################################
+
+units           real                                     # Required for CHIMES pair style
+newton          on                                       # Required for CHIMES pair style
+atom_style      atomic                                   # No charges as in full
+atom_modify     sort 0 0.0                               # Prevent sorting
+
+########################################
+# NEIGHBOR LIST SETUP
+########################################
 
 neighbor        1.0 bin
 neigh_modify    delay 0 every 1 check yes
 
+########################################
+# INITIALIZATION CONTROLS
+########################################
 
-#### Define some universal vars  
-# -- These lines are always needed, but the user can modify temp (temperature) and iofrq (output frequency)
+read_data       ${data_file}
 
-variable temp equal 300
-variable seed equal 1866
-variable iofrq equal 4 
-
- 
-# -- These lines are always needed, but the data file name should be updated (following the case-x.indep-y.data.in convention) to match the in.lammps file's case/indep
-
-read_data       case-0.indep-0.data.in # 
 velocity        all create ${temp} ${seed} loop all mom yes rot yes dist gaussian
 
+########################################
+# FORCE FIELD CONTROLS
+########################################
 
-#### Evaluate interactions with ChIMES ####  
-# -- These lines are always needed, exactly as is 
-# -- The number of instances of "chimesFF fitting" should match the number of *.fm_setup.in files you create/fit
+# Number of "chimesFF for_fitting" entries should match
+# the number of *.fm_setup.in files
+
 pair_style      hybrid/overlay chimesFF for_fitting chimesFF for_fitting
-pair_coeff      * * chimesFF  1  0params.txt.reduced
-pair_coeff      * * chimesFF  2  1params.txt.reduced
 
-#### Initiate dynamics and set i/o  
-# -- These lines are always needed, but the user can modify:
-#    1. The timestep
-#    2. Which fix is used, provided ${temp} is used to set the temperature
-#    3. The dump modify element line
-#    4. The user is free to ADD items to the thermo_style and dump custom, AT THE END of what is given here.
-#    5. The number of steps to run
+pair_coeff      * * chimesFF 1 0params.txt.reduced
+pair_coeff      * * chimesFF 2 1params.txt.reduced
 
-
-timestep        0.05
+########################################
+# ENSEMBLE CONTROLS
+########################################
 
 fix             1 all nvt temp ${temp} ${temp} 5
 fix_modify      1 energy yes
 
+########################################
+# THERMO OUTPUT CONTROLS
+########################################
+
 compute         ke_tensor all temp
+
 thermo_style    custom step time ke pe etotal temp press pxx pyy pzz pxy pxz pyz vol c_ke_tensor[1] c_ke_tensor[2] c_ke_tensor[3] c_ke_tensor[4] c_ke_tensor[5] c_ke_tensor[6]
+
 thermo_modify   line one format float %20.5f flush yes
 thermo          ${iofrq}
 
-dump            1 all custom ${iofrq} traj.lammpstrj element xu yu zu fx fy fz
-dump_modify     1 element H O sort id
-restart 10000 restart.*
+########################################
+# DUMP CONTROLS
+########################################
 
-run             200000
+dump            1 all custom ${iofrq} traj.lammpstrj element xu yu zu fx fy fz
+
+dump_modify     1 element H O sort id
+
+########################################
+# RESTART CONTROLS
+########################################
+
+restart         10000 restart.*
+
+########################################
+# RUN CONTROLS
+########################################
+
+timestep        ${tstep}
+
+run             ${run_steps}
