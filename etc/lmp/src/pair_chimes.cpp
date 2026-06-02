@@ -41,10 +41,9 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <fstream>
 
 using namespace LAMMPS_NS;
-
-
 
 /*	Functions required by LAMMPS:
 
@@ -206,6 +205,14 @@ void PairCHIMES::coeff(int narg, char **arg)
 		{
 			setflag[i][j] = 1;
 			setflag[j][i] = 1;
+
+			if (chimes_type[i-1] < 0 || chimes_type[j-1] < 0)
+			{
+				cutsq[i][j] = 0.0;
+				if (i!=j)
+					cutsq[j][i] = 0.0;
+				continue;
+			}
 			
 			cutsq[i][j]  = cutoff_2b[ chimes_calculator.get_atom_pair_index( chimes_type[i-1]*chimes_calculator.natmtyps + chimes_type[j-1] ) ][1];
 			cutsq[i][j] *= cutsq[i][j];
@@ -338,6 +345,7 @@ void PairCHIMES::build_mb_neighlists()
 	int *ilist,*jlist,*klist,*llist, *numneigh,**firstneigh; // Local neighborlist vars
 	tagint 	*tag   = atom -> tag;					         // Access to global atom indices
 	int     itag, jtag, ktag, ltag;					         // holds tags	
+	int     *type  = atom -> type;					         // Access to system atom types
 	double 	**x    = atom -> x;					             // Access to system coordinates
 	
 	double maxcut_3b_padded = maxcut_3b + neighbor-> skin;
@@ -361,11 +369,17 @@ void PairCHIMES::build_mb_neighlists()
 		jlist = firstneigh[i];		
 		jnum  = numneigh[i];	
 
+		if (chimes_type[type[i]-1] < 0)
+			continue;
+
 		for (jj = 0; jj < jnum; jj++)	
 		{
 			j     = jlist[jj];	
 			jtag  = tag[j];		
 			j    &= NEIGHMASK;
+
+			if (chimes_type[type[j]-1] < 0)
+				continue;
 
 			if (j == i)
 				continue;
@@ -387,6 +401,9 @@ void PairCHIMES::build_mb_neighlists()
 				k     = klist[kk];	
 				ktag  = tag[k];		
 				k    &= NEIGHMASK;
+
+				if (chimes_type[type[k]-1] < 0)
+					continue;
 
 				if ( (k==i) || (k==j) )
 					continue;
@@ -435,6 +452,9 @@ void PairCHIMES::build_mb_neighlists()
 					l     = llist[ll];	
 					ltag  = tag[l];		
 					l    &= NEIGHMASK;
+
+					if (chimes_type[type[l]-1] < 0)
+						continue;
 					
 					if ( (l==i) || (l==j) || (l==k))
 						continue;
@@ -475,6 +495,7 @@ void PairCHIMES::build_mb_neighlists()
 			}
 		}
 	}
+
 }
 
 void PairCHIMES::compute(int eflag, int vflag)
@@ -571,11 +592,13 @@ void PairCHIMES::compute(int eflag, int vflag)
 	////////////////////////////////////////
 	// Compute 1- and 2-body interactions
 	////////////////////////////////////////
-	
 	for (ii = 0; ii < inum; ii++)		// Loop over the atoms owned by the current process
 	{
 		i     = ilist[ii];				// Index of the current atom
 		itag  = tag[i];					// Get i's global atom index (sort of like its "parent")
+
+		if (chimes_type[type[i]-1] < 0)
+			continue;
 
 		jlist = firstneigh[i];			// Neighborlist for atom i
 		jnum  = numneigh[i];			// Number of neighbors of atom i
@@ -598,6 +621,9 @@ void PairCHIMES::compute(int eflag, int vflag)
 			j     = jlist[jj];			// Index of the jj atom
 			jtag  = tag[j];				// Get j's global atom index (sort of like its "parent")
 			j    &= NEIGHMASK;			// Strip possible extra bits of j
+
+			if (chimes_type[type[j]-1] < 0)
+				continue;
 				
 			
 			if (jtag <= itag) // only allow calculation for j<i, since we've requested a full neighbor list
@@ -836,6 +862,8 @@ void PairCHIMES::set_chimes_type()
 		std::cout << "Attempting to match LAMMPS and ChIMES atom types by comparing masses. Looking for matches within a tolerance of 1e-3." << std::endl;
 	int nmatches = 0;
 
+	chimes_type.assign(atom->ntypes, -1);
+
 	for (int i=1; i<= atom->ntypes; i++) // Lammps indexing starts at 1
 	{
 		bool matched = false;
@@ -845,7 +873,7 @@ void PairCHIMES::set_chimes_type()
 				std::cout << "LAMMPS atom type idx: " << i << " LAMMPS mass: " << atom->mass[i] << " ; " << "ChIMES atom type idx: " << j << " ChIMES mass: " << chimes_calculator.masses[j] << " ... status: " << std::endl;
 			if (abs(atom->mass[i] - chimes_calculator.masses[j]) < 1e-3) // Masses should match to at least 3 decimal places
 			{
-				chimes_type.push_back(j);
+				chimes_type[i-1] = j;
 				nmatches++;
 				matched = true;
 				if(comm->me == 0)
