@@ -65,7 +65,7 @@ group argon  type 2    # group argon  atoms
 ########################################
 
 pair_style      hybrid/overlay chimesFF momb 9.0 0.75 20.0 lj/cut 10.0            # Use ChIMES, momb and LJ potentials (removed "for_fitting" after chimesFF copied from the parameter file)
-pair_coeff * * chimesFF params.txt
+pair_coeff * * chimesFF ../../../../serial_interface/tests/force_fields/published_params.Carbon-2.0.Small.2+3+4b.Tersoff.txt
 pair_coeff      1 1 momb 0.0 1.0 1.0 418.26 2.904                                 # Use momb for dispersion correction (only for the small carbon model, copied from the parameter file)
 pair_coeff      1 2 lj/cut 0.25   3.5                                             # Use LJ for C-Ar  (epsilon: Kcal/mol, sigma: Angstrom) calculated with L-B combining rules
 pair_coeff      2 2 lj/cut 0.25   3.5                                             # Use LJ for Ar-Ar (epsilon: Kcal/mol, sigma: Angstrom)
