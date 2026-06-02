@@ -51,7 +51,6 @@ pair_coeff      * * chimesFF 2 1params.txt.reduced
 ########################################
 
 fix             1 all nvt temp ${temp} ${temp} 5
-fix_modify      1 energy yes
 
 ########################################
 # THERMO OUTPUT CONTROLS
