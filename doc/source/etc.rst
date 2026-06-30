@@ -101,9 +101,12 @@ The data file must have atom types with matching masses (order doesn't matter):
 Hybrid Overlay Usage
 """""""""""""""""""
 
-ChIMES can be used simultaneously with other potentials using LAMMPS' hybrid/overlay pair style. This allows you to combine ChIMES with additional force fields for specific interactions.
+ChIMES can be used simultaneously with other potentials using LAMMPS ``hybrid/overlay`` pair style so that forces from each sub-style add together. The subsections below each use their own heading for a distinct overlay pattern.
 
-**Example of hybrid/overlay usage:**
+ChIMES with MOMB and Lennard-Jones
+++++++++++++++++++++++++++++++++++
+
+Combine one ChIMES parameter file with MOMB (many-body van der Waals) and Lennard-Jones for different atom-type pairs.
 
 .. code-block:: text
 
@@ -113,14 +116,29 @@ ChIMES can be used simultaneously with other potentials using LAMMPS' hybrid/ove
     pair_coeff      1 2 lj/cut 0.25   3.5
     pair_coeff      2 2 lj/cut 0.25   3.5
 
-In this example, ChIMES is combined with MOMB (Many-body van der Waals) and Lennard-Jones potentials for different atom type interactions. 
+Here ChIMES supplies the bonded / short-range ML-IAP description, while MOMB and ``lj/cut`` supply additional van der Waals channels as specified by the ``pair_coeff`` lines.
 
-Models with D2 Dispersion Correction
-"""""""""""""""""""""""""""""""""""
+TurboChIMES multilayer (two ``chimesFF`` layers)
+++++++++++++++++++++++++++++++++++++++++++++++++
 
-Using hybrid ChIMES and MOMB is specifically for adding D2 dispersion correction at the time of using LAMMPS. Whether to include MOMB and the parameters used is specific to the ChIMES parameterization and should not be added arbitrarily.
+A **multilayer (TurboChIMES)** fit from the Active Learning Driver and ChIMES LSQ produces **two** reduced parameter files—one per hyperparameter layer—typically named ``0params.txt.reduced`` and ``1params.txt.reduced`` by convention. The **0** file is the **short-ranged** layer (dense basis, smaller effective outer cutoffs in the fit); the **1** file is the **long-ranged** layer (sparser basis, smoother mid- to long-range behavior). Use **two** ``chimesFF`` entries in ``hybrid/overlay`` and assign each file to a different sub-style index.
 
-**Important:** When using MOMB with ChIMES, you must include the ``make yes-extra-pair`` command in the install.sh script when compiling LAMMPS to enable the MOMB potential support.
+.. code-block:: text
+
+    pair_style      hybrid/overlay chimesFF for_fitting chimesFF for_fitting
+    pair_coeff      * * chimesFF  1  0params.txt.reduced
+    pair_coeff      * * chimesFF  2  1params.txt.reduced
+
+The integer after ``chimesFF`` on each ``pair_coeff`` line selects which ``chimesFF`` instance in the ``pair_style`` list receives that file: **1** → short-range layer (**0params**), **2** → long-range layer (**1params**). For production runs (outside the LSQ fitting workflow), replace ``for_fitting`` with the appropriate keyword for your build, as for a single ``pair_style chimesFF`` run.
+
+**Important:** Both parameter files must remain **consistent** with the same LAMMPS data file (atom typing, masses, and ``atom_style``) and with how the model was trained; only the split of resolution across range differs between the two files.
+
+D2 dispersion correction (MOMB with ChIMES)
+++++++++++++++++++++++++++++++++++++++++++++++
+
+This pattern uses **hybrid ChIMES + MOMB** specifically to add **D2 dispersion correction** in LAMMPS. Whether to include MOMB and which parameters to use follow your ChIMES parameterization; do not add MOMB arbitrarily.
+
+**Important:** When using MOMB with ChIMES, you must include the ``make yes-extra-pair`` command in the ``install.sh`` script when compiling LAMMPS to enable the MOMB potential support.
 
 .. code-block:: text
 
