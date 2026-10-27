@@ -74,6 +74,47 @@ namespace LAMMPS_NS
             // Prepare files necessary for ChIMES fitting 
             
             bool     for_fitting;
+
+#ifdef FASTMB
+			// Fast many-body evaluation (pair_style chimesFF fastmb)
+
+			bool                use_fastmb;             // Evaluate the 3- and 4-body terms through the chimesFF pair cache
+			bool                fastmb_simd;            // Sweep clusters of one type in SIMD batches (keyword nosimd: one at a time)
+			bool                fastmb_rips;            // Build cluster lists by bitset intersection (keyword norips: the nested loops of build_mb_neighlists)
+			bool                fastmb_hash_ownership;  // A cluster is owned by its atom with the smallest hashed tag (keyword orient tag: smallest tag)
+			bool                fastmb_4b_reuse;        // 4-body term by hierarchical reuse across clusters (keyword nok4: the SIMD tree sweep)
+			bool                fastmb_warned_self_image; // The fall-back to build_mb_neighlists has been reported once
+
+			std::vector<int>    fastmb_pair_i;          // [pair idx] local index of the first atom of a registered pair (i < j)
+			std::vector<int>    fastmb_pair_j;          // [pair idx] local index of the second atom
+			std::vector<double> fastmb_pair_r;          // [pair idx] pair distance
+			std::vector<double> fastmb_pair_dr;         // [pair idx*CHDIM + dim] distance components, atom j minus atom i
+			std::vector<int>    fastmb_3mer_pair_idx;   // [3mer idx*3 + slot] 2*pair idx, plus 1 if the slot runs from j to i
+			std::vector<int>    fastmb_4mer_pair_idx;   // [4mer idx*6 + slot]
+			std::vector<long long> fastmb_registry_keys; // Open-addressing hash table of the registered pairs: pair key, -1 if empty
+			std::vector<int>       fastmb_registry_vals; // Pair index of the pair stored in the same table slot
+			std::vector<std::vector<int> > fastmb_batches; // [cluster key] clusters waiting for a full SIMD batch
+			std::vector<double> fastmb_pair_deriv;      // [pair idx] dE/dr accumulated by the hierarchical 4-body kernel
+			std::vector<int>    fastmb_4b_atoms;        // [cluster*4 + a] atoms of the active clusters of one key, list order
+			std::vector<int>    fastmb_4b_pair_idxs;    // [cluster*6 + slot] their slot pair indices
+
+			// Benchmark instrumentation, printed at exit: phase timers (env CHIMES_TIMING=1) and the
+			// memory held by the many-body data structures (env CHIMES_MEMORY=1)
+
+			bool   fastmb_timing;
+			double fastmb_time_neighlist;               // Seconds in the many-body neighbor list builds, this rank
+			double fastmb_time_registry;                // ... in the pair registry builds
+			double fastmb_time_cache;                   // ... filling the pair cache
+			double fastmb_time_2b;                      // ... in the 1- and 2-body loop
+			double fastmb_time_3b;                      // ... in the 3-body term
+			double fastmb_time_4b;                      // ... in the 4-body term
+			void   report_fastmb_instrumentation();     // The two reports, rank 0
+
+			bool   build_fastmb_neighlists();           // Cluster lists by bitset intersection; false if the box is too small (caller then uses build_mb_neighlists on every rank)
+			void   build_fastmb_pair_registry();        // Assigns pair indices to the pairs of the many-body neighbor lists
+			void   compute_fastmb(int nbody);           // 3- or 4-body forces, energy and virial from the pair cache
+			void   compute_fastmb_4B_reuse();           // 4-body forces, energy and virial by hierarchical reuse
+#endif
             bool     fingerprint;
 			int IO_freq;
             ofstream badness_stream;			

@@ -18,6 +18,9 @@
 #include<algorithm>
 #include<cmath>
 #include<map>
+#ifdef FASTMB
+#include<cstdint>
+#endif
 
 #define pi 3.14159265359
 
@@ -115,6 +118,123 @@ inline void chimes3BTmp::resize(int poly_order)
     if ( Tnd_jk.size() < poly_order + 1 ) 
         Tnd_jk.resize(poly_order+1) ;   
 }
+
+#ifdef FASTMB
+
+// Storage for the fast many-body evaluation (pair_style chimesFF fastmb), see chimesFF::fastmb_init.
+
+// A cutoff variant is a (pair type, inner cutoff, outer cutoff) combination used by some slot of some
+// 3- or 4-body cluster type. The Chebyshev polynomials depend on the cutoffs through the Morse
+// transformation, so a pair needs one cached polynomial vector per variant of its pair type.
+
+class chimesFastMBVariants
+{
+public:
+    inline chimesFastMBVariants() ;
+    inline int get(int pair_typ, double inner_cutoff, double outer_cutoff) ;  // Returns the variant index, adding the variant if it is new
+
+    int                     order;         // 3- or 4-body polynomial order
+    vector<vector<double> > cutoff;        // [variant][2] inner and outer cutoff
+    vector<int>             pair_type;     // [variant] ChIMES pair type index
+    vector<vector<int> >    by_pair_type;  // [pair type] indices of the variants of that pair type
+    vector<vector<int> >    slot_variant;  // [cluster type key][slot] variant index; -1 for excluded cluster types
+} ;
+
+inline chimesFastMBVariants::chimesFastMBVariants() : order(0)
+{
+    ;
+}
+
+inline int chimesFastMBVariants::get(int pair_typ, double inner_cutoff, double outer_cutoff)
+{
+    for (int v = 0; v < cutoff.size(); v++)
+        if ((pair_type[v] == pair_typ) && (cutoff[v][0] == inner_cutoff) && (cutoff[v][1] == outer_cutoff))
+            return v;
+
+    vector<double> new_cutoff(2);
+    new_cutoff[0] = inner_cutoff;
+    new_cutoff[1] = outer_cutoff;
+
+    cutoff.push_back(new_cutoff);
+    pair_type.push_back(pair_typ);
+
+    return cutoff.size() - 1;
+}
+
+// Per-pair cache of the cutoff-weighted Chebyshev polynomials X_n(r) = fcut(r) T_n(s(r)) and their
+// distance derivatives D_n(r) = dX_n/dr, for every cutoff variant of the pair's type.
+
+class chimesFastMBCache
+{
+public:
+    inline chimesFastMBCache() ;
+
+    int            nvariants;   // Variants per pair
+    int            stride;      // Doubles per (pair, variant) entry: 2*(order+1)
+    vector<int>    offset;      // [pair idx*nvariants + variant] start of the entry in data, or -1 if the pair is beyond that outer cutoff
+    vector<double> data;        // Each entry holds X_0..X_order followed by D_0..D_order
+} ;
+
+inline chimesFastMBCache::chimesFastMBCache() : nvariants(0), stride(0)
+{
+    ;
+}
+
+// Coefficient tree of one cluster type: the M-index coefficient tensor stored as a compressed sparse
+// fiber (CSF) tree. The terms are sorted by their power tuples; terms that share the first k powers
+// share one node at level k. One sweep of the tree gives the cluster energy and all M derivatives.
+
+template <int M>
+class chimesFastMBTree
+{
+public:
+    inline chimesFastMBTree() ;
+
+    vector<unsigned char> power[M];    // [level][node] power of the slot at that level
+    vector<int>           child[M-1];  // [level][node] first child at the next level; children of node n are child[n]..child[n+1]-1
+    vector<double>        coeff;       // [leaf] polynomial coefficient
+    int                   nroots;      // Nodes at level 0
+} ;
+
+template <int M>
+inline chimesFastMBTree<M>::chimesFastMBTree() : nroots(0)
+{
+    ;
+}
+
+// A 64-byte aligned array of doubles for the vector loops of the hierarchical 4-body kernel
+// (heap allocations are only guaranteed 16-byte alignment).
+
+class chimesFastMBAlignedBuffer
+{
+public:
+    inline chimesFastMBAlignedBuffer() ;
+    inline void   alloc(size_t n) ;     // Allocates and zeroes n doubles
+    inline size_t bytes() const ;
+
+    double *p;                          // Aligned start
+
+private:
+    vector<double> storage;
+} ;
+
+inline chimesFastMBAlignedBuffer::chimesFastMBAlignedBuffer() : p(nullptr)
+{
+    ;
+}
+
+inline void chimesFastMBAlignedBuffer::alloc(size_t n)
+{
+    storage.assign(n + 8, 0.0);
+    p = (double *)(((uintptr_t)storage.data() + 63) & ~(uintptr_t)63);
+}
+
+inline size_t chimesFastMBAlignedBuffer::bytes() const
+{
+    return storage.capacity() * sizeof(double);
+}
+
+#endif
 
 enum class fcutType
 {
@@ -225,7 +345,48 @@ public:
     void   compute_3B_tab(const vector<double> & dx, const vector<double> & dr, const vector<int> & typ_idxs, vector<double> & force, vector<double> & stress, double & energy, chimes3BTmp &tmp, vector<double> & force_scalar_in);     
     double get_tab_3B(int tripidx, const std::string& pairtyp_ij, const std::string& pairtyp_ik, const std::string& pairtyp_jk,  double rij, double rik, double rjk, double (&force_scalar)[3]);
     #endif
-    
+
+    // New for fast many-body evaluation (pair_style chimesFF fastmb)
+#ifdef FASTMB
+    // The 3- and 4-body terms are evaluated from a per-pair cache of the cutoff-weighted Chebyshev
+    // polynomials, X_n(r) = fcut(r) T_n(s(r)), and their derivatives D_n(r) = dX_n/dr, filled once per
+    // pair per step and shared by every cluster that contains the pair, and from the coefficient tree
+    // of each cluster type, which sums the polynomial so that partial products shared by terms are
+    // formed once. The arithmetic is that of compute_3B/compute_4B; only its order changes, so results
+    // agree to floating-point roundoff.
+    //
+    // A pair index is the caller's running index of a registered atom pair. Slots are the pairs of a
+    // cluster in the order ij ik jk (3-body) or ij ik il jk jl kl (4-body). A cluster key is the
+    // integer fastmb_cluster_key builds from the atom type indices of a cluster in slot order.
+
+    static const int fastmb_max_order = 25;   // Largest 3-/4-body polynomial order the batch buffers hold
+    static const int fastmb_lanes     = 8;    // Clusters evaluated together by one sweep: 8 doubles fill one AVX-512 register
+
+    string fastmb_init();                                                   // Builds the cutoff-variant tables and coefficient trees; returns "" or the reason the parameter file cannot use fastmb
+    void   fastmb_resize_cache(int npairs);                                 // Allocates the cache for npairs registered pairs
+    void   fastmb_fill_cache(int pair_idx, int pair_typ, double dx);        // Stores X and D of one pair at distance dx, for every cutoff variant of its pair type
+    int    fastmb_pair_type(int typ_idx_1, int typ_idx_2);                  // ChIMES pair type index of two atom type indices
+    int    fastmb_cluster_key(int nbody, const int *typ_idxs);              // Cluster key of nbody atom type indices
+    int    fastmb_ncluster_keys(int nbody);                                 // Number of possible cluster keys
+    bool   fastmb_cluster_active(int nbody, int key, const int *pair_idxs); // True if the cluster type is included and every slot pair is inside its outer cutoff
+    bool   fastmb_compute_cluster(int nbody, int key, const int *pair_idxs, double & energy, double *deriv); // Energy and dE/dr per slot of one cluster; returns false if the cluster is inactive
+    void   fastmb_compute_batch(int nbody, int key, const int *pair_idxs, int nclusters, double *energy, double *deriv); // Same for up to fastmb_lanes active clusters of one key, swept together; pair_idxs[c*npairs + slot], energy[c], deriv[c*npairs + slot]
+    void   fastmb_memory(size_t & cache_bytes, size_t & tree_bytes);        // Bytes held by the pair caches and by the coefficient trees (for reporting)
+
+    // Hierarchical reuse for the 4-body term. The cluster list of one type is a prefix tree:
+    // owner atom i, its pairs (i,j), the triangles (i,j,k) on each pair, the tetrahedra (i,j,k,l)
+    // on each triangle. With the coefficient tensor held densely in face-first slot order
+    // [ij ik jk | il jl kl], the ij mode is contracted once per (i,j) run, the ik and jk modes once
+    // per triangle, and only the three l-side modes per tetrahedron; derivatives return up the same
+    // tree. Runs are found from consecutive clusters with equal (i,j) and (i,j,k), so any list
+    // order is correct; the bitset enumeration produces maximal runs.
+
+    string fastmb_init_4B_reuse();                                          // Builds the dense tensors; returns "" or why the 4-body term cannot use hierarchical reuse
+    void   fastmb_compute_4B_reuse(int key, int nclusters, const int *atoms, const int *pair_idxs, double *pair_deriv, double & energy); // nclusters active clusters of one key in list order (atoms[4c+a], pair_idxs[6c+s]); adds the energy and dE/dr of every pair to pair_deriv[pair idx]
+    size_t fastmb_4B_reuse_bytes();                                         // Bytes held by the dense tensors and scratch (for reporting)
+    void   fastmb_4B_reuse_counts(long long counts[3]);                     // (i,j) runs, triangles and tetrahedra processed so far (for reporting)
+#endif
+
 private:
         
     string            xform_style;    //  Morse, direct, inverse, etc...
@@ -304,6 +465,35 @@ private:
     vector<vector<vector<int> > >    chimes_4b_powers;    // [nquads][nparams][constit. pair]
     vector<vector<double> >          chimes_4b_params;    // [nquads][nparams]    
     vector<vector<vector<double> > > chimes_4b_cutoff;    // [nquads][2][constit. pair] inner and outer cutoff for pair 1
+
+#ifdef FASTMB
+    // Fast many-body evaluation
+
+    chimesFastMBVariants fastmb_variants_3b;   // Cutoff variants of the 3-body cluster slots
+    chimesFastMBVariants fastmb_variants_4b;   // Cutoff variants of the 4-body cluster slots
+    chimesFastMBCache    fastmb_cache_3b;      // Per-pair polynomial cache for the 3-body term
+    chimesFastMBCache    fastmb_cache_4b;      // Per-pair polynomial cache for the 4-body term
+    vector<chimesFastMBTree<3> > fastmb_trees_3b;  // [ntrips] coefficient tree of each 3-body cluster type
+    vector<chimesFastMBTree<6> > fastmb_trees_4b;  // [nquads] coefficient tree of each 4-body cluster type
+    vector<double>       fastmb_Tn;            // Scratch for set_cheby_polys
+    vector<double>       fastmb_Tnd;
+
+    // Hierarchical reuse for the 4-body term
+
+    int                            fastmb_4b_nbasis;        // Basis functions per slot held densely (largest 4-body power + 1), 0 if not in use
+    vector<chimesFastMBAlignedBuffer> fastmb_4b_dense;      // [cluster key] dense coefficient tensor in face-first slot order
+    chimesFastMBAlignedBuffer      fastmb_4b_T1;            // Scratch: tensor contracted over the ij mode
+    chimesFastMBAlignedBuffer      fastmb_4b_W2;            // Scratch: adjoint accumulated over a (i,j) run
+    chimesFastMBAlignedBuffer      fastmb_4b_T2;            // Scratch: contracted over ij and ik
+    chimesFastMBAlignedBuffer      fastmb_4b_R;             // Scratch: contracted over the face
+    chimesFastMBAlignedBuffer      fastmb_4b_W;             // Scratch: adjoint accumulated over a triangle
+    chimesFastMBAlignedBuffer      fastmb_4b_V;             // Scratch: triangle gradient
+    long long                      fastmb_4b_counts[3];     // (i,j) runs, triangles, tetrahedra processed
+
+    void fastmb_init_variants(int nbody, chimesFastMBVariants & variants);
+    template <int NA> void fastmb_4B_reuse_run(int key, int nclusters, const int *atoms, const int *pair_idxs, double *pair_deriv, double & energy);
+    void fastmb_fill_cache_one(chimesFastMBCache & cache, const chimesFastMBVariants & variants, int pair_idx, int pair_typ, double dx);
+#endif
 
     // Tools for compute functions
         
